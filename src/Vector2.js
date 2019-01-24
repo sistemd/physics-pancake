@@ -16,7 +16,21 @@ export default class Vector2 {
 
     }
 
-    add(other) {
+    addedTo(other) {
         return new Vector2(this.x + other.x, this.y + other.y);
+    }
+
+    scaled(factor) {
+        return new Vector2(this.x * factor, this.y * factor);
+    }
+
+    add(other) {
+        this.x += other.x;
+        this.y += other.y;
+    }
+
+    scale(factor) {
+        this.x *= factor;
+        this.y *= factor;
     }
 }

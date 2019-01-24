@@ -5,8 +5,7 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint",
-    "lint-fix": "vue-cli-service lint --fix"
+    "lint": "vue-cli-service lint"
   },
   "dependencies": {
     "vue": "^2.5.21"
@@ -33,13 +32,23 @@
       "@vue/standard"
     ],
     "rules": {
-      "indent": ["error", 4],
-      "semi": ["error", "always"],
+      "indent": [
+        "error",
+        4
+      ],
+      "semi": [
+        "error",
+        "always"
+      ],
       "curly": "off",
-      "space-before-function-paren": ["error", "never"],
+      "space-before-function-paren": [
+        "error",
+        "never"
+      ],
       "comma-dangle": "off",
       "no-console": "off",
-      "no-new": "off"
+      "no-new": "off",
+      "vue/attribute-hyphenation": "off"
     },
     "parserOptions": {
       "parser": "babel-eslint"

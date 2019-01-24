@@ -1,3 +1,6 @@
+// XXX Perhaps in the future I should make it so that the engine (and the simulation) can be paused
+// During the pause, lastIntegrationTime gets updated, but timeAccumulator doesn't
+
 export default class Engine {
     constructor(timestep) {
         this.timestep = timestep;
@@ -13,7 +16,7 @@ export default class Engine {
 
         this.timeAccumulator += currentTime - this.lastIntegrationTime;
         this.lastIntegrationTime = currentTime;
-        while (this.timeAccumulator >= self.timestep) {
+        while (this.timeAccumulator >= this.timestep) {
             this.timeAccumulator -= this.timestep;
             this.integrateStep();
         }
