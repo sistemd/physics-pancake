@@ -26,18 +26,25 @@
       <button id="restart-simulation" @click="restartSimulation()">Restart</button>
       </div>
 
-      <div>
+      <div class="gravity">
+          <div>
         <label
           class="gravity"
           for="mass-aggregate-gravity"
         >
           Gravity:
         </label>
+            </div>
+            <div class="gravity-slider">
         <input
+          type="range"
           id="mass-aggregate-gravity"
           v-model="simulationSelection.massAggregateSimulation.engine.gravity"
-          class="gravity"
+          min="0"
+          max="1e-5"
+          step="1e-9"
         >
+        </div>
       </div>
     </div>
   </div>
@@ -111,6 +118,14 @@ export default {
 
 button#restart-simulation {
     margin-left: 3%;
+}
+
+div.gravity {
+    display: flex
+}
+
+div.gravity-slider {
+    margin-top: 0%;
 }
 
 #options-root > div > div {
