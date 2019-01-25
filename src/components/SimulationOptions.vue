@@ -1,9 +1,7 @@
 <template>
   <div id="options-root">
     <select v-model="engineSelection">
-      <option
-        value="massAggregateEngine"
-      >
+      <option value="massAggregateEngine">
         Mass Aggregate Engine
       </option>
       <option value="rigidBodyEngine">
@@ -17,12 +15,13 @@
     >
       <label
         class="gravity"
-        for="mass-aggregate-engine-gravity"
+        for="mass-aggregate-gravity"
       >
         Gravity:
       </label>
       <input
-        v-model="simulationSelection.massAggregateSimulation.options.gravity"
+        id="mass-aggregate-gravity"
+        v-model="simulationSelection.massAggregateSimulation.engine.gravity"
         class="gravity"
       >
     </div>
@@ -30,8 +29,6 @@
 </template>
 
 <script>
-'use strict';
-
 // TODO Add individual children for mass aggregate options and rigid body options
 
 export default {

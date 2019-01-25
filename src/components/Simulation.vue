@@ -10,8 +10,6 @@
 </template>
 
 <script>
-'use strict';
-
 import SimulationDisplay from './SimulationDisplay';
 import SimulationOptions from './SimulationOptions';
 import MassAggregateSimulation from '../mass-aggregate/MassAggregateSimulation';
@@ -24,10 +22,8 @@ export default {
     data() {
         return {
             massAggregateSimulation: new MassAggregateSimulation({
-                drawingContext: null,
-                timestep: 1,
-                options: {
-                    gravity: 1e-6,
+                drawing: {
+                    context: null,
                     drawParticles: true,
                     drawSprings: true,
                     particleRadius: 0.0099,
@@ -35,13 +31,17 @@ export default {
                     primaryStyle: 'green',
                     secondaryStyle: 'grey',
                 },
-                particles: [
-                    new Particle({
-                        position: new Vector2(0, 0),
-                        mass: 0.1,
-                    }),
-                ],
-                springs: [],
+                engine: {
+                    timestep: 1,
+                    gravity: 1e-6,
+                    particles: [
+                        new Particle({
+                            position: new Vector2(0, 0),
+                            mass: 0.1,
+                        }),
+                    ],
+                    springs: [],
+                },
             }),
             rigidBodySimulation: new RigidBodySimulation(),
             activeSimulation: null,
@@ -50,8 +50,8 @@ export default {
     mounted() {
         const canvas = document.getElementsByTagName('canvas')[0];
         const drawingContext = canvas.getContext('2d');
-        this.massAggregateSimulation.drawingContext = drawingContext;
-        this.rigidBodySimulation.drawingContext = drawingContext;
+        this.massAggregateSimulation.drawing.context = drawingContext;
+        this.rigidBodySimulation.drawing.context = drawingContext;
     },
 };
 </script>

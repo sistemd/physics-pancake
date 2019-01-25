@@ -1,5 +1,8 @@
 <template>
-  <canvas width="300" height="300" />
+  <canvas
+    width="300"
+    height="300"
+  />
 </template>
 
 <script>

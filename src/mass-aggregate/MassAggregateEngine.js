@@ -2,18 +2,19 @@ import Engine from '../Engine';
 import Vector2 from '../Vector2';
 
 export default class MassAggregateEngine extends Engine {
-    constructor({ timestep, options, particles, springs }) {
+    constructor({ timestep, gravity, particles, springs }) {
         super(timestep);
+        this.gravity = gravity;
         this.particles = particles;
         this.springs = springs;
-        this.options = options;
-        this.addGravity();
+
+        this.addGravityForce();
     }
 
-    addGravity() {
+    addGravityForce() {
         for (const particle of this.particles) {
             particle.forces.push(
-                particle => new Vector2(0, -this.options.gravity * particle.mass));
+                particle => new Vector2(0, -this.gravity * particle.mass));
         }
     }
 

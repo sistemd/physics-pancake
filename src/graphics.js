@@ -1,5 +1,3 @@
-'use strict';
-
 import Vector2 from './Vector2';
 
 export function clearContext(context, style) {
@@ -26,4 +24,3 @@ function transformNormalizedCoordinates(context, coordinates) {
         context.canvas.height * (1 - factor.y),
     );
 }
-
