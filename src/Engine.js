@@ -9,7 +9,7 @@ export default class Engine {
     }
 
     integrateTime(currentTime) {
-        if (this.lastIntgrationTime === null) {
+        if (this.lastIntegrationTime === null) {
             this.lastIntegrationTime = currentTime;
             return;
         }

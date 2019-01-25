@@ -11,13 +11,6 @@ export default class MassAggregateDrawing {
         this.secondaryStyle = secondaryStyle;
     }
 
-    redraw() {
-        if (this.drawingParticles)
-            this.drawParticles();
-        if (this.drawingSprings)
-            this.drawSprings();
-    }
-
     clear() {
         clearContext(this.context, this.backgroundStyle);
     }

@@ -13,17 +13,32 @@
       v-if="engineSelection === 'massAggregateEngine'"
       id="mass-aggregate-options"
     >
-      <label
-        class="gravity"
-        for="mass-aggregate-gravity"
-      >
-        Gravity:
-      </label>
-      <input
-        id="mass-aggregate-gravity"
-        v-model="simulationSelection.massAggregateSimulation.engine.gravity"
-        class="gravity"
-      >
+      <div>
+      <select>
+        <option
+          v-for="sample in massAggregateSamples"
+          :key="sample.title"
+          @click="currentSample = sample"
+        >
+          {{ sample.title }}
+        </option>
+      </select>
+      <button id="restart-simulation" @click="restartSimulation()">Restart</button>
+      </div>
+
+      <div>
+        <label
+          class="gravity"
+          for="mass-aggregate-gravity"
+        >
+          Gravity:
+        </label>
+        <input
+          id="mass-aggregate-gravity"
+          v-model="simulationSelection.massAggregateSimulation.engine.gravity"
+          class="gravity"
+        >
+      </div>
     </div>
   </div>
 </template>
@@ -37,19 +52,32 @@ export default {
             type: Object,
             default: null,
         },
+        massAggregateSamples: {
+            type: Array,
+            default: null,
+        },
+        rigidBodySamples: {
+            type: Array,
+            default: null,
+        },
     },
     data() {
         return {
             engineSelection: 'massAggregateEngine',
+            currentSample: null,
         };
     },
     watch: {
         engineSelection(newSelection) {
             this.updateActiveSimulation(newSelection);
         },
+        currentSample() {
+            this.restartSimulation();
+        }
     },
     created() {
         this.updateActiveSimulation(this.engineSelection);
+        this.currentSample = this.massAggregateSamples[0];
     },
     methods: {
         updateActiveSimulation(engineSelection) {
@@ -57,6 +85,10 @@ export default {
                 this.simulationSelection.activeSimulation = this.simulationSelection.massAggregateSimulation;
             if (engineSelection === 'rigidBodyEngine')
                 this.simulationSelection.activeSimulation = this.simulationSelection.rigidBodySimulation;
+        },
+        restartSimulation() {
+            this.simulationSelection.massAggregateSimulation.engine = this.currentSample.factory(
+                this.simulationSelection.massAggregateSimulation.engine);
         },
     },
 };
@@ -75,12 +107,24 @@ export default {
 #options-root > div {
     justify-content: center;
     display: flex;
+}
+
+button#restart-simulation {
+    margin-left: 3%;
+}
+
+#options-root > div > div {
     margin-top: 3%;
 }
 
 #options-root > div > * {
     justify-content: center;
     text-align: center;
+}
+
+div#mass-aggregate-options {
+    display: flex;
+    flex-direction: column;
 }
 
 div#mass-aggregate-options > input.gravity {

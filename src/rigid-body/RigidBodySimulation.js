@@ -3,4 +3,10 @@ export default class RigidBodySimulation {
         this.engine = {};
         this.drawing = {};
     }
+
+    integrateTime(time) {
+    }
+
+    redraw() {
+    }
 }

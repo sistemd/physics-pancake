@@ -4,7 +4,6 @@ export default class Particle {
     constructor({ position, mass }) {
         this.position = position;
         this.forces = [];
-        this.force = Vector2.zero;
         this.velocity = Vector2.zero;
         this.mass = mass;
     }
