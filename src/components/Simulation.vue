@@ -20,6 +20,7 @@ import MassAggregateSimulation from '../mass-aggregate/MassAggregateSimulation';
 import MassAggregateEngine from '../mass-aggregate/MassAggregateEngine';
 import RigidBodySimulation from '../rigid-body/RigidBodySimulation';
 import Particle from '../mass-aggregate/Particle';
+import Spring from '../mass-aggregate/Spring';
 import Vector2 from '../Vector2';
 
 export default {
@@ -51,10 +52,35 @@ export default {
         massAggregateSamples() {
             return [
                 {
-                    title: 'Single Particle',
+                    title: 'Simple Spring',
+                    factory(engine) {
+                        const particles = [
+                            new Particle({
+                                position: new Vector2(-0.1, 0),
+                                mass: 1,
+                            }),
+                            new Particle({
+                                position: new Vector2(0.1, 0.1),
+                                forces: [() => new Vector2(1e-2, 0)],
+                                mass: 1,
+                            }),
+                        ];
+                        return new MassAggregateEngine({
+                            timestep: engine.timestep,
+                            gravity: 0,
+                            particles,
+                            springs: [
+                                new Spring({ particles }),
+                            ],
+                        });
+                    },
+                },
+                {
+                    title: 'Simple Particle',
                     factory(engine) {
                         return new MassAggregateEngine({
-                            ...engine,
+                            timestep: engine.timestep,
+                            gravity: engine.gravity,
                             particles: [
                                 new Particle({
                                     position: new Vector2(0, 0),

@@ -14,36 +14,41 @@
       id="mass-aggregate-options"
     >
       <div>
-      <select>
-        <option
-          v-for="sample in massAggregateSamples"
-          :key="sample.title"
-          @click="currentSample = sample"
+        <select>
+          <option
+            v-for="sample in massAggregateSamples"
+            :key="sample.title"
+            @click="currentSample = sample"
+          >
+            {{ sample.title }}
+          </option>
+        </select>
+        <button
+          id="restart-simulation"
+          @click="restartSimulation()"
         >
-          {{ sample.title }}
-        </option>
-      </select>
-      <button id="restart-simulation" @click="restartSimulation()">Restart</button>
+          Restart
+        </button>
       </div>
 
       <div class="gravity">
-          <div>
-        <label
-          class="gravity"
-          for="mass-aggregate-gravity"
-        >
-          Gravity:
-        </label>
-            </div>
-            <div class="gravity-slider">
-        <input
-          type="range"
-          id="mass-aggregate-gravity"
-          v-model="simulationSelection.massAggregateSimulation.engine.gravity"
-          min="0"
-          max="1e-5"
-          step="1e-9"
-        >
+        <div>
+          <label
+            class="gravity"
+            for="mass-aggregate-gravity"
+          >
+            Gravity:
+          </label>
+        </div>
+        <div class="gravity-slider">
+          <input
+            id="mass-aggregate-gravity"
+            v-model="simulationSelection.massAggregateSimulation.engine.gravity"
+            type="range"
+            min="0"
+            max="1e-5"
+            step="1e-9"
+          >
         </div>
       </div>
     </div>

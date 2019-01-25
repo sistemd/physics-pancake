@@ -1,9 +1,9 @@
 import Vector2 from '../Vector2';
 
 export default class Particle {
-    constructor({ position, mass }) {
+    constructor({ position, mass, forces }) {
         this.position = position;
-        this.forces = [];
+        this.forces = forces || [];
         this.velocity = Vector2.zero;
         this.mass = mass;
     }
@@ -17,6 +17,10 @@ export default class Particle {
 
     accumulateAcceleration() {
         return this.accumulateForce().scaled(1 / this.mass);
+    }
+
+    distanceTo(other) {
+        return this.position.distanceTo(other.position);
     }
 
     get positionIsValid() {

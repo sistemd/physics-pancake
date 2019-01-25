@@ -1,4 +1,5 @@
 import Vector2 from './Vector2';
+import Line from './Line';
 
 export function clearContext(context, style) {
     if (style)
@@ -15,6 +16,23 @@ export function drawCircle(context, { position, radius }, style) {
     const yRadius = context.canvas.height * radius;
     context.ellipse(position.x, position.y, xRadius, yRadius, 0, 0, Math.PI * 2);
     context.fill();
+}
+
+export function drawLine(context, line, style) {
+    if (style)
+        context.strokeStyle = style;
+    line = transformNormalizedLine(context, line);
+    context.beginPath();
+    context.moveTo(line.origin.x, line.origin.y);
+    context.lineTo(line.end.x, line.end.y);
+    context.stroke();
+}
+
+function transformNormalizedLine(context, line) {
+    return new Line(
+        transformNormalizedCoordinates(context, line.origin),
+        transformNormalizedCoordinates(context, line.offset),
+    );
 }
 
 function transformNormalizedCoordinates(context, coordinates) {
