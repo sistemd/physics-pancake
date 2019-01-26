@@ -17,8 +17,8 @@
         <select v-model="currentSample">
           <option
             v-for="sample in massAggregateSamples"
-            :value="sample"
             :key="sample.title"
+            :value="sample"
           >
             {{ sample.title }}
           </option>

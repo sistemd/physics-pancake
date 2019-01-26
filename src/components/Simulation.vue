@@ -35,8 +35,9 @@ export default {
             massAggregateSimulation: new MassAggregateSimulation({
                 drawing: {
                     context: null,
-                    drawParticles: true,
-                    drawSprings: true,
+                    drawingForces: true,
+                    drawingParticles: true,
+                    drawingSprings: true,
                     particleRadius: 0.0099,
                     backgroundStyle: 'white',
                     primaryStyle: 'green',
@@ -67,16 +68,15 @@ export default {
                             new MovingParticle({
                                 position: new Vector2(0.1, 0.1),
                                 mass: 1,
-                                // constantForce: new Vector2(1.2e-6, 0),
-                                constantForce: new Vector2(0, 0),
+                                constantForce: new Vector2(1e-7, 0),
                             }),
                         ];
                         return new MassAggregateEngine({
                             timestep: engine.timestep,
-                            gravity: 0,
+                            gravity: engine.gravity,
                             particles,
                             springs: [
-                                new Spring({ particles }),
+                                new Spring({ particles, stiffness: 1, }),
                             ],
                         });
                     },

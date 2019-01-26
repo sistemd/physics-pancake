@@ -11,4 +11,3 @@ export default class MovingParticle extends Particle {
         super.update(timestep);
     }
 }
-

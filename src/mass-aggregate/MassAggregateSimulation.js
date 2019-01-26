@@ -11,6 +11,7 @@ export default class MassAggregateSimulation {
         this.drawing.clear();
         this.drawing.drawParticles(this.engine.particles);
         this.drawing.drawSprings(this.engine.springs);
+        this.drawing.drawForces(this.engine.particles);
     }
 
     integrateTime(time) {

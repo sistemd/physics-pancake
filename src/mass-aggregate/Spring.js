@@ -3,23 +3,23 @@ import Line from '../Line.js';
 export default class Spring {
     constructor({ particles, stiffness }) {
         this.particles = particles;
-        this.stiffness = (stiffness !== undefined) ? stiffness : 0.99;
+        this.stiffness = stiffness;
         this.restingLength = this.currentLength;
     }
 
-    update(timestep) {
-        this.contract(this.particles[0], this.particles[1], timestep);
-        this.contract(this.particles[1], this.particles[0], timestep);
+    update() {
+        this.contract(this.particles[0], this.particles[1]);
+        this.contract(this.particles[1], this.particles[0]);
     }
 
-    contract(fromParticle, toParticle, timestep) {
+    contract(fromParticle, toParticle) {
         fromParticle.force.add(
             fromParticle.position.directionTo(toParticle.position).scaled(
-                this.contractionMagnitude(fromParticle, timestep)));
+                this.contractionMagnitude(fromParticle)));
     }
 
-    contractionMagnitude(particle, timestep) {
-        return (particle.mass / timestep) * (this.lengthDelta / 2 / timestep - particle.speed) * this.stiffness;
+    contractionMagnitude(particle) {
+        return this.stiffness * this.lengthDelta;
     }
 
     get line() {

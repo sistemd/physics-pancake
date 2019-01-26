@@ -7,7 +7,7 @@ export default class Particle {
         this.velocity = Vector2.zero;
         this.mass = mass;
     }
-    
+
     applyGravity(gravity) {
         this.force.add(new Vector2(0, -gravity * this.mass));
     }

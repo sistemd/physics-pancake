@@ -1,5 +1,4 @@
 import Vector2 from './Vector2';
-import Line from './Line';
 
 export function clearContext(context, style) {
     if (style)

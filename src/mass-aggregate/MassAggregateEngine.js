@@ -1,5 +1,4 @@
 import Engine from '../Engine';
-import Vector2 from '../Vector2';
 
 export default class MassAggregateEngine extends Engine {
     constructor({ timestep, gravity, particles, springs }) {
