@@ -8,8 +8,17 @@ export default class Vector2 {
         this.y = y;
     }
 
+    reset() {
+        this.x = 0;
+        this.y = 0;
+    }
+
     get magnitude() {
         return Math.sqrt(this.x * this.x + this.y * this.y);
+    }
+
+    get normalized() {
+        return this.scaled(1 / this.magnitude);
     }
 
     dot(other) {
@@ -49,5 +58,9 @@ export default class Vector2 {
 
     distanceTo(other) {
         return this.subtractedFrom(other).magnitude;
+    }
+
+    directionTo(other) {
+        return this.subtractedFrom(other).normalized;
     }
 }

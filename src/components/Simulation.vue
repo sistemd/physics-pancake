@@ -14,12 +14,17 @@
 </template>
 
 <script>
+// TODO Since now springs are just forces and it isn't easy to draw them,
+// I'll need to be able to inject the drawing object into the simulation (or something like that),
+// so simulation may need to only be a single class (don't need to separate into two classes).
+
 import SimulationDisplay from './SimulationDisplay';
 import SimulationOptions from './SimulationOptions';
 import MassAggregateSimulation from '../mass-aggregate/MassAggregateSimulation';
 import MassAggregateEngine from '../mass-aggregate/MassAggregateEngine';
 import RigidBodySimulation from '../rigid-body/RigidBodySimulation';
 import Particle from '../mass-aggregate/Particle';
+import MovingParticle from '../mass-aggregate/MovingParticle';
 import Spring from '../mass-aggregate/Spring';
 import Vector2 from '../Vector2';
 
@@ -59,10 +64,11 @@ export default {
                                 position: new Vector2(-0.1, 0),
                                 mass: 1,
                             }),
-                            new Particle({
+                            new MovingParticle({
                                 position: new Vector2(0.1, 0.1),
-                                forces: [() => new Vector2(1e-2, 0)],
                                 mass: 1,
+                                // constantForce: new Vector2(1.2e-6, 0),
+                                constantForce: new Vector2(0, 0),
                             }),
                         ];
                         return new MassAggregateEngine({

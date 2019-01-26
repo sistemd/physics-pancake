@@ -1,7 +1,10 @@
-import { clearContext, drawCircle, drawLine } from '../graphics';
+import { clearContext, drawCircle, drawLine } from '../drawing';
 
 export default class MassAggregateDrawing {
-    constructor({ context, drawingSprings, drawingParticles, particleRadius, backgroundStyle, primaryStyle, secondaryStyle }) {
+    constructor({
+        context, drawingSprings, drawingParticles, particleRadius,
+        backgroundStyle, primaryStyle, secondaryStyle,
+    }) {
         this.context = context;
         this.drawingSprings = drawingSprings;
         this.drawingParticles = drawingParticles;
@@ -25,7 +28,8 @@ export default class MassAggregateDrawing {
     }
 
     drawSprings(springs) {
-        for (const spring of springs)
+        for (const spring of springs) {
             drawLine(this.context, spring.line, this.secondaryStyle);
+        }
     }
 }

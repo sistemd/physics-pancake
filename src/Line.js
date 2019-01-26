@@ -9,7 +9,7 @@ export default class Line {
     }
 
     get end() {
-        return this.origin.addTo(this.offset);
+        return this.origin.addedTo(this.offset);
     }
 
     get length() {

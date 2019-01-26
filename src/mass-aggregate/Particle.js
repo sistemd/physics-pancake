@@ -1,26 +1,36 @@
 import Vector2 from '../Vector2';
 
 export default class Particle {
-    constructor({ position, mass, forces }) {
+    constructor({ position, mass }) {
         this.position = position;
-        this.forces = forces || [];
+        this.force = Vector2.zero;
         this.velocity = Vector2.zero;
         this.mass = mass;
     }
-
-    accumulateForce() {
-        return this.forces.reduce(
-            (accumulator, force) => accumulator.addedTo(force(this)),
-            Vector2.zero,
-        );
+    
+    applyGravity(gravity) {
+        this.force.add(new Vector2(0, -gravity * this.mass));
     }
 
-    accumulateAcceleration() {
-        return this.accumulateForce().scaled(1 / this.mass);
+    update(timestep) {
+        this.updateVelocity(timestep);
+        this.updatePosition(timestep);
     }
 
-    distanceTo(other) {
-        return this.position.distanceTo(other.position);
+    get speed() {
+        return this.velocity.magnitude;
+    }
+
+    updateVelocity(timestep) {
+        this.velocity.add(this.acceleration.scaled(timestep));
+    }
+
+    updatePosition(timestep) {
+        this.position.add(this.velocity.scaled(timestep));
+    }
+
+    get acceleration() {
+        return this.force.scaled(1 / this.mass);
     }
 
     get positionIsValid() {

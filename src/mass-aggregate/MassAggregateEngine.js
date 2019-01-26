@@ -7,15 +7,6 @@ export default class MassAggregateEngine extends Engine {
         this.gravity = gravity;
         this.particles = particles;
         this.springs = springs;
-
-        this.addGravityForce();
-    }
-
-    addGravityForce() {
-        for (const particle of this.particles) {
-            particle.forces.push(
-                particle => new Vector2(0, -this.gravity * particle.mass));
-        }
     }
 
     clearDeadParticles() {
@@ -23,30 +14,29 @@ export default class MassAggregateEngine extends Engine {
     }
 
     integrateStep() {
-        this.updateParticles();
+        this.resetForces();
         this.updateSprings();
+        this.updateParticles();
         this.clearDeadParticles();
 
         // clearDeadParticles doesn't strictly need to be called whenever we
         // integrate, but I decided to call it here for simplicity.
     }
 
+    resetForces() {
+        for (const particle of this.particles)
+            particle.force.reset();
+    }
+
     updateParticles() {
         for (const particle of this.particles) {
-            this.updateVelocity(particle);
-            this.updatePosition(particle);
+            particle.applyGravity(this.gravity);
+            particle.update(this.timestep);
         }
     }
 
-    updateVelocity(particle) {
-        particle.velocity.add(particle.accumulateAcceleration().scaled(this.timestep));
-    }
-
-    updatePosition(particle) {
-        particle.position.add(particle.velocity.scaled(this.timestep));
-    }
-
     updateSprings() {
-        // TODO
+        for (const spring of this.springs)
+            spring.update(this.timestep);
     }
 }

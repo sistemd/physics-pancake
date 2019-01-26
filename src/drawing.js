@@ -21,18 +21,12 @@ export function drawCircle(context, { position, radius }, style) {
 export function drawLine(context, line, style) {
     if (style)
         context.strokeStyle = style;
-    line = transformNormalizedLine(context, line);
     context.beginPath();
-    context.moveTo(line.origin.x, line.origin.y);
-    context.lineTo(line.end.x, line.end.y);
+    const origin = transformNormalizedCoordinates(context, line.origin);
+    context.moveTo(origin.x, origin.y);
+    const end = transformNormalizedCoordinates(context, line.end);
+    context.lineTo(end.x, end.y);
     context.stroke();
-}
-
-function transformNormalizedLine(context, line) {
-    return new Line(
-        transformNormalizedCoordinates(context, line.origin),
-        transformNormalizedCoordinates(context, line.offset),
-    );
 }
 
 function transformNormalizedCoordinates(context, coordinates) {

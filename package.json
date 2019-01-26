@@ -53,7 +53,10 @@
       "comma-dangle": "off",
       "no-console": "off",
       "no-new": "off",
-      "strict": ["error", "global"],
+      "strict": [
+        "error",
+        "global"
+      ],
       "vue/attribute-hyphenation": "off"
     }
   },

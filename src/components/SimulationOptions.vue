@@ -14,11 +14,11 @@
       id="mass-aggregate-options"
     >
       <div>
-        <select>
+        <select v-model="currentSample">
           <option
             v-for="sample in massAggregateSamples"
+            :value="sample"
             :key="sample.title"
-            @click="currentSample = sample"
           >
             {{ sample.title }}
           </option>
