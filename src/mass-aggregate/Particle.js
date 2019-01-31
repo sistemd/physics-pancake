@@ -17,6 +17,10 @@ export default class Particle {
         this.updatePosition(timestep);
     }
 
+    wasStationary(timestep) {
+        return this.velocity.almostEquals(this.acceleration.scaled(timestep));
+    }
+
     get speed() {
         return this.velocity.magnitude;
     }

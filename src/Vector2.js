@@ -1,3 +1,5 @@
+import { almostEquals } from './utils';
+
 export default class Vector2 {
     static get zero() {
         return new Vector2(0, 0);
@@ -13,6 +15,14 @@ export default class Vector2 {
         this.y = 0;
     }
 
+    // The projection of normal onto positiveDirection (the dot product) should be positive
+    normal(positiveDirection) {
+        const oneNormal = new Vector2(-this.y, this.x).normalized;
+        if (oneNormal.dot(positiveDirection) > 0)
+            return oneNormal;
+        return oneNormal.negated;
+    }
+
     get magnitude() {
         return Math.sqrt(this.x * this.x + this.y * this.y);
     }
@@ -21,8 +31,16 @@ export default class Vector2 {
         return this.scaled(1 / this.magnitude);
     }
 
-    dot(other) {
+    get negated() {
+        return new Vector2(-this.x, -this.y);
+    }
 
+    almostEquals(other) {
+        return almostEquals(this.x, other.x) && almostEquals(this.y, other.y);
+    }
+
+    dot(other) {
+        return this.x * other.x + this.y * other.y;
     }
 
     cross(other) {
