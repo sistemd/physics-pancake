@@ -2,21 +2,19 @@
   <canvas
     width="300"
     height="300"
+    v-on="$listeners"
   />
 </template>
 
 <script>
+import Vector2 from '../Vector2';
+
 export default {
     props: {
-        simulationSelection: {
+        simulation: {
             type: Object,
             default: null,
         },
-    },
-    data() {
-        return {
-            requestID: null,
-        };
     },
     mounted() {
         const frameCallback = time => {
@@ -29,10 +27,3 @@ export default {
     },
 };
 </script>
-
-<style>
-canvas {
-    width: 300px;
-    height: 300px;
-}
-</style>

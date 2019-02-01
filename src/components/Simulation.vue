@@ -14,10 +14,6 @@
 </template>
 
 <script>
-// TODO Since now springs are just forces and it isn't easy to draw them,
-// I'll need to be able to inject the drawing object into the simulation (or something like that),
-// so simulation may need to only be a single class (don't need to separate into two classes).
-
 import SimulationDisplay from './SimulationDisplay';
 import SimulationOptions from './SimulationOptions';
 import MassAggregateSimulation from '../mass-aggregate/MassAggregateSimulation';

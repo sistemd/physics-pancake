@@ -1,5 +1,7 @@
+import { min } from '../utils';
+
 export default class Contact {
-    static find() {
+    static find(particles, terrain) {
         return min(allContacts(), contact => contact.particle.origin.distanceTo(contact.intersection));
 
         function allContacts() {
