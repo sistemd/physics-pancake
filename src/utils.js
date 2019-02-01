@@ -1,6 +1,6 @@
 export function min(sequence, key = x => x) {
-    let result = undefined;
-    let minKey = undefined;
+    let result;
+    let minKey;
 
     for (const elem of sequence) {
         const k = key(elem);

@@ -17,7 +17,7 @@ export default class Line {
     get end() {
         return this.origin.addedTo(this.offset);
     }
-    
+
     set end(value) {
         this.offset = this.origin.subtractedFrom(value);
     }

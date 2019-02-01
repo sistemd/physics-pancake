@@ -1,12 +1,11 @@
 <template>
-  <Simulation />
+  <DemoChoice />
 </template>
 
 <script>
-// TODO Rename Simulation -> SimulationView or something
-import Simulation from './components/Simulation';
+import DemoChoice from './components/DemoChoice';
 
 export default {
-    components: { Simulation },
+    components: { DemoChoice },
 };
 </script>

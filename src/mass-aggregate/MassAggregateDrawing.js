@@ -1,25 +1,35 @@
-import { clearContext, drawCircle, drawLine } from '../drawing';
+import { clearContext, drawCircle, drawLine } from '../graphics';
 import Line from '../Line';
 
 const visualForceScale = 100000;
 
+const backgroundStyle = 'white';
+
+const particleStyle = 'green';
+
+const springStyle = 'grey';
+
+const forceStyle = 'pink';
+
+const particleRadius = 0.001;
+
 export default class MassAggregateDrawing {
-    constructor({
-        context, drawingForces, drawingSprings, drawingParticles,
-        particleRadius, backgroundStyle, primaryStyle, secondaryStyle,
-    }) {
+    constructor({ context, drawingForces, drawingSprings, drawingParticles }) {
         this.context = context;
         this.drawingForces = drawingForces;
         this.drawingSprings = drawingSprings;
         this.drawingParticles = drawingParticles;
-        this.particleRadius = particleRadius;
-        this.backgroundStyle = backgroundStyle;
-        this.primaryStyle = primaryStyle;
-        this.secondaryStyle = secondaryStyle;
+    }
+
+    redraw(engine) {
+        this.clear();
+        this.drawParticles(engine.particles);
+        this.drawSprings(engine.springs);
+        this.drawForces(engine.particles);
     }
 
     clear() {
-        clearContext(this.context, this.backgroundStyle);
+        clearContext(this.context, backgroundStyle);
     }
 
     drawForces(particles) {
@@ -30,7 +40,7 @@ export default class MassAggregateDrawing {
             drawLine(
                 this.context,
                 new Line(particle.position, particle.force.scaled(visualForceScale)),
-                this.primaryStyle,
+                forceStyle,
             );
         }
     }
@@ -42,8 +52,8 @@ export default class MassAggregateDrawing {
         for (const particle of particles) {
             drawCircle(this.context, {
                 position: particle.position,
-                radius: this.particleRadius,
-            }, this.secondaryStyle);
+                radius: particleRadius,
+            }, particleStyle);
         }
     }
 
@@ -52,7 +62,7 @@ export default class MassAggregateDrawing {
             return;
 
         for (const spring of springs) {
-            drawLine(this.context, spring.line, this.secondaryStyle);
+            drawLine(this.context, spring.line, springStyle);
         }
     }
 }

@@ -4,7 +4,7 @@ import NotImplemented from './NotImplemented';
 // During the pause, lastIntegrationTime gets updated, but timeAccumulator doesn't
 
 export default class Engine {
-    constructor(timestep) {
+    constructor(timestep = 1) {
         this.timestep = timestep;
         this.timeAccumulator = 0;
         this.lastIntegrationTime = null;
