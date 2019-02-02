@@ -10,7 +10,7 @@ export default {
     },
     created() {
         this.simulation = new Simulation({
-            engine: this.createEngine(),
+            engine: this.createEngine({}),
             drawing: this.createDrawing(),
         });
     },
@@ -18,7 +18,7 @@ export default {
         this.simulation.drawing.context = document.getElementsByTagName('canvas')[0].getContext('2d');
     },
     methods: {
-        createEngine() {
+        createEngine(previousEngine) {
             throw new NotImplemented();
         },
         createDrawing() {
@@ -27,7 +27,7 @@ export default {
             throw new NotImplemented();
         },
         restartEngine() {
-            this.simulation.engine = this.createEngine();
+            this.simulation.engine = this.createEngine(this.simulation.engine);
         },
     }
 };

@@ -1,14 +1,31 @@
 <template>
-  <div>
-    <SimulationDisplay @mousemove="mouseMoved" :simulation="simulation" />
-    <RestartButton @click="restartEngine" />
-  </div>
+  <table>
+    <tr>
+      <td>
+        <SimulationDisplay
+          :simulation="simulation"
+          @mousemove="mouseMoved"
+        />
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <RestartButton @click="restartEngine" />
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <StiffnessSlider :spring="spring" />
+      </td>
+    </tr>
+  </table>
 </template>
 
 <script>
 import Demo from '../Demo';
 import SimulationDisplay from '../SimulationDisplay';
 import RestartButton from '../RestartButton';
+import StiffnessSlider from '../StiffnessSlider';
 import MassAggregateEngine from '../../mass-aggregate/MassAggregateEngine';
 import MassAggregateDrawing from '../../mass-aggregate/MassAggregateDrawing';
 import Spring from '../../mass-aggregate/Spring';
@@ -20,6 +37,7 @@ export default {
     components: {
         SimulationDisplay,
         RestartButton,
+        StiffnessSlider,
     },
     mixins: [Demo],
     data() {
@@ -31,7 +49,7 @@ export default {
         };
     },
     methods: {
-        createEngine() {
+        createEngine(previousEngine) {
             const particles = [
                 this.fixedParticle,
                 new Particle({
@@ -41,6 +59,8 @@ export default {
                 }),
             ];
             return new MassAggregateEngine({
+                gravity: previousEngine.gravity,
+                damping: previousEngine.damping,
                 particles,
                 springs: [
                     new Spring({ particles, stiffness: 1e-5 }),
@@ -58,6 +78,11 @@ export default {
         mouseMoved(position) {
             this.fixedParticle.position = position;
         },
-    }
+    },
+    computed: {
+        spring() {
+            return this.simulation.engine.springs[0];
+        },
+    },
 };
 </script>

@@ -1,14 +1,36 @@
 <template>
-  <div>
-    <SimulationDisplay :simulation="simulation" />
-    <RestartButton @click="restartEngine" />
-  </div>
+  <table>
+    <tbody>
+      <tr>
+        <td>
+          <SimulationDisplay :simulation="simulation" />
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <RestartButton @click="restartEngine" />
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <GravitySlider :simulation="simulation" />
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <DampingSlider :simulation="simulation" />
+        </td>
+      </tr>
+    </tbody>
+  </table>
 </template>
 
 <script>
 import Demo from '../Demo';
 import SimulationDisplay from '../SimulationDisplay';
 import RestartButton from '../RestartButton';
+import GravitySlider from '../GravitySlider';
+import DampingSlider from '../DampingSlider';
 import MassAggregateEngine from '../../mass-aggregate/MassAggregateEngine';
 import MassAggregateDrawing from '../../mass-aggregate/MassAggregateDrawing';
 import Spring from '../../mass-aggregate/Spring';
@@ -20,10 +42,12 @@ export default {
     components: {
         SimulationDisplay,
         RestartButton,
+        GravitySlider,
+        DampingSlider,
     },
     mixins: [Demo],
     methods: {
-        createEngine() {
+        createEngine(previousEngine) {
             const particles = [
                 new FixedParticle({
                     position: Vector2.zero,
@@ -36,6 +60,8 @@ export default {
                 }),
             ];
             return new MassAggregateEngine({
+                gravity: previousEngine.gravity,
+                damping: previousEngine.damping,
                 particles,
                 springs: [
                     new Spring({ particles, stiffness: 0.99 }),
