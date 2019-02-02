@@ -1,46 +1,49 @@
 <template>
   <div>
-    <SimulationDisplay :simulation="simulation" />
+    <SimulationDisplay @mousemove="mouseMoved" :simulation="simulation" />
     <RestartButton @click="restartEngine" />
   </div>
 </template>
 
 <script>
 import Demo from '../Demo';
-import RestartButton from '../RestartButton';
 import SimulationDisplay from '../SimulationDisplay';
+import RestartButton from '../RestartButton';
 import MassAggregateEngine from '../../mass-aggregate/MassAggregateEngine';
 import MassAggregateDrawing from '../../mass-aggregate/MassAggregateDrawing';
 import Spring from '../../mass-aggregate/Spring';
 import Particle from '../../mass-aggregate/Particle';
-import MovingParticle from '../../mass-aggregate/MovingParticle';
+import FixedParticle from '../../mass-aggregate/FixedParticle';
 import Vector2 from '../../Vector2';
 
 export default {
     components: {
-        RestartButton,
         SimulationDisplay,
+        RestartButton,
     },
     mixins: [Demo],
+    data() {
+        return {
+            fixedParticle: new FixedParticle({
+                position: Vector2.zero,
+                mass: 1,
+            }),
+        };
+    },
     methods: {
         createEngine() {
             const particles = [
+                this.fixedParticle,
                 new Particle({
-                    position: new Vector2(-0.1, 0),
+                    position: new Vector2(-0.2, 0.2),
+                    gravityScale: 2.5,
                     mass: 1,
-                }),
-                new MovingParticle({
-                    // XXX This should be a FixedParticle with position being
-                    // set to mouse position clamped from -1 to 1
-                    position: new Vector2(0.1, 0.1),
-                    mass: 1,
-                    constantForce: new Vector2(1e-7, 0),
                 }),
             ];
             return new MassAggregateEngine({
                 particles,
                 springs: [
-                    new Spring({ particles, stiffness: 1, }),
+                    new Spring({ particles, stiffness: 1e-5 }),
                 ],
             });
         },
@@ -52,6 +55,9 @@ export default {
                 drawingForces: false,
             });
         },
-    },
+        mouseMoved(position) {
+            this.fixedParticle.position = position;
+        },
+    }
 };
 </script>

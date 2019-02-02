@@ -10,7 +10,7 @@ export function drawCircle(context, { position, radius }, style) {
     if (style)
         context.fillStyle = style;
     context.beginPath();
-    position = fromNormalizedCoordinates(position, canvasDimensions(context));
+    position = fromNormalizedCoordinates(position, context.canvas);
     const xRadius = context.canvas.width * radius;
     const yRadius = context.canvas.height * radius;
     context.ellipse(position.x, position.y, xRadius, yRadius, 0, 0, Math.PI * 2);
@@ -21,9 +21,9 @@ export function drawLine(context, line, style) {
     if (style)
         context.strokeStyle = style;
     context.beginPath();
-    const origin = fromNormalizedCoordinates(line.origin, canvasDimensions(context));
+    const origin = fromNormalizedCoordinates(line.origin, context.canvas);
     context.moveTo(origin.x, origin.y);
-    const end = fromNormalizedCoordinates(line.end, canvasDimensions(context));
+    const end = fromNormalizedCoordinates(line.end, context.canvas);
     context.lineTo(end.x, end.y);
     context.stroke();
 }
@@ -39,11 +39,4 @@ export function fromNormalizedCoordinates(coordinates, { width, height }) {
 export function toNormalizedCoordinates(coordinates, { width, height }) {
     const factor = new Vector2(coordinates.x / width, 1 - coordinates.y / height);
     return factor.addedTo(new Vector2(-0.5, -0.5)).scaled(2);
-}
-
-function canvasDimensions(context) {
-    return {
-        width: context.canvas.width,
-        height: context.canvas.height,
-    };
 }

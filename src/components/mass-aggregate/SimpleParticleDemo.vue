@@ -16,8 +16,8 @@ import Vector2 from '../../Vector2';
 
 export default {
     components: {
-        RestartButton,
         SimulationDisplay,
+        RestartButton,
     },
     mixins: [Demo],
     methods: {

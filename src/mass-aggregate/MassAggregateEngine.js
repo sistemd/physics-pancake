@@ -1,15 +1,24 @@
 import Engine from '../Engine';
 
+const positionBound = 10;
+
+function positionWithinBounds({ x, y }) {
+    return (x >= -positionBound && x <= positionBound &&
+            y >= -positionBound && y <= positionBound);
+}
+
 export default class MassAggregateEngine extends Engine {
-    constructor({ timestep, gravity = 1e-6, particles = [], springs = [] } = {}) {
+    constructor({ timestep, gravity = 1e-6, damping = 7e-4, particles = [], springs = [] } = {}) {
         super(timestep);
+        this.damping = Math.pow(damping, this.timestep);
         this.gravity = gravity;
         this.particles = particles;
         this.springs = springs;
     }
 
     clearDeadParticles() {
-        this.particles = this.particles.filter(particle => particle.positionIsValid);
+        this.particles = this.particles.filter(
+            particle => positionWithinBounds(particle.position));
     }
 
     integrateStep() {
@@ -28,10 +37,8 @@ export default class MassAggregateEngine extends Engine {
     }
 
     updateParticles() {
-        for (const particle of this.particles) {
-            particle.applyGravity(this.gravity);
-            particle.update(this.timestep);
-        }
+        for (const particle of this.particles)
+            particle.update(this.timestep, this.gravity, this.damping);
     }
 
     updateSprings() {

@@ -2,11 +2,14 @@
   <canvas
     width="300"
     height="300"
-    v-on="$listeners"
+    @mousemove="mouseMoved"
   />
 </template>
 
 <script>
+import { toNormalizedCoordinates } from '../graphics';
+import Vector2 from '../Vector2';
+
 export default {
     props: {
         simulation: {
@@ -23,5 +26,19 @@ export default {
 
         requestAnimationFrame(frameCallback);
     },
+    methods: {
+        mouseMoved(event) {
+            const canvas = this.simulation.drawing.context.canvas;
+            const { left, top } = canvas.getBoundingClientRect();
+            const position = new Vector2(event.clientX - left, event.clientY - top);
+            this.$emit('mousemove', toNormalizedCoordinates(position, canvas));
+
+            // XXX Test do I need this?
+            // If you need the bounding rectangle relative to the top-left corner of the document,
+            // just add the current scrolling position to the top and left properties (these can be obtained
+            // using window.scrollX and window.scrollY) to get a bounding rectangle which is independent
+            // from the current scrolling position.
+        }
+    }
 };
 </script>

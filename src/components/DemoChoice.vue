@@ -10,25 +10,33 @@
       </option>
     </select>
 
-    <component class="demo" :is="currentDemo" />
+    <component
+      :is="currentDemo"
+      class="demo"
+    />
   </div>
 </template>
 
 <script>
-import ParticleDemo from './mass-aggregate/ParticleDemo';
-import SpringDemo from './mass-aggregate/SpringDemo';
+import SimpleParticleDemo from './mass-aggregate/SimpleParticleDemo';
+import SimpleSpringDemo from './mass-aggregate/SimpleSpringDemo';
+import MouseSpringDemo from './mass-aggregate/MouseSpringDemo';
 
 export default {
     data() {
         return {
             demos: [
                 {
-                    title: 'Particle Demo',
-                    component: ParticleDemo,
+                    title: 'Simple Particle Demo',
+                    component: SimpleParticleDemo,
                 },
                 {
-                    title: 'SpringDemo',
-                    component: SpringDemo,
+                    title: 'Simple Spring Demo',
+                    component: SimpleSpringDemo,
+                },
+                {
+                    title: 'Mouse Spring Demo',
+                    component: MouseSpringDemo,
                 },
             ],
             currentDemo: null,

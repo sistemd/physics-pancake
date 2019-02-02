@@ -1,19 +1,22 @@
 import Vector2 from '../Vector2';
 
 export default class Particle {
-    constructor({ position, mass }) {
+    constructor({ position, mass, gravityScale = 1 }) {
         this.position = position;
+        this.gravityScale = gravityScale;
         this.force = Vector2.zero;
         this.velocity = Vector2.zero;
         this.mass = mass;
     }
 
     applyGravity(gravity) {
-        this.force.add(new Vector2(0, -gravity * this.mass));
+        this.force.add(new Vector2(0, -gravity * this.mass).scaled(this.gravityScale));
     }
 
-    update(timestep) {
+    update(timestep, gravity, damping) {
+        this.applyGravity(gravity);
         this.updateVelocity(timestep);
+        this.applyDamping(damping);
         this.updatePosition(timestep);
     }
 
@@ -23,6 +26,10 @@ export default class Particle {
 
     get speed() {
         return this.velocity.magnitude;
+    }
+
+    applyDamping(damping) {
+        this.velocity.scale(1 - damping);
     }
 
     updateVelocity(timestep) {
@@ -35,10 +42,5 @@ export default class Particle {
 
     get acceleration() {
         return this.force.scaled(1 / this.mass);
-    }
-
-    get positionIsValid() {
-        return (this.position.x >= -2 && this.position.x <= 2 &&
-                this.position.y >= -2 && this.position.y <= 2);
     }
 }
