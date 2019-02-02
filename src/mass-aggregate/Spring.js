@@ -23,7 +23,10 @@ export default class Spring {
     }
 
     get line() {
-        return Line.between(this.particles[0].position, this.particles[1].position);
+        return new Line({
+            origin: this.particles[0].position,
+            end: this.particles[1].position,
+        });
     }
 
     get currentLength() {

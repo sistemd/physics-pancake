@@ -1,7 +1,7 @@
 <template>
   <div>
-    <RestartButton @click="restartSimulation" />
     <SimulationDisplay :simulation="simulation" />
+    <RestartButton @click="restartEngine" />
   </div>
 </template>
 
@@ -47,9 +47,9 @@ export default {
         createDrawing() {
             return new MassAggregateDrawing({
                 context: undefined,
-                drawParticles: true,
-                drawSprings: true,
-                drawForces: false,
+                drawingParticles: true,
+                drawingSprings: true,
+                drawingForces: false,
             });
         },
     },

@@ -1,7 +1,7 @@
 import Engine from '../Engine';
 
 export default class MassAggregateEngine extends Engine {
-    constructor({ timestep, gravity = 1e-6, particles = [], springs = [] }) {
+    constructor({ timestep, gravity = 1e-6, particles = [], springs = [] } = {}) {
         super(timestep);
         this.gravity = gravity;
         this.particles = particles;

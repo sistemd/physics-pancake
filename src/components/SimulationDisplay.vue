@@ -16,8 +16,8 @@ export default {
     },
     mounted() {
         const frameCallback = time => {
-            this.simulationSelection.activeSimulation.integrateTime(time);
-            this.simulationSelection.activeSimulation.redraw();
+            this.simulation.integrateTime(time);
+            this.simulation.redraw();
             requestAnimationFrame(frameCallback);
         };
 

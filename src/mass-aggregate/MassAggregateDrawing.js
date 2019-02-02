@@ -11,7 +11,9 @@ const springStyle = 'grey';
 
 const forceStyle = 'pink';
 
-const particleRadius = 0.001;
+const particleRadius = 0.007;
+
+// XXX Will probably have a base class
 
 export default class MassAggregateDrawing {
     constructor({ context, drawingForces, drawingSprings, drawingParticles }) {
@@ -22,6 +24,9 @@ export default class MassAggregateDrawing {
     }
 
     redraw(engine) {
+        if (!this.context)
+            return;
+
         this.clear();
         this.drawParticles(engine.particles);
         this.drawSprings(engine.springs);

@@ -10,7 +10,7 @@
       </option>
     </select>
 
-    <component :is="currentDemo" />
+    <component class="demo" :is="currentDemo" />
   </div>
 </template>
 

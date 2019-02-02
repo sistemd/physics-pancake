@@ -12,7 +12,7 @@ export default {
         };
     },
     mounted() {
-        this.simulation.context = document.getElementsByTag('canvas')[0].getContext('2d');
+        this.simulation.drawing.context = document.getElementsByTagName('canvas')[0].getContext('2d');
     },
     methods: {
         createEngine() {
