@@ -34,12 +34,12 @@ export default {
                 gravity: previousEngine.gravity,
                 damping: previousEngine.damping,
                 particles: [
-                    new Particle({ position: Vector2.zero, mass: 1 }),
+                    new Particle({ position: new Vector2(0, 0.9), mass: 1 }),
                 ],
                 terrain: [
                     {
                         line: new Line({ origin: new Vector2(-0.5, 0), end: new Vector2(0.5, 0) }),
-                        restitution: 0.1,
+                        restitution: 0.5,
                     },
                 ],
             });

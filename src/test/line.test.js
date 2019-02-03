@@ -3,7 +3,7 @@
 import Line from '../Line';
 import Vector2 from '../Vector2';
 
-const testCases = [
+const intersectionTests = [
     {
         lines: [
             new Line({
@@ -178,7 +178,7 @@ const testCases = [
 ];
 
 test('Line.intersection', () => {
-    for (const { lines, intersection } of testCases) {
+    for (const { lines, intersection } of intersectionTests) {
         if (intersection === undefined) {
             expect(lines[0].intersection(lines[1])).toBeUndefined();
             expect(lines[1].intersection(lines[0])).toBeUndefined();

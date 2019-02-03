@@ -3,7 +3,7 @@
 import { fromNormalizedCoordinates, toNormalizedCoordinates } from '../graphics';
 import Vector2 from '../Vector2';
 
-const testCases = [
+const coordinateConversionTests = [
     {
         dimensions: { width: 100, height: 100 },
         coordinates: [
@@ -65,7 +65,7 @@ const testCases = [
 ];
 
 test('graphics.fromNormalizedCoordinates and graphics.toNormalizedCoordinates', () => {
-    for (const testCase of testCases) {
+    for (const testCase of coordinateConversionTests) {
         for (const coordinates of testCase.coordinates) {
             const worldCoordinates = fromNormalizedCoordinates(coordinates.normalized, testCase.dimensions);
             const normalizedCoordinates = toNormalizedCoordinates(coordinates.world, testCase.dimensions);
