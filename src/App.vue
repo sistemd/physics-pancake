@@ -1,5 +1,5 @@
 <template>
-    <DemoChoice />
+  <DemoChoice />
 </template>
 
 <script>
