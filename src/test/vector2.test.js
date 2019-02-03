@@ -1,4 +1,6 @@
-import Vector2 from '../src/Vector2';
+/* eslint-env jest */
+
+import Vector2 from '../Vector2';
 
 const sqrt5 = Math.sqrt(5);
 

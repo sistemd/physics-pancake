@@ -1,5 +1,7 @@
-import { fromNormalizedCoordinates, toNormalizedCoordinates } from '../src/graphics';
-import Vector2 from '../src/Vector2';
+/* eslint-env jest */
+
+import { fromNormalizedCoordinates, toNormalizedCoordinates } from '../graphics';
+import Vector2 from '../Vector2';
 
 const testCases = [
     {

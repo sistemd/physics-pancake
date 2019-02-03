@@ -1,4 +1,6 @@
-import { min, almostEquals } from '../src/utils';
+/* eslint-env jest */
+
+import { min, almostEquals } from '../utils';
 
 test('utils.min', () => {
     expect(min([2, 1, 4, 10])).toBe(1);
@@ -19,4 +21,3 @@ test('utils.almostEquals', () => {
     expect(almostEquals(0.1, -0.1)).toBeFalsy();
     expect(almostEquals(55, -55.00000000000001)).toBeFalsy();
 });
-
