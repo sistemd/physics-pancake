@@ -1,7 +1,7 @@
 <template>
   <div>
     <label for="gravity-slider">
-        Gravity
+      Gravity
     </label>
     <input
       id="gravity-slider"

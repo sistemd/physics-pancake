@@ -48,6 +48,11 @@ export default {
             }),
         };
     },
+    computed: {
+        spring() {
+            return this.simulation.engine.springs[0];
+        },
+    },
     methods: {
         createEngine(previousEngine) {
             const particles = [
@@ -77,11 +82,6 @@ export default {
         },
         mouseMoved(position) {
             this.fixedParticle.position = position;
-        },
-    },
-    computed: {
-        spring() {
-            return this.simulation.engine.springs[0];
         },
     },
 };

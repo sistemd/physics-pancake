@@ -15,6 +15,7 @@ export default class Vector2 {
         this.y = 0;
     }
 
+    // TODO Test this
     // The projection of normal onto positiveDirection (the dot product) should be positive
     normal(positiveDirection) {
         const oneNormal = new Vector2(-this.y, this.x).normalized;
