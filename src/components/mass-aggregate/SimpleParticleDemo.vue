@@ -25,9 +25,9 @@ import Demo from '../Demo';
 import GravitySlider from '../GravitySlider';
 import RestartButton from '../RestartButton';
 import SimulationDisplay from '../SimulationDisplay';
-import Particle from '../../mass-aggregate/Particle';
-import MassAggregateEngine from '../../mass-aggregate/MassAggregateEngine';
-import MassAggregateDrawing from '../../mass-aggregate/MassAggregateDrawing';
+import Particle from '../../engine/mass-aggregate/Particle';
+import MassAggregateEngine from '../../engine/mass-aggregate/MassAggregateEngine';
+import MassAggregateDrawing from '../../engine/mass-aggregate/MassAggregateDrawing';
 import Vector2 from '../../Vector2';
 
 export default {

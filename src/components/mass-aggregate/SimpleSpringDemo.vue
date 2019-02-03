@@ -31,11 +31,11 @@ import SimulationDisplay from '../SimulationDisplay';
 import RestartButton from '../RestartButton';
 import GravitySlider from '../GravitySlider';
 import DampingSlider from '../DampingSlider';
-import MassAggregateEngine from '../../mass-aggregate/MassAggregateEngine';
-import MassAggregateDrawing from '../../mass-aggregate/MassAggregateDrawing';
-import Spring from '../../mass-aggregate/Spring';
-import Particle from '../../mass-aggregate/Particle';
-import FixedParticle from '../../mass-aggregate/FixedParticle';
+import MassAggregateEngine from '../../engine/mass-aggregate/MassAggregateEngine';
+import MassAggregateDrawing from '../../engine/mass-aggregate/MassAggregateDrawing';
+import Spring from '../../engine/mass-aggregate/Spring';
+import Particle from '../../engine/mass-aggregate/Particle';
+import FixedParticle from '../../engine/mass-aggregate/FixedParticle';
 import Vector2 from '../../Vector2';
 
 export default {

@@ -1,5 +1,5 @@
-import { min } from '../utils';
-import Line from '../Line';
+import { min } from '../../utils';
+import Line from '../../Line';
 
 export default class Contact {
     static find(particle, terrain) {

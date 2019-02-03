@@ -1,5 +1,5 @@
-import { clearContext, drawCircle, drawLine } from '../graphics';
-import Line from '../Line';
+import { clearContext, drawCircle, drawLine } from '../../graphics';
+import Line from '../../Line';
 
 const visualForceScale = 100000;
 

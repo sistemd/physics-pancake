@@ -1,5 +1,5 @@
 <script>
-import Simulation from '../Simulation';
+import Simulation from '../engine/Simulation';
 import NotImplemented from '../NotImplemented';
 
 export default {

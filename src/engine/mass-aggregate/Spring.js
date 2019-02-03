@@ -1,4 +1,4 @@
-import Line from '../Line.js';
+import Line from '../../Line.js';
 
 export default class Spring {
     constructor({ particles, stiffness }) {

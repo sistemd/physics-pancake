@@ -1,4 +1,4 @@
-import NotImplemented from './NotImplemented';
+import NotImplemented from '../NotImplemented';
 
 // XXX Perhaps in the future I should make it so that the engine (and the simulation) can be paused
 // During the pause, lastIntegrationTime gets updated, but timeAccumulator doesn't
