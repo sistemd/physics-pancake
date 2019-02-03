@@ -1,3 +1,5 @@
+export const epsilon = 1e-5;
+
 export function min(sequence, key = x => x) {
     let result;
     let minKey;
@@ -16,5 +18,5 @@ export function min(sequence, key = x => x) {
 }
 
 export function almostEquals(a, b) {
-    return Math.abs(a - b) <= 1e-5;
+    return Math.abs(a - b) <= epsilon;
 }

@@ -1,3 +1,5 @@
+import { epsilon, almostEquals } from './utils';
+
 export default class Line {
     constructor({ origin, offset, end }) {
         if (offset !== undefined && end !== undefined)
@@ -12,6 +14,24 @@ export default class Line {
 
     normal(positiveDirection) {
         return this.offset.normal(positiveDirection);
+    }
+
+    intersection(other) {
+        const a = this.origin.subtractedFrom(other.origin);
+        const b = other.origin.subtractedFrom(other.end);
+        const c = this.origin.subtractedFrom(this.end);
+        const div = c.cross(b);
+
+        if (almostEquals(div, 0))
+            return undefined;
+
+        const t = a.cross(b) / div;
+        const u = a.negated.cross(c) / (-div);
+
+        if (t > 1 + epsilon || t < -epsilon || u > 1 + epsilon || u < -epsilon)
+            return undefined;
+
+        return c.scaled(t).addedTo(this.origin);
     }
 
     get end() {

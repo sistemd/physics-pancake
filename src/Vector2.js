@@ -45,7 +45,7 @@ export default class Vector2 {
     }
 
     cross(other) {
-
+        return this.x * other.y - this.y * other.x;
     }
 
     addedTo(other) {

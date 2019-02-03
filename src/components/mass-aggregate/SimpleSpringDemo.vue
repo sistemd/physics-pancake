@@ -69,12 +69,7 @@ export default {
             });
         },
         createDrawing() {
-            return new MassAggregateDrawing({
-                context: undefined,
-                drawingParticles: true,
-                drawingSprings: true,
-                drawingForces: false,
-            });
+            return new MassAggregateDrawing();
         },
     },
 };

@@ -9,6 +9,8 @@ const particleStyle = 'green';
 
 const springStyle = 'grey';
 
+const terrainStyle = 'brown';
+
 const forceStyle = 'pink';
 
 const particleRadius = 0.007;
@@ -16,9 +18,16 @@ const particleRadius = 0.007;
 // XXX Will probably have a base class
 
 export default class MassAggregateDrawing {
-    constructor({ context, drawingForces, drawingSprings, drawingParticles }) {
+    constructor({
+        context,
+        drawingForces = false,
+        drawingTerrain = true,
+        drawingSprings = true,
+        drawingParticles = true
+    } = {}) {
         this.context = context;
         this.drawingForces = drawingForces;
+        this.drawingTerrain = drawingTerrain;
         this.drawingSprings = drawingSprings;
         this.drawingParticles = drawingParticles;
     }
@@ -28,6 +37,7 @@ export default class MassAggregateDrawing {
             return;
 
         this.clear();
+        this.drawTerrain(engine.terrain);
         this.drawParticles(engine.particles);
         this.drawSprings(engine.springs);
         this.drawForces(engine.particles);
@@ -35,6 +45,14 @@ export default class MassAggregateDrawing {
 
     clear() {
         clearContext(this.context, backgroundStyle);
+    }
+
+    drawTerrain(terrain) {
+        if (!this.drawingTerrain)
+            return;
+
+        for (const { line } of terrain)
+            drawLine(this.context, line, terrainStyle);
     }
 
     drawForces(particles) {
@@ -66,8 +84,7 @@ export default class MassAggregateDrawing {
         if (!this.drawingSprings)
             return;
 
-        for (const spring of springs) {
+        for (const spring of springs)
             drawLine(this.context, spring.line, springStyle);
-        }
     }
 }

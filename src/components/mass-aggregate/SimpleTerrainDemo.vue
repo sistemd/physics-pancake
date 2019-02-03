@@ -11,42 +11,36 @@
           <RestartButton @click="restartEngine" />
         </td>
       </tr>
-      <tr>
-        <td>
-          <GravitySlider :simulation="simulation" />
-        </td>
-      </tr>
     </tbody>
   </table>
 </template>
 
 <script>
 import Demo from '../Demo';
-import GravitySlider from '../GravitySlider';
-import RestartButton from '../RestartButton';
 import SimulationDisplay from '../SimulationDisplay';
+import RestartButton from '../RestartButton';
+import Line from '../../Line';
+import Vector2 from '../../Vector2';
 import Particle from '../../engine/mass-aggregate/Particle';
 import MassAggregateEngine from '../../engine/mass-aggregate/MassAggregateEngine';
 import MassAggregateDrawing from '../../engine/mass-aggregate/MassAggregateDrawing';
-import Vector2 from '../../Vector2';
 
 export default {
-    components: {
-        SimulationDisplay,
-        RestartButton,
-        GravitySlider,
-    },
+    components: { SimulationDisplay, RestartButton },
     mixins: [Demo],
     methods: {
         createEngine(previousEngine) {
             return new MassAggregateEngine({
                 gravity: previousEngine.gravity,
-                damping: 0,
+                damping: previousEngine.damping,
                 particles: [
-                    new Particle({
-                        position: new Vector2(0, 0),
-                        mass: 0.1,
-                    }),
+                    new Particle({ position: Vector2.zero, mass: 1 }),
+                ],
+                terrain: [
+                    {
+                        line: new Line({ origin: new Vector2(-0.5, 0), end: new Vector2(0.5, 0) }),
+                        restitution: 0.1,
+                    },
                 ],
             });
         },

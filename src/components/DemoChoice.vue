@@ -10,10 +10,7 @@
       </option>
     </select>
 
-    <component
-      :is="currentDemo"
-      class="demo"
-    />
+    <component :is="currentDemo" />
   </div>
 </template>
 
@@ -21,6 +18,7 @@
 import SimpleParticleDemo from './mass-aggregate/SimpleParticleDemo';
 import SimpleSpringDemo from './mass-aggregate/SimpleSpringDemo';
 import MouseSpringDemo from './mass-aggregate/MouseSpringDemo';
+import SimpleTerrainDemo from './mass-aggregate/SimpleTerrainDemo';
 
 export default {
     data() {
@@ -37,6 +35,10 @@ export default {
                 {
                     title: 'Mouse Spring Demo',
                     component: MouseSpringDemo,
+                },
+                {
+                    title: 'Simple Terrain Demo',
+                    component: SimpleTerrainDemo,
                 },
             ],
             currentDemo: null,

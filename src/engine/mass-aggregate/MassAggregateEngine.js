@@ -1,4 +1,5 @@
 import Engine from '../Engine';
+import Contact from './Contact';
 
 const positionBound = 10;
 
@@ -8,12 +9,13 @@ function positionWithinBounds({ x, y }) {
 }
 
 export default class MassAggregateEngine extends Engine {
-    constructor({ timestep, gravity = 1e-6, damping = 7e-4, particles = [], springs = [] } = {}) {
+    constructor({ timestep, gravity = 1e-6, damping = 7e-4, particles = [], springs = [], terrain = [] } = {}) {
         super(timestep);
         this.damping = Math.pow(damping, this.timestep);
         this.gravity = gravity;
         this.particles = particles;
         this.springs = springs;
+        this.terrain = terrain;
     }
 
     clearDeadParticles() {
@@ -37,8 +39,12 @@ export default class MassAggregateEngine extends Engine {
     }
 
     updateParticles() {
-        for (const particle of this.particles)
+        for (const particle of this.particles) {
+            const contact = Contact.find(particle, this.terrain);
+            if (contact)
+                contact.solve(this.timestep);
             particle.update(this.timestep, this.gravity, this.damping);
+        }
     }
 
     updateSprings() {
