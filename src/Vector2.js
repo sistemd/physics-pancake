@@ -15,13 +15,15 @@ export default class Vector2 {
         this.y = 0;
     }
 
-    // TODO Test this
-    // The projection of normal onto positiveDirection (the dot product) should be positive
     normal(positiveDirection) {
-        const oneNormal = new Vector2(-this.y, this.x).normalized;
-        if (oneNormal.dot(positiveDirection) > 0)
-            return oneNormal;
-        return oneNormal.negated;
+        const normal = new Vector2(-this.y, this.x).normalized;
+        if (normal.dot(positiveDirection) > 0)
+            return normal;
+        return normal.negated;
+    }
+
+    get cloned() {
+        return new Vector2(this.x, this.y);
     }
 
     get magnitude() {
@@ -56,8 +58,8 @@ export default class Vector2 {
         return new Vector2(this.x + other.x, this.y + other.y);
     }
 
-    subtractedFrom(other) {
-        return new Vector2(other.x - this.x, other.y - this.y);
+    subtracted(other) {
+        return new Vector2(this.x - other.x, this.y - other.y);
     }
 
     scaled(factor) {
@@ -80,7 +82,7 @@ export default class Vector2 {
     }
 
     distanceSquared(other) {
-        return this.subtractedFrom(other).magnitudeSquared;
+        return this.subtracted(other).magnitudeSquared;
     }
 
     // XXX Rename this to distance
@@ -90,6 +92,6 @@ export default class Vector2 {
 
     // XXX Rename this to direction
     directionTo(other) {
-        return this.subtractedFrom(other).normalized;
+        return this.subtracted(other).normalized;
     }
 }

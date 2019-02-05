@@ -42,7 +42,7 @@ export default class Contact {
         // if (this.particle.position.distanceSquared(this.approachIntersection) < minDistanceSquared)
         //    this.solveTouch();
         // else
-            this.solveCollision();
+        this.solveCollision();
     }
 
     solveTouch() {
