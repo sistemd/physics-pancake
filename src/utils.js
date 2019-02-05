@@ -17,6 +17,6 @@ export function min(sequence, key = x => x) {
     return result;
 }
 
-export function almostEquals(a, b) {
-    return Math.abs(a - b) <= epsilon;
+export function almostEquals(a, b, x = epsilon) {
+    return Math.abs(a - b) <= x;
 }

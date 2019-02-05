@@ -1,3 +1,4 @@
+import { almostEquals } from '../../utils';
 import Vector2 from '../../Vector2';
 
 export default class Particle {
@@ -5,6 +6,7 @@ export default class Particle {
         this.position = position;
         this.gravityScale = gravityScale;
         this.force = Vector2.zero;
+        this.previousSpeedSquared = 0;
         this.velocity = Vector2.zero;
         this.mass = mass;
     }
@@ -20,12 +22,17 @@ export default class Particle {
         this.updatePosition(timestep);
     }
 
-    wasStationary(timestep) {
-        return this.velocity.almostEquals(this.acceleration.scaled(timestep));
+    get wasStationary() {
+        console.log(this.previousSpeedSquared);
+        return almostEquals(this.previousSpeedSquared, 0, 1e-8);
     }
 
     get speed() {
         return this.velocity.magnitude;
+    }
+
+    get speedSquared() {
+        return this.velocity.magnitudeSquared;
     }
 
     applyDamping(damping) {
@@ -33,6 +40,7 @@ export default class Particle {
     }
 
     updateVelocity(timestep) {
+        this.previousSpeedSquared = this.speedSquared;
         this.velocity.add(this.acceleration.scaled(timestep));
     }
 

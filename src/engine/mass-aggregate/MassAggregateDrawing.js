@@ -13,9 +13,9 @@ const terrainStyle = 'brown';
 
 const forceStyle = 'pink';
 
-const particleRadius = 0.007;
+const particleRadius = 0.005;
 
-// XXX Will probably have a base class
+// XXX Will probably have a base class for drawing
 
 export default class MassAggregateDrawing {
     constructor({

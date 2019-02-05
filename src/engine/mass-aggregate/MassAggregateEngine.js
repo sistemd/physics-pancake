@@ -42,7 +42,7 @@ export default class MassAggregateEngine extends Engine {
         for (const particle of this.particles) {
             const contact = Contact.find(particle, this.terrain);
             if (contact)
-                contact.solve(this.timestep);
+                contact.solve();
             particle.update(this.timestep, this.gravity, this.damping);
         }
     }

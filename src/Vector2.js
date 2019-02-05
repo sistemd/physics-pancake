@@ -25,7 +25,11 @@ export default class Vector2 {
     }
 
     get magnitude() {
-        return Math.sqrt(this.x * this.x + this.y * this.y);
+        return Math.sqrt(this.magnitudeSquared);
+    }
+
+    get magnitudeSquared() {
+        return this.x * this.x + this.y * this.y;
     }
 
     get normalized() {
@@ -75,10 +79,16 @@ export default class Vector2 {
         this.y *= factor;
     }
 
-    distanceTo(other) {
-        return this.subtractedFrom(other).magnitude;
+    distanceSquared(other) {
+        return this.subtractedFrom(other).magnitudeSquared;
     }
 
+    // XXX Rename this to distance
+    distanceTo(other) {
+        return Math.sqrt(this.distanceSquared(other));
+    }
+
+    // XXX Rename this to direction
     directionTo(other) {
         return this.subtractedFrom(other).normalized;
     }
