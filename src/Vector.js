@@ -1,8 +1,8 @@
 import { almostEquals } from './utils';
 
-export default class Vector2 {
+export default class Vector {
     static get zero() {
-        return new Vector2(0, 0);
+        return new Vector(0, 0);
     }
 
     constructor(x, y) {
@@ -16,14 +16,14 @@ export default class Vector2 {
     }
 
     normal(positiveDirection) {
-        const normal = new Vector2(-this.y, this.x).normalized;
+        const normal = new Vector(-this.y, this.x).normalized;
         if (normal.dot(positiveDirection) > 0)
             return normal;
         return normal.negated;
     }
 
     get cloned() {
-        return new Vector2(this.x, this.y);
+        return new Vector(this.x, this.y);
     }
 
     get magnitude() {
@@ -39,7 +39,7 @@ export default class Vector2 {
     }
 
     get negated() {
-        return new Vector2(-this.x, -this.y);
+        return new Vector(-this.x, -this.y);
     }
 
     almostEquals(other) {
@@ -54,16 +54,17 @@ export default class Vector2 {
         return this.x * other.y - this.y * other.x;
     }
 
+    // XXX Rename to added
     addedTo(other) {
-        return new Vector2(this.x + other.x, this.y + other.y);
+        return new Vector(this.x + other.x, this.y + other.y);
     }
 
     subtracted(other) {
-        return new Vector2(this.x - other.x, this.y - other.y);
+        return new Vector(this.x - other.x, this.y - other.y);
     }
 
     scaled(factor) {
-        return new Vector2(this.x * factor, this.y * factor);
+        return new Vector(this.x * factor, this.y * factor);
     }
 
     add(other) {
@@ -92,6 +93,6 @@ export default class Vector2 {
 
     // XXX Rename this to direction
     directionTo(other) {
-        return this.subtracted(other).normalized;
+        return other.subtracted(this).normalized;
     }
 }

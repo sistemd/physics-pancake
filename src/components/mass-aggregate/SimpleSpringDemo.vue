@@ -36,7 +36,7 @@ import MassAggregateDrawing from '../../engine/mass-aggregate/MassAggregateDrawi
 import Spring from '../../engine/mass-aggregate/Spring';
 import Particle from '../../engine/mass-aggregate/Particle';
 import FixedParticle from '../../engine/mass-aggregate/FixedParticle';
-import Vector2 from '../../Vector2';
+import Vector from '../../Vector';
 
 export default {
     components: {
@@ -50,11 +50,11 @@ export default {
         createEngine(previousEngine) {
             const particles = [
                 new FixedParticle({
-                    position: Vector2.zero,
+                    position: Vector.zero,
                     mass: 1,
                 }),
                 new Particle({
-                    position: new Vector2(-0.2, 0.2),
+                    position: new Vector(-0.2, 0.2),
                     gravityScale: 2.5,
                     mass: 1,
                 }),

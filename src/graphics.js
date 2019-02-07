@@ -1,4 +1,4 @@
-import Vector2 from './Vector2';
+import Vector from './Vector';
 
 export function clearContext(context, style) {
     if (style)
@@ -28,15 +28,30 @@ export function drawLine(context, line, style) {
     context.stroke();
 }
 
+export function drawPolygon(context, polygon, style) {
+    if (style)
+        context.fillStyle = style;
+
+    if (!polygon.edgesAreConnected())
+        throw new Error('Disconnected polygon edges');
+
+    const points = polygon.edges.map(edge => fromNormalizedCoordinates(edge.origin, context.canvas));
+    context.beginPath();
+    context.moveTo(points[0].x, points[0].y);
+    for (const point of points.slice(1))
+        context.lineTo(point.x, point.y);
+    context.fill();
+}
+
 export function fromNormalizedCoordinates(coordinates, { width, height }) {
-    const factor = coordinates.addedTo(new Vector2(1, 1)).scaled(0.5);
-    return new Vector2(
+    const factor = coordinates.addedTo(new Vector(1, 1)).scaled(0.5);
+    return new Vector(
         width * factor.x,
         height * (1 - factor.y),
     );
 }
 
 export function toNormalizedCoordinates(coordinates, { width, height }) {
-    const factor = new Vector2(coordinates.x / width, 1 - coordinates.y / height);
-    return factor.addedTo(new Vector2(-0.5, -0.5)).scaled(2);
+    const factor = new Vector(coordinates.x / width, 1 - coordinates.y / height);
+    return factor.addedTo(new Vector(-0.5, -0.5)).scaled(2);
 }

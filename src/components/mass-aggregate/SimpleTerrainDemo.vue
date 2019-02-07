@@ -38,13 +38,14 @@ import RestitutionSlider from '../RestitutionSlider';
 import AngleSlider from '../AngleSlider';
 import LengthSlider from '../LengthSlider';
 import Line from '../../Line';
-import Vector2 from '../../Vector2';
+import Polygon from '../../Polygon';
+import Vector from '../../Vector';
 import Particle from '../../engine/mass-aggregate/Particle';
 import MassAggregateEngine from '../../engine/mass-aggregate/MassAggregateEngine';
 import MassAggregateDrawing from '../../engine/mass-aggregate/MassAggregateDrawing';
 
 function startingPosition() {
-    return new Vector2(0, 0.9);
+    return new Vector(0, 0.9);
 }
 
 export default {
@@ -56,7 +57,10 @@ export default {
         return {
             particle: new Particle({ position: startingPosition, mass: 1 }),
             platform: {
-                line: new Line({ origin: new Vector2(-0.5, 0), end: new Vector2(0.5, 0) }),
+                polygon: Polygon.fromVertices([
+                    new Vector(-0.5, 0), new Vector(0.5, 0),
+                    new Vector(0.5, -2), new Vector(-0.5, -2),
+                ]),
                 restitution: platformRestitution,
             },
             platformAngle: 0,
@@ -78,7 +82,7 @@ export default {
     methods: {
         createEngine(previousEngine) {
             this.particle.position = startingPosition();
-            this.particle.velocity = Vector2.zero;
+            this.particle.velocity = Vector.zero;
 
             return new MassAggregateEngine({
                 gravity: previousEngine.gravity,
@@ -92,12 +96,12 @@ export default {
         },
         updatePlatformLayout() {
             const lengthHalf = this.platformLength / 2;
-            const end = new Vector2(
-                lengthHalf * Math.cos(this.platformAngle),
-                lengthHalf * Math.sin(this.platformAngle),
-            );
-            const origin = end.negated;
-            this.platform.line = new Line({ origin, end });
+            const x = lengthHalf * Math.cos(this.platformAngle);
+            const y = lengthHalf * Math.sin(this.platformAngle);
+            this.platform.lines = [
+                new Line(-x, -y), new Line(x, y),
+                new Line(x, -2), new Line(-x, -2),
+            ];
         },
     },
 };

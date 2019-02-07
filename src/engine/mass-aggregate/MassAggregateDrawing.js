@@ -1,11 +1,11 @@
-import { clearContext, drawCircle, drawLine } from '../../graphics';
+import { clearContext, drawCircle, drawLine, drawPolygon } from '../../graphics';
 import Line from '../../Line';
 
 const visualForceScale = 100000;
 
 const backgroundStyle = 'white';
 
-const particleStyle = 'green';
+const particleStyle = 'blue';
 
 const springStyle = 'grey';
 
@@ -15,7 +15,7 @@ const forceStyle = 'pink';
 
 const particleRadius = 0.005;
 
-// XXX Will probably have a base class for drawing
+// TODO Have a base class for drawing
 
 export default class MassAggregateDrawing {
     constructor({
@@ -51,8 +51,8 @@ export default class MassAggregateDrawing {
         if (!this.drawingTerrain)
             return;
 
-        for (const { line } of terrain)
-            drawLine(this.context, line, terrainStyle);
+        for (const { polygon } of terrain)
+            drawPolygon(this.context, polygon, terrainStyle);
     }
 
     drawForces(particles) {

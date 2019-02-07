@@ -28,7 +28,7 @@ import SimulationDisplay from '../SimulationDisplay';
 import Particle from '../../engine/mass-aggregate/Particle';
 import MassAggregateEngine from '../../engine/mass-aggregate/MassAggregateEngine';
 import MassAggregateDrawing from '../../engine/mass-aggregate/MassAggregateDrawing';
-import Vector2 from '../../Vector2';
+import Vector from '../../Vector';
 
 export default {
     components: {
@@ -44,7 +44,7 @@ export default {
                 damping: 0,
                 particles: [
                     new Particle({
-                        position: new Vector2(0, 0),
+                        position: new Vector(0, 0),
                         mass: 0.1,
                     }),
                 ],

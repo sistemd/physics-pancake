@@ -8,7 +8,7 @@
 
 <script>
 import { toNormalizedCoordinates } from '../graphics';
-import Vector2 from '../Vector2';
+import Vector from '../Vector';
 
 export default {
     props: {
@@ -30,7 +30,7 @@ export default {
         mouseMoved(event) {
             const canvas = this.simulation.drawing.context.canvas;
             const { left, top } = canvas.getBoundingClientRect();
-            const position = new Vector2(event.clientX - left, event.clientY - top);
+            const position = new Vector(event.clientX - left, event.clientY - top);
             this.$emit('mousemove', toNormalizedCoordinates(position, canvas));
 
             // XXX Test do I need this?

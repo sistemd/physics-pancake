@@ -1,18 +1,17 @@
-import { almostEquals } from '../../utils';
-import Vector2 from '../../Vector2';
+import { epsilon } from '../../utils';
+import Vector from '../../Vector';
 
 export default class Particle {
     constructor({ position, mass, gravityScale = 1 }) {
         this.position = position;
         this.gravityScale = gravityScale;
-        this.force = Vector2.zero;
-        this.previousSpeedSquared = 0;
-        this.velocity = Vector2.zero;
+        this.force = Vector.zero;
+        this.velocity = Vector.zero;
         this.mass = mass;
     }
 
     applyGravity(gravity) {
-        this.force.add(new Vector2(0, -gravity * this.mass).scaled(this.gravityScale));
+        this.force.add(new Vector(0, -gravity * this.mass).scaled(this.gravityScale));
     }
 
     update(timestep, gravity, damping) {
@@ -22,9 +21,9 @@ export default class Particle {
         this.updatePosition(timestep);
     }
 
-    get wasStationary() {
-        console.log(this.previousSpeedSquared);
-        return almostEquals(this.previousSpeedSquared, 0, 1e-8);
+    touches(other) {
+        const radiusSquared = Math.max(this.speedSquared, other.speedSquared);
+        return radiusSquared < this.position.distanceSquared(other.position) + epsilon;
     }
 
     get speed() {
@@ -40,7 +39,6 @@ export default class Particle {
     }
 
     updateVelocity(timestep) {
-        this.previousSpeedSquared = this.speedSquared;
         this.velocity.add(this.acceleration.scaled(timestep));
     }
 

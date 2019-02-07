@@ -1,5 +1,6 @@
 import Engine from '../Engine';
-import Contact from './Contact';
+import ParticleContact from './ParticleContact';
+import TerrainContact from './TerrainContact';
 
 const positionBound = 10;
 
@@ -18,7 +19,7 @@ export default class MassAggregateEngine extends Engine {
         this.terrain = terrain;
     }
 
-    clearDeadParticles() {
+    clearUselessParticles() {
         this.particles = this.particles.filter(
             particle => positionWithinBounds(particle.position));
     }
@@ -26,11 +27,43 @@ export default class MassAggregateEngine extends Engine {
     integrateStep() {
         this.resetForces();
         this.updateSprings();
+        this.solveContacts();
         this.updateParticles();
-        this.clearDeadParticles();
+        this.clearUselessParticles();
 
-        // clearDeadParticles doesn't strictly need to be called whenever we
+        // clearUselessParticles doesn't strictly need to be called whenever we
         // integrate, but I decided to call it here for simplicity.
+    }
+
+    solveContacts() {
+        for (const contact of this.findContacts())
+            contact.solve();
+    }
+
+    findContacts() {
+        return [
+            // ...this.findParticleContacts(),
+            ...this.findTerrainContacts(),
+        ];
+    }
+
+    * findParticleContacts() {
+        for (let i = 0; i < this.particles.length - 1; ++i) {
+            const particle = this.particles[i];
+            for (const otherParticle of this.particles.slice(i + 1)) {
+                if (otherParticle.touches(particle))
+                    yield new ParticleContact([particle, otherParticle]);
+            }
+        }
+    }
+
+    * findTerrainContacts() {
+        for (const particle of this.particles) {
+            for (const { polygon, restitution } of this.terrain) {
+                if (polygon.containsPoint(particle.position))
+                    yield new TerrainContact({ particle, polygon, restitution });
+            }
+        }
     }
 
     resetForces() {
@@ -38,17 +71,13 @@ export default class MassAggregateEngine extends Engine {
             particle.force.reset();
     }
 
-    updateParticles() {
-        for (const particle of this.particles) {
-            const contact = Contact.find(particle, this.terrain);
-            if (contact)
-                contact.solve();
-            particle.update(this.timestep, this.gravity, this.damping);
-        }
-    }
-
     updateSprings() {
         for (const spring of this.springs)
             spring.update(this.timestep);
+    }
+
+    updateParticles() {
+        for (const particle of this.particles)
+            particle.update(this.timestep, this.gravity, this.damping);
     }
 }

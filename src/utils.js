@@ -20,3 +20,9 @@ export function min(sequence, key = x => x) {
 export function almostEquals(a, b, x = epsilon) {
     return Math.abs(a - b) <= x;
 }
+
+export function valueIsBetween({ value, limits }) {
+    const minLimit = Math.min(...limits);
+    const maxLimit = Math.max(...limits);
+    return minLimit <= value && value <= maxLimit;
+}
