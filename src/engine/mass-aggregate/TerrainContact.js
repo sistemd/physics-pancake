@@ -8,10 +8,6 @@ export default class TerrainContact extends Contact {
         this.restitution = restitution;
     }
 
-    get severity() {
-        return this.particle.speed;
-    }
-
     solve() {
         const edge = this.edge();
         const normal = this.normal(edge);

@@ -52,7 +52,7 @@ export default {
     components: { SimulationDisplay, RestartButton, RestitutionSlider, AngleSlider, LengthSlider },
     mixins: [Demo],
     data() {
-        const platformRestitution = 0.3;
+        const platformRestitution = 0.45;
 
         return {
             particle: new Particle({ position: startingPosition, mass: 1 }),

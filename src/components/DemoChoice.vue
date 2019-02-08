@@ -18,7 +18,8 @@
 import SimpleParticleDemo from './mass-aggregate/SimpleParticleDemo';
 import SimpleSpringDemo from './mass-aggregate/SimpleSpringDemo';
 import MouseSpringDemo from './mass-aggregate/MouseSpringDemo';
-import SimpleTerrainDemo from './mass-aggregate/SimpleTerrainDemo';
+import TerrainCollisionDemo from './mass-aggregate/TerrainCollisionDemo';
+import ParticleCollisionDemo from './mass-aggregate/ParticleCollisionDemo';
 
 export default {
     data() {
@@ -37,11 +38,15 @@ export default {
                     component: MouseSpringDemo,
                 },
                 {
-                    title: 'Simple Terrain Demo',
-                    component: SimpleTerrainDemo,
+                    title: 'Terrain Collision Demo',
+                    component: TerrainCollisionDemo,
+                },
+                {
+                    title: 'Particle Collision Demo',
+                    component: ParticleCollisionDemo,
                 },
             ],
-            currentDemo: null,
+            currentDemo: undefined,
         };
     },
 };

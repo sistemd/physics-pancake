@@ -42,7 +42,7 @@ export default class MassAggregateEngine extends Engine {
 
     findContacts() {
         return [
-            // ...this.findParticleContacts(),
+            ...this.findParticleContacts(),
             ...this.findTerrainContacts(),
         ];
     }

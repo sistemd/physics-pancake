@@ -87,6 +87,7 @@ export default class Line {
         return new Vector((t - y * this.offset.y) / this.offset.x, y);
     }
 
+    // XXX Ditch the whole distanceTo* thing and use distance, can dispatch based on parameter type if needed
     distanceToPoint(point) {
         return Math.sqrt(this.distanceToPointSquared(point));
     }

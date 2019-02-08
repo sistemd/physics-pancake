@@ -91,7 +91,7 @@ export default class Vector {
         return Math.sqrt(this.distanceSquared(other));
     }
 
-    // XXX Rename this to direction
+    // XXX Ditch this
     directionTo(other) {
         return other.subtracted(this).normalized;
     }
