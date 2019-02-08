@@ -34,6 +34,6 @@ export default class TerrainContact extends Contact {
     }
 
     penetrationDepth(edge) {
-        return edge.distanceToPoint(this.particle.position);
+        return edge.distance(this.particle.position);
     }
 }

@@ -14,7 +14,7 @@ export default class Spring {
 
     contract(fromParticle, toParticle) {
         fromParticle.force.add(
-            fromParticle.position.directionTo(toParticle.position).scaled(
+            toParticle.position.subtracted(fromParticle.position).scaled(
                 this.contractionMagnitude(fromParticle)));
     }
 
@@ -30,7 +30,7 @@ export default class Spring {
     }
 
     get currentLength() {
-        return this.particles[0].position.distanceTo(this.particles[1].position);
+        return this.particles[0].position.distance(this.particles[1].position);
     }
 
     get lengthDelta() {

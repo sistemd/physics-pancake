@@ -317,6 +317,6 @@ test('Line.distance', () => {
 
     for (const { line, point, closestPoint } of distanceTests) {
         expect(line.closestPoint(point).almostEquals(closestPoint)).toBeTruthy();
-        expect(line.distanceToPoint(point)).toBeCloseTo(point.distanceTo(closestPoint), numDigits);
+        expect(line.distance(point)).toBeCloseTo(point.distance(closestPoint), numDigits);
     }
 });

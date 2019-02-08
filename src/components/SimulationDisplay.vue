@@ -32,12 +32,6 @@ export default {
             const { left, top } = canvas.getBoundingClientRect();
             const position = new Vector(event.clientX - left, event.clientY - top);
             this.$emit('mousemove', toNormalizedCoordinates(position, canvas));
-
-            // XXX Test do I need this?
-            // If you need the bounding rectangle relative to the top-left corner of the document,
-            // just add the current scrolling position to the top and left properties (these can be obtained
-            // using window.scrollX and window.scrollY) to get a bounding rectangle which is independent
-            // from the current scrolling position.
         }
     }
 };

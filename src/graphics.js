@@ -44,7 +44,7 @@ export function drawPolygon(context, polygon, style) {
 }
 
 export function fromNormalizedCoordinates(coordinates, { width, height }) {
-    const factor = coordinates.addedTo(new Vector(1, 1)).scaled(0.5);
+    const factor = coordinates.added(new Vector(1, 1)).scaled(0.5);
     return new Vector(
         width * factor.x,
         height * (1 - factor.y),
@@ -53,5 +53,5 @@ export function fromNormalizedCoordinates(coordinates, { width, height }) {
 
 export function toNormalizedCoordinates(coordinates, { width, height }) {
     const factor = new Vector(coordinates.x / width, 1 - coordinates.y / height);
-    return factor.addedTo(new Vector(-0.5, -0.5)).scaled(2);
+    return factor.added(new Vector(-0.5, -0.5)).scaled(2);
 }

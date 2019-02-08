@@ -54,8 +54,7 @@ export default class Vector {
         return this.x * other.y - this.y * other.x;
     }
 
-    // XXX Rename to added
-    addedTo(other) {
+    added(other) {
         return new Vector(this.x + other.x, this.y + other.y);
     }
 
@@ -86,13 +85,7 @@ export default class Vector {
         return this.subtracted(other).magnitudeSquared;
     }
 
-    // XXX Rename this to distance
-    distanceTo(other) {
+    distance(other) {
         return Math.sqrt(this.distanceSquared(other));
-    }
-
-    // XXX Ditch this
-    directionTo(other) {
-        return other.subtracted(this).normalized;
     }
 }

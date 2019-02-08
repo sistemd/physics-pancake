@@ -61,6 +61,6 @@ export default class Polygon {
     }
 
     closestEdge(point) {
-        return min(this.edges, edge => edge.distanceToPoint(point));
+        return min(this.edges, edge => edge.distance(point));
     }
 }

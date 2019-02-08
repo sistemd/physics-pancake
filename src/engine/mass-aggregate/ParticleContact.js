@@ -15,7 +15,7 @@ export default class ParticleContact extends Contact {
     }
 
     solveInterpenetration() {
-        const distance = this.particles[0].position.distanceTo(this.particles[1].position);
+        const distance = this.particles[0].position.distance(this.particles[1].position);
     }
 
     solveBounce() {

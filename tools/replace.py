@@ -8,6 +8,8 @@ from subprocess import run
 original = argv[1]
 new = argv[2]
 
-src_files = glob('src/**', recursive=True)
+src_files = glob('src/**/*.js', recursive=True) + glob('src/**.vue', recursive=True)
+
 for filename in src_files:
-    run('sed' f's/{original}/{new}/g', filename, check=True)
+    print(filename)
+    run(['sed', '-i', f's/{original}/{new}/g', filename], check=True)

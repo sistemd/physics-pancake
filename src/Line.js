@@ -48,7 +48,7 @@ export default class Line {
         if (t > 1 + epsilon || t < -epsilon || u > 1 + epsilon || u < -epsilon)
             return undefined;
 
-        return this.offset.scaled(t).addedTo(this.origin);
+        return this.offset.scaled(t).added(this.origin);
     }
 
     // XXX Document this, stackoverflow link or have a local copy
@@ -87,12 +87,11 @@ export default class Line {
         return new Vector((t - y * this.offset.y) / this.offset.x, y);
     }
 
-    // XXX Ditch the whole distanceTo* thing and use distance, can dispatch based on parameter type if needed
-    distanceToPoint(point) {
-        return Math.sqrt(this.distanceToPointSquared(point));
+    distance(point) {
+        return Math.sqrt(this.distanceSquared(point));
     }
 
-    distanceToPointSquared(point) {
+    distanceSquared(point) {
         return this.closestPoint(point).distanceSquared(point);
     }
 
@@ -101,7 +100,7 @@ export default class Line {
     }
 
     get end() {
-        return this.origin.addedTo(this.offset);
+        return this.origin.added(this.offset);
     }
 
     set end(value) {
