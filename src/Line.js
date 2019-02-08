@@ -20,7 +20,7 @@ export default class Line {
         return this.offset.normal(positiveDirection);
     }
 
-    // Treat self as if it were a ray directed from origin into end
+    // Treats self as if it were a ray directed from origin into end
     rayIntersects(other) {
         const { t, u } = this.intersectionParameters(other);
 

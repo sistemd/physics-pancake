@@ -98,10 +98,11 @@ export default {
             const lengthHalf = this.platformLength / 2;
             const x = lengthHalf * Math.cos(this.platformAngle);
             const y = lengthHalf * Math.sin(this.platformAngle);
-            this.platform.lines = [
-                new Line(-x, -y), new Line(x, y),
-                new Line(x, -2), new Line(-x, -2),
-            ];
+            this.platform.polygon = Polygon.fromVertices([
+                new Vector(-x, -y), new Vector(x, y),
+                new Vector(x, -2), new Vector(-x, -2),
+            ]);
+            this.simulation.engine.terrain[0].polygon = this.platform.polygon;
         },
     },
 };

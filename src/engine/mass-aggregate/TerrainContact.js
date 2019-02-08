@@ -16,17 +16,17 @@ export default class TerrainContact extends Contact {
         const edge = this.edge();
         const normal = this.normal(edge);
         const penetrationDepth = this.penetrationDepth(edge);
-        this.solvePenetartion(normal, penetrationDepth);
+        this.solvePenetration(normal, penetrationDepth);
         this.solveBounce(normal);
     }
 
     solvePenetration(normal, penetrationDepth) {
-        this.particle.position = this.normal.scaled(this.penetrationDepth);
+        this.particle.position.add(normal.scaled(penetrationDepth));
     }
 
     solveBounce(normal) {
         const speed = this.particle.velocity.dot(normal);
-        this.particle.velocity = normal.scaled(speed * this.restitution);
+        this.particle.velocity = normal.scaled(-speed * this.restitution);
     }
 
     edge() {
@@ -38,6 +38,6 @@ export default class TerrainContact extends Contact {
     }
 
     penetrationDepth(edge) {
-        return edge.distanceTo(this.particle.position);
+        return edge.distanceToPoint(this.particle.position);
     }
 }

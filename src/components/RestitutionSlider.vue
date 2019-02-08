@@ -8,7 +8,7 @@
       v-model="terrainElement.restitution"
       type="range"
       min="0"
-      max="1"
+      max="0.9"
       step="1e-9"
     >
   </div>
