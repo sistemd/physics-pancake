@@ -5,11 +5,12 @@
     </label>
     <input
       id="restitution-slider"
-      v-model="terrainElement.restitution"
       type="range"
       min="0"
       max="0.9"
       step="1e-9"
+      @input="onInput"
+      :value="terrainElement.humanReadableRestitution(engine.timestep)"
     >
   </div>
 </template>
@@ -17,10 +18,14 @@
 <script>
 export default {
     props: {
-        terrainElement: {
-            type: Object,
-            default: undefined,
-        },
+        terrainElement: Object,
+        engine: Object,
+    },
+    methods: {
+        onInput(event) {
+            const { value } = event.target;
+            this.terrainElement.setRestitution(value, this.engine.timestep);
+        }
     },
 };
 </script>

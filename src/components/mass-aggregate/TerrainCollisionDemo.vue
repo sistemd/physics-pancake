@@ -13,7 +13,10 @@
       </tr>
       <tr>
         <td>
-          <RestitutionSlider :terrainElement="platform" />
+          <RestitutionSlider
+            :terrainElement="platform"
+            :engine="simulation.engine"
+          />
         </td>
       </tr>
       <tr>
@@ -37,12 +40,12 @@ import RestartButton from '../RestartButton';
 import RestitutionSlider from '../RestitutionSlider';
 import AngleSlider from '../AngleSlider';
 import LengthSlider from '../LengthSlider';
-import Line from '../../Line';
 import Polygon from '../../Polygon';
 import Vector from '../../Vector';
 import Particle from '../../engine/mass-aggregate/Particle';
 import MassAggregateEngine from '../../engine/mass-aggregate/MassAggregateEngine';
 import MassAggregateDrawing from '../../engine/mass-aggregate/MassAggregateDrawing';
+import TerrainElement from '../../engine/mass-aggregate/TerrainElement';
 
 function startingPosition() {
     return new Vector(0, 0.9);
@@ -56,13 +59,13 @@ export default {
 
         return {
             particle: new Particle({ position: startingPosition, mass: 1 }),
-            platform: {
+            platform: new TerrainElement({
                 polygon: Polygon.fromVertices([
                     new Vector(-0.5, 0), new Vector(0.5, 0),
                     new Vector(0.5, -2), new Vector(-0.5, -2),
                 ]),
                 restitution: platformRestitution,
-            },
+            }),
             platformAngle: 0,
             platformLength: 1,
             platformRestitution,
@@ -76,7 +79,7 @@ export default {
             this.updatePlatformLayout();
         },
         platformRestitution() {
-            this.platform.restitution = this.platformRestitution;
+            this.platform.setRestitution(this.platformRestitution);
         },
     },
     methods: {

@@ -13,9 +13,7 @@ const terrainStyle = 'brown';
 
 const forceStyle = 'pink';
 
-const particleRadius = 0.005;
-
-// TODO Have a base class for drawing
+// XXX Have a base class for drawing
 
 export default class MassAggregateDrawing {
     constructor({
@@ -75,7 +73,7 @@ export default class MassAggregateDrawing {
         for (const particle of particles) {
             drawCircle(this.context, {
                 position: particle.position,
-                radius: particleRadius,
+                radius: particle.radius,
             }, particleStyle);
         }
     }

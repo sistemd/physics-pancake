@@ -1,10 +1,22 @@
-import Line from '../../Line.js';
+import Line from '../../Line';
+import MassAggregateEngine from './MassAggregateEngine';
 
 export default class Spring {
-    constructor({ particles, stiffness }) {
+    constructor({ particles, stiffness, timestep }) {
         this.particles = particles;
-        this.stiffness = stiffness;
         this.restingLength = this.currentLength;
+        this.stiffness = undefined;
+
+        this.setStiffness(stiffness, timestep);
+    }
+
+    setStiffness(stiffness, timestep = MassAggregateEngine.defaultTimestep) {
+        this.stiffness = Math.pow(stiffness, timestep);
+    }
+
+    // Used mostly in the UI so that the user can see stiffness independent of timestep
+    humanReadableStiffness(timestep = MassAggregateEngine.defaultTimestep) {
+        return Math.pow(this.stiffness, 1/timestep);
     }
 
     update() {
@@ -14,11 +26,10 @@ export default class Spring {
 
     contract(fromParticle, toParticle) {
         fromParticle.force.add(
-            toParticle.position.subtracted(fromParticle.position).scaled(
-                this.contractionMagnitude(fromParticle)));
+            toParticle.position.subtracted(fromParticle.position).scaled(this.contractionMagnitude));
     }
 
-    contractionMagnitude(particle) {
+    get contractionMagnitude() {
         return this.stiffness * this.lengthDelta;
     }
 

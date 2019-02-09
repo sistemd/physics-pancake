@@ -10,13 +10,35 @@ function positionWithinBounds({ x, y }) {
 }
 
 export default class MassAggregateEngine extends Engine {
-    constructor({ timestep, gravity = 1e-6, damping = 7e-4, particles = [], springs = [], terrain = [] } = {}) {
+    static get defaultTimestep() {
+        return 1;
+    }
+
+    constructor({
+        timestep = MassAggregateEngine.defaultTimestep,
+        gravity = 1e-6, damping = 7e-4,
+        particles = [], springs = [], terrain = []
+    } = {}) {
         super(timestep);
-        this.damping = Math.pow(damping, this.timestep);
         this.gravity = gravity;
         this.particles = particles;
         this.springs = springs;
         this.terrain = terrain;
+        this.damping = undefined;
+
+        this.setDamping(damping);
+    }
+
+    setDamping(damping) {
+        console.log(`Setting damping ${damping}`);
+        this.damping = Math.pow(damping, this.timestep);
+        console.log(`Set to ${this.damping}`);
+    }
+    
+    // Used mostly in the UI so that the user can see damping independent of timestep
+    get humanReadableDamping() {
+        console.log(`Human readable damping ${Math.pow(this.damping, 1/this.timestep)}`);
+        return Math.pow(this.damping, 1/this.timestep);
     }
 
     clearUselessParticles() {

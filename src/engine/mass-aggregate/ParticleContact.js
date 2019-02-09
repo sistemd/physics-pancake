@@ -1,8 +1,5 @@
 import Contact from './Contact';
 
-// XXX It's easier to just look at particles as if they had a certain finite radius,
-// so add a radius field to Particle and change this
-
 export default class ParticleContact extends Contact {
     constructor(particles) {
         super();
@@ -15,7 +12,6 @@ export default class ParticleContact extends Contact {
     }
 
     solveInterpenetration() {
-        const distance = this.particles[0].position.distance(this.particles[1].position);
     }
 
     solveBounce() {

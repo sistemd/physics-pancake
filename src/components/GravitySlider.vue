@@ -5,7 +5,7 @@
     </label>
     <input
       id="gravity-slider"
-      v-model="simulation.engine.gravity"
+      v-model="engine.gravity"
       type="range"
       min="0"
       max="1e-5"
@@ -17,10 +17,7 @@
 <script>
 export default {
     props: {
-        simulation: {
-            type: Object,
-            default: null,
-        },
+        engine: Object,
     },
 };
 </script>

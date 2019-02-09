@@ -1,29 +1,39 @@
 <template>
-    <table>
-        <tbody>
-          <tr>
-            <td>
-              <SimulationDisplay :simulation="simulation" />
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <RestartButton @click="restartEngine" />
-            </td>
-          </tr>
-          <tr>
-              <td>
-                  <label>Force:</label>
-                  <input type="range" min="1e-4" max="4e-3" step="1e-9" v-model="firingForce">
-              </td>
-          </tr>
-          <tr>
-              <td>
-                <ParticleMassSliders :particles="particles" :min="1" :max="5" />
-              </td>
-          </tr>
-        </tbody>
-    </table>
+  <table>
+    <tbody>
+      <tr>
+        <td>
+          <SimulationDisplay :simulation="simulation" />
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <RestartButton @click="restartEngine" />
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <label>Force</label>
+          <input
+            v-model="firingForce"
+            type="range"
+            min="1e-4"
+            max="4e-3"
+            step="1e-9"
+          >
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <ParticleMassSliders
+            :particles="particles"
+            :min="1"
+            :max="5"
+          />
+        </td>
+      </tr>
+    </tbody>
+  </table>
 </template>
 
 <script>
@@ -58,19 +68,22 @@ class FiredParticle extends Particle {
 }
 
 export default {
-    mixins: [Demo],
     components: { SimulationDisplay, RestartButton, ParticleMassSliders },
+    mixins: [Demo],
     data() {
         const firingForce = 8.3e-4;
+
         return {
             firingForce,
             particles: [
                 new FiredParticle({
-                    position: leftParticlePosition.cloned, mass: 1,
+                    position: leftParticlePosition.cloned,
+                    mass: 1,
                     firingForce: new Vector(firingForce, 0),
                 }),
                 new FiredParticle({
-                    position: rightParticlePosition.cloned, mass: 1,
+                    position: rightParticlePosition.cloned,
+                    mass: 1,
                     firingForce: new Vector(-firingForce, 0),
                 }),
             ],

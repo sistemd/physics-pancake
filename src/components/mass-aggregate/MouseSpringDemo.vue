@@ -15,7 +15,10 @@
     </tr>
     <tr>
       <td>
-        <StiffnessSlider :spring="spring" />
+        <StiffnessSlider
+          :spring="spring"
+          :engine="simulation.engine"
+        />
       </td>
     </tr>
   </table>
@@ -68,7 +71,7 @@ export default {
                 damping: previousEngine.damping,
                 particles,
                 springs: [
-                    new Spring({ particles, stiffness: 1e-5 }),
+                    new Spring({ particles, stiffness: 1e-5, timestep: MassAggregateEngine.defaultTimestep }),
                 ],
             });
         },

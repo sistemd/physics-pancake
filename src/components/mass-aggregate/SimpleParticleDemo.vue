@@ -13,7 +13,7 @@
       </tr>
       <tr>
         <td>
-          <GravitySlider :simulation="simulation" />
+          <GravitySlider :engine="simulation.engine" />
         </td>
       </tr>
     </tbody>

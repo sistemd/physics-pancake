@@ -16,12 +16,13 @@ import Vector from '../../Vector';
 // chapter on collision resolution might be interesting.
 
 export default class Particle {
-    constructor({ position, mass, gravityScale = 1 }) {
+    constructor({ position, mass, gravityScale = 1, radius = 6e-3 }) {
         this.position = position;
         this.gravityScale = gravityScale;
         this.force = Vector.zero;
         this.velocity = Vector.zero;
         this.mass = mass;
+        this.radius = radius;
     }
 
     applyGravity(gravity) {

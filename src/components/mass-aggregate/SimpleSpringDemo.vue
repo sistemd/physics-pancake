@@ -13,12 +13,12 @@
       </tr>
       <tr>
         <td>
-          <GravitySlider :simulation="simulation" />
+          <GravitySlider :engine="simulation.engine" />
         </td>
       </tr>
       <tr>
         <td>
-          <DampingSlider :simulation="simulation" />
+          <DampingSlider :engine="simulation.engine" />
         </td>
       </tr>
     </tbody>
@@ -38,6 +38,10 @@ import Particle from '../../engine/mass-aggregate/Particle';
 import FixedParticle from '../../engine/mass-aggregate/FixedParticle';
 import Vector from '../../Vector';
 
+// XXX Need a stiffness slider here
+// XXX The restitution/stiffness sliders are totally busted and not trivially fixable
+// XXX Dragable particles
+
 export default {
     components: {
         SimulationDisplay,
@@ -50,21 +54,20 @@ export default {
         createEngine(previousEngine) {
             const particles = [
                 new FixedParticle({
-                    position: Vector.zero,
+                    position: new Vector(0, 0.75),
                     mass: 1,
                 }),
                 new Particle({
-                    position: new Vector(-0.2, 0.2),
-                    gravityScale: 2.5,
+                    position: new Vector(-0.3, 0.75),
                     mass: 1,
                 }),
             ];
             return new MassAggregateEngine({
-                gravity: previousEngine.gravity,
+                gravity: previousEngine.gravity || 6e-6,
                 damping: previousEngine.damping,
                 particles,
                 springs: [
-                    new Spring({ particles, stiffness: 0.99 }),
+                    new Spring({ particles, stiffness: 1e-5 }),
                 ],
             });
         },

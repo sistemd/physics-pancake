@@ -1,12 +1,24 @@
 <template>
-<table>
+  <table>
     <tbody>
-        <tr v-for="(particle, index) in particles">
-            <label>Particle {{ index }} mass:</label>
-            <input type="range" :min="min" :max="max" step="1e-9" v-model="particle.mass">
-        </tr>
+      <tr
+        v-for="(particle, index) in particles"
+        :key="index"
+      >
+        <label :for="'mass-input' + index">
+          Particle {{ index }} mass
+        </label>
+        <input
+          :id="'mass-input' + index"
+          v-model="particle.mass"
+          type="range"
+          :min="min"
+          :max="max"
+          step="1e-9"
+        >
+      </tr>
     </tbody>
-</table>
+  </table>
 </template>
 
 <script>
