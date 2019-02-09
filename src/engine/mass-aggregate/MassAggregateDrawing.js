@@ -5,11 +5,17 @@ const visualForceScale = 100000;
 
 const backgroundStyle = 'white';
 
-const particleStyle = 'blue';
+const particleColor = {
+    hue: 225,
+    saturation: 70,
+    lightness:  40,
+};
+
+const maxColorLightness = 100;
 
 const springStyle = 'grey';
 
-const terrainStyle = 'brown';
+const terrainStyle = 'rgb(155, 200, 200)';
 
 const forceStyle = 'pink';
 
@@ -67,14 +73,19 @@ export default class MassAggregateDrawing {
     }
 
     drawParticles(particles) {
-        if (!this.drawingParticles)
+        if (!this.drawingParticles || particles.length === 0)
             return;
 
+        let currentLightness = particleColor.lightness;
+        const lightnessStep = Math.min(
+            (maxColorLightness - particleColor.lightness) / particles.length,
+            25,
+        );
+
         for (const particle of particles) {
-            drawCircle(this.context, {
-                position: particle.position,
-                radius: particle.radius,
-            }, particleStyle);
+            const style = `hsl(${particleColor.hue}, ${particleColor.saturation}%, ${currentLightness}%)`;
+            drawCircle(this.context, { position: particle.position, radius: particle.radius }, style);
+            currentLightness -= lightnessStep;
         }
     }
 
