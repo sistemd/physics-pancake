@@ -5,7 +5,7 @@
     </label>
     <input
       id="stiffness-slider"
-      v-model="spring.stiffness"
+      v-model.number="spring.stiffness"
       type="range"
       min="1e-6"
       max="1e-4"

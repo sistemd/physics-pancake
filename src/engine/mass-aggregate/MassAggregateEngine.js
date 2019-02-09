@@ -11,6 +11,9 @@ function positionWithinBounds({ x, y }) {
 
 export default class MassAggregateEngine extends Engine {
     static get defaultTimestep() {
+        // XXX This is way too low, set to 6
+        // that's about 3 updates per frame
+        // will need to tweak other values though
         return 1;
     }
 
@@ -59,7 +62,7 @@ export default class MassAggregateEngine extends Engine {
         for (let i = 0; i < this.particles.length - 1; ++i) {
             const particle = this.particles[i];
             for (const otherParticle of this.particles.slice(i + 1)) {
-                if (otherParticle.touches(particle))
+                if (otherParticle.overlaps(particle))
                     yield new ParticleContact([particle, otherParticle]);
             }
         }

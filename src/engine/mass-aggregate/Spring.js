@@ -3,8 +3,8 @@ import Line from '../../Line';
 export default class Spring {
     constructor({ particles, stiffness }) {
         this.particles = particles;
-        this.restingLength = this.currentLength;
         this.stiffness = stiffness;
+        this.restingLength = this.currentLength;
     }
 
     update() {
@@ -13,8 +13,8 @@ export default class Spring {
     }
 
     contract(fromParticle, toParticle) {
-        fromParticle.force.add(
-            toParticle.position.subtracted(fromParticle.position).scaled(this.contractionMagnitude));
+        const direction = fromParticle.position.direction(toParticle.position);
+        fromParticle.force.add(direction.scaled(this.contractionMagnitude));
     }
 
     get contractionMagnitude() {

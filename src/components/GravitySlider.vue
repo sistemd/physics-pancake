@@ -5,7 +5,7 @@
     </label>
     <input
       id="gravity-slider"
-      v-model="engine.gravity"
+      v-model.number="engine.gravity"
       type="range"
       min="0"
       max="1e-5"

@@ -37,9 +37,9 @@ export default class Particle {
         this.updatePosition();
     }
 
-    touches(other) {
-        const radiusSquared = Math.max(this.speedSquared, other.speedSquared);
-        return radiusSquared >= this.position.distanceSquared(other.position) - epsilon;
+    overlaps(other) {
+        const radiiSum = this.radius + other.radius;
+        return radiiSum * radiiSum >= this.position.distanceSquared(other.position);
     }
 
     get speed() {

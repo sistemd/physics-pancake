@@ -12,19 +12,27 @@ export default class ParticleContact extends Contact {
     }
 
     solveInterpenetration() {
+        const delta = this.normal.scaled(this.interpenetration / 2);
+        this.particles[0].position.subtract(delta);
+        this.particles[1].position.add(delta);
     }
 
     solveBounce() {
-        this.particles[0].velocity = this.normal.scaled(this.particleSpeed(this.particles[0].mass));
-        this.particles[1].velocity = this.normal.scaled(-this.particleSpeed(this.particles[1].mass));
+        this.particles[0].velocity = this.normal.scaled(-this.particleSpeed(this.particles[1].mass));
+        this.particles[1].velocity = this.normal.scaled(this.particleSpeed(this.particles[0].mass));
     }
 
     particleSpeed(mass) {
-        return this.netMass * this.netSpeed / mass;
+        return mass * this.netSpeed / this.netMass;
+    }
+
+    get interpenetration() {
+        const distance = this.particles[0].position.distance(this.particles[1].position);
+        return this.particles[0].radius + this.particles[1].radius - distance;
     }
 
     get normal() {
-        return this.particles[1].position.subtracted(this.particles[0].position);
+        return this.particles[0].position.direction(this.particles[1].position);
     }
 
     get netMass() {

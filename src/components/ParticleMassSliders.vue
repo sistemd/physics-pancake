@@ -10,7 +10,7 @@
         </label>
         <input
           :id="'mass-input' + index"
-          v-model="particle.mass"
+          v-model.number="particle.mass"
           type="range"
           :min="min"
           :max="max"

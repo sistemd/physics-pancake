@@ -5,7 +5,7 @@
     </label>
     <input
       id="damping-slider"
-      v-model="engine.damping"
+      v-model.number="engine.damping"
       type="range"
       min="0"
       max="1e-2"

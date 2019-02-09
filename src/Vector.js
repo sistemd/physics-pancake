@@ -88,4 +88,8 @@ export default class Vector {
     distance(other) {
         return Math.sqrt(this.distanceSquared(other));
     }
+
+    direction(other) {
+        return other.subtracted(this).normalized;
+    }
 }

@@ -5,7 +5,7 @@
     </label>
     <input
       id="restitution-slider"
-      v-model="terrainElement.restitution"
+      v-model.number="terrainElement.restitution"
       type="range"
       min="0"
       max="0.9"
