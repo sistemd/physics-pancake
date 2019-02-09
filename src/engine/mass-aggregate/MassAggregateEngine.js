@@ -24,21 +24,7 @@ export default class MassAggregateEngine extends Engine {
         this.particles = particles;
         this.springs = springs;
         this.terrain = terrain;
-        this.damping = undefined;
-
-        this.setDamping(damping);
-    }
-
-    setDamping(damping) {
-        console.log(`Setting damping ${damping}`);
-        this.damping = Math.pow(damping, this.timestep);
-        console.log(`Set to ${this.damping}`);
-    }
-    
-    // Used mostly in the UI so that the user can see damping independent of timestep
-    get humanReadableDamping() {
-        console.log(`Human readable damping ${Math.pow(this.damping, 1/this.timestep)}`);
-        return Math.pow(this.damping, 1/this.timestep);
+        this.damping = damping;
     }
 
     clearUselessParticles() {
@@ -100,6 +86,6 @@ export default class MassAggregateEngine extends Engine {
 
     updateParticles() {
         for (const particle of this.particles)
-            particle.update(this.timestep, this.gravity, this.damping);
+            particle.update(this.gravity, this.damping);
     }
 }

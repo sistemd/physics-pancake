@@ -15,10 +15,7 @@
     </tr>
     <tr>
       <td>
-        <StiffnessSlider
-          :spring="spring"
-          :engine="simulation.engine"
-        />
+        <StiffnessSlider :spring="spring" />
       </td>
     </tr>
   </table>

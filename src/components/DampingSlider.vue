@@ -5,12 +5,11 @@
     </label>
     <input
       id="damping-slider"
+      v-model="engine.damping"
       type="range"
       min="0"
       max="1e-2"
       step="1e-9"
-      @input="onInput"
-      :value="engine.humanReadableDamping"
     >
   </div>
 </template>
@@ -19,12 +18,6 @@
 export default {
     props: {
         engine: Object,
-    },
-    methods: {
-        onInput(event) {
-            const { value } = event.target;
-            this.engine.setDamping(value);
-        },
     },
 };
 </script>

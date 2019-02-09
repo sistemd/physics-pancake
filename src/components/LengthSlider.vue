@@ -10,7 +10,7 @@
       min="0.2"
       max="4"
       step="1e-9"
-      @input="$emit('input', $event.target.value)"
+      @input="$emit('input', Number($event.target.value))"
     >
   </div>
 </template>

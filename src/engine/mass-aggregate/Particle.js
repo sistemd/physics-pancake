@@ -1,3 +1,4 @@
+import Engine from '../Engine';
 import { epsilon } from '../../utils';
 import Vector from '../../Vector';
 
@@ -29,11 +30,11 @@ export default class Particle {
         this.force.add(new Vector(0, -gravity * this.mass).scaled(this.gravityScale));
     }
 
-    update(timestep, gravity, damping) {
+    update(gravity, damping) {
         this.applyGravity(gravity);
-        this.updateVelocity(timestep);
+        this.updateVelocity();
         this.applyDamping(damping);
-        this.updatePosition(timestep);
+        this.updatePosition();
     }
 
     touches(other) {
@@ -50,15 +51,15 @@ export default class Particle {
     }
 
     applyDamping(damping) {
-        this.velocity.scale(1 - damping);
+        this.velocity.scale(Math.pow(1 - damping, Engine.timestep));
     }
 
-    updateVelocity(timestep) {
-        this.velocity.add(this.acceleration.scaled(timestep));
+    updateVelocity() {
+        this.velocity.add(this.acceleration.scaled(Engine.timestep));
     }
 
-    updatePosition(timestep) {
-        this.position.add(this.velocity.scaled(timestep));
+    updatePosition() {
+        this.position.add(this.velocity.scaled(Engine.timestep));
     }
 
     get acceleration() {

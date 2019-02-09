@@ -13,10 +13,7 @@
       </tr>
       <tr>
         <td>
-          <RestitutionSlider
-            :terrainElement="platform"
-            :engine="simulation.engine"
-          />
+          <RestitutionSlider :terrainElement="platform" />
         </td>
       </tr>
       <tr>
