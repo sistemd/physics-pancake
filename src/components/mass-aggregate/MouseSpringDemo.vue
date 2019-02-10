@@ -15,7 +15,7 @@
     </tr>
     <tr>
       <td>
-        <StiffnessSlider :spring="spring" />
+        <StiffnessSlider :stiffness="stiffness" />
       </td>
     </tr>
   </table>
@@ -33,6 +33,9 @@ import Particle from '../../engine/mass-aggregate/Particle';
 import FixedParticle from '../../engine/mass-aggregate/FixedParticle';
 import Vector from '../../Vector';
 
+// XXX When I make particles dragable by default, I won't need to save
+// fixedParticle on data() here
+
 export default {
     components: {
         SimulationDisplay,
@@ -46,11 +49,12 @@ export default {
                 position: Vector.zero,
                 mass: 1,
             }),
+            stiffness: 1e-5,
         };
     },
-    computed: {
-        spring() {
-            return this.simulation.engine.springs[0];
+    watch: {
+        stiffness(newStiffness) {
+            this.simulation.engine.springs[0].stiffness = newStiffness;
         },
     },
     methods: {
@@ -68,7 +72,7 @@ export default {
                 damping: previousEngine.damping,
                 particles,
                 springs: [
-                    new Spring({ particles, stiffness: 1e-5, timestep: MassAggregateEngine.defaultTimestep }),
+                    new Spring({ particles, stiffness: this.stiffness }),
                 ],
             });
         },

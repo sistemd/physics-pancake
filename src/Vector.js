@@ -21,7 +21,7 @@ export default class Vector {
             return normal;
         return normal.negated;
     }
-    
+
     flippedTowards(direction) {
         if (this.dot(direction) > 0)
             return this.cloned;

@@ -18,7 +18,7 @@ export default class ParticleContact extends Contact {
     }
 
     solveBounce() {
-        this.particles[0].velocity = this.normal.scaled(this.particles[1].mass * this.netSpeed / this.netMass);
+        this.particles[0].velocity = this.normal.scaled(-this.particles[1].mass * this.netSpeed / this.netMass);
         this.particles[1].velocity = this.normal.scaled(this.particles[0].mass * this.netSpeed / this.netMass);
     }
 

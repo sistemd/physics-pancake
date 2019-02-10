@@ -5,7 +5,8 @@
     </label>
     <input
       id="stiffness-slider"
-      v-model.number="spring.stiffness"
+      :value="value"
+      @input="$emit('input', Number($event.target.value))"
       type="range"
       min="1e-6"
       max="1e-4"
@@ -17,7 +18,7 @@
 <script>
 export default {
     props: {
-        spring: Object,
+        value: Number,
     },
 };
 </script>

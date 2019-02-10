@@ -21,6 +21,11 @@
           <DampingSlider :engine="simulation.engine" />
         </td>
       </tr>
+        <tr>
+            <td>
+                <StiffnessSlider v-model="stiffness" :spring="simulation.engine.springs[0]" />
+            </td>
+        </tr>
     </tbody>
   </table>
 </template>
@@ -31,6 +36,7 @@ import SimulationDisplay from '../SimulationDisplay';
 import RestartButton from '../RestartButton';
 import GravitySlider from '../GravitySlider';
 import DampingSlider from '../DampingSlider';
+import StiffnessSlider from '../StiffnessSlider';
 import MassAggregateEngine from '../../engine/mass-aggregate/MassAggregateEngine';
 import MassAggregateDrawing from '../../engine/mass-aggregate/MassAggregateDrawing';
 import Spring from '../../engine/mass-aggregate/Spring';
@@ -48,8 +54,19 @@ export default {
         RestartButton,
         GravitySlider,
         DampingSlider,
+        StiffnessSlider,
+    },
+    data() {
+        return {
+            stiffness: 1e-5,
+        };
     },
     mixins: [Demo],
+    watch: {
+        stiffness(newStiffness) {
+            this.simulation.engine.springs[0].stiffness = newStiffness;
+        }
+    },
     methods: {
         createEngine(previousEngine) {
             const particles = [
@@ -67,7 +84,7 @@ export default {
                 damping: previousEngine.damping,
                 particles,
                 springs: [
-                    new Spring({ particles, stiffness: 1e-5 }),
+                    new Spring({ particles, stiffness: this.stiffness }),
                 ],
             });
         },
