@@ -46,9 +46,7 @@ import Spring from '../../engine/mass-aggregate/Spring';
 import Particle from '../../engine/mass-aggregate/Particle';
 import Vector from '../../Vector';
 
-// XXX Need a stiffness slider here
-// XXX The restitution/stiffness sliders are totally busted and not trivially fixable
-// XXX Dragable particles
+// XXX Remove this and use interactive displays everywhere
 
 export default {
     components: {

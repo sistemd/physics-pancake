@@ -44,6 +44,9 @@ import MassAggregateEngine from '../../engine/mass-aggregate/MassAggregateEngine
 import MassAggregateDrawing from '../../engine/mass-aggregate/MassAggregateDrawing';
 import TerrainElement from '../../engine/mass-aggregate/TerrainElement';
 
+// XXX Name this TerrainDemo and maybe add some more terrain to it like a wall on the right end or similar
+// XXX Add a friction slider here and see if you can figure out a decent default value
+
 function startingPosition() {
     return new Vector(0, 0.9);
 }

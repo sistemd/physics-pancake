@@ -42,6 +42,9 @@ export default class TerrainContact extends Contact {
     }
 
     bounceParticle(normal) {
+        // XXX Maybe don't look at velocity projected onto the normal,
+        // look at overall velocity instead
+        // I think it would look more realistic
         const velocity = this.particle.velocity.projected(normal);
         if (velocity.magnitudeSquared < minimumBounceSpeedSquared)
             return false;
