@@ -45,10 +45,11 @@ export default class TerrainContact extends Contact {
         // XXX Maybe don't look at velocity projected onto the normal,
         // look at overall velocity instead
         // I think it would look more realistic
-        const velocity = this.particle.velocity.projected(normal);
-        if (velocity.magnitudeSquared < minimumBounceSpeedSquared)
+        const normalVelocity = this.particle.velocity.projected(normal);
+        if (normalVelocity.magnitudeSquared < minimumBounceSpeedSquared)
             return false;
-        this.particle.velocity = velocity.scaled(-this.terrainElement.restitution);
+        this.particle.velocity.subtract(normalVelocity);
+        this.particle.velocity.add(normalVelocity.scaled(-this.terrainElement.restitution));
         return true;
     }
 

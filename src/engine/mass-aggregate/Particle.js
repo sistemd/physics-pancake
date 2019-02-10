@@ -15,14 +15,16 @@ import Vector from '../../Vector';
 // and also Kodicek D., Flynt J. P., Mathematics and Physics for Programmers,
 // chapter on collision resolution might be interesting.
 
+const baseRadius = 6e-3;
+
 export default class Particle {
-    constructor({ position, mass, gravityScale = 1, radius = 6e-3, fixed = false }) {
+    constructor({ position, mass = 1, gravityScale = 1, fixedRadius = undefined, fixed = false }) {
         this.position = position;
         this.gravityScale = gravityScale;
         this.force = Vector.zero;
         this.velocity = Vector.zero;
         this.mass = mass;
-        this.radius = radius;
+        this.fixedRadius = fixedRadius;
         this.fixed = fixed;
     }
 
@@ -42,9 +44,16 @@ export default class Particle {
         this.updatePosition();
     }
 
+    // XXX Test this
     overlaps(other) {
         const radiiSum = this.radius + other.radius;
         return radiiSum * radiiSum > this.position.distanceSquared(other.position);
+    }
+
+    get radius() {
+        if (this.fixedRadius !== undefined)
+            return this.fixedRadius;
+        return baseRadius * Math.sqrt(this.mass);
     }
 
     get speed() {

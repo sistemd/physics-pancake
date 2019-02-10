@@ -3,7 +3,7 @@
     <tbody>
       <tr>
         <td>
-          <SimulationDisplay :simulation="simulation" />
+          <InteractiveSimulationDisplay :simulation="simulation" />
         </td>
       </tr>
       <tr>
@@ -38,7 +38,7 @@
 
 <script>
 import Demo from '../Demo';
-import SimulationDisplay from '../SimulationDisplay';
+import InteractiveSimulationDisplay from '../InteractiveSimulationDisplay';
 import RestartButton from '../RestartButton';
 import ParticleMassSliders from '../ParticleMassSliders';
 import MassAggregateEngine from '../../engine/mass-aggregate/MassAggregateEngine';
@@ -68,7 +68,7 @@ class FiredParticle extends Particle {
 }
 
 export default {
-    components: { SimulationDisplay, RestartButton, ParticleMassSliders },
+    components: { InteractiveSimulationDisplay, RestartButton, ParticleMassSliders },
     mixins: [Demo],
     data() {
         const firingForce = 8.3e-4;

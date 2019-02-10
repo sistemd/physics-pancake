@@ -11,7 +11,7 @@ const particleColor = {
     lightness: 40,
 };
 
-const maxColorLightness = 100;
+const maxColorHue = 360;
 
 const springStyle = 'grey';
 
@@ -76,16 +76,16 @@ export default class MassAggregateDrawing {
         if (!this.drawingParticles || particles.length === 0)
             return;
 
-        let currentLightness = particleColor.lightness;
-        const lightnessStep = Math.min(
-            (maxColorLightness - particleColor.lightness) / particles.length,
-            25,
+        let currentHue = particleColor.hue;
+        const hueStep = Math.min(
+            (maxColorHue - particleColor.hue) / particles.length,
+            20,
         );
 
         for (const particle of particles) {
-            const style = `hsl(${particleColor.hue}, ${particleColor.saturation}%, ${currentLightness}%)`;
+            const style = `hsl(${currentHue}, ${particleColor.saturation}%, ${particleColor.lightness}%)`;
             drawCircle(this.context, { position: particle.position, radius: particle.radius }, style);
-            currentLightness -= lightnessStep;
+            currentHue -= hueStep;
         }
     }
 

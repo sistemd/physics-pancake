@@ -15,10 +15,9 @@
 </template>
 
 <script>
-import SimpleParticleDemo from './mass-aggregate/SimpleParticleDemo';
-import SimpleSpringDemo from './mass-aggregate/SimpleSpringDemo';
-import MouseSpringDemo from './mass-aggregate/MouseSpringDemo';
-import TerrainCollisionDemo from './mass-aggregate/TerrainCollisionDemo';
+import ParticleDemo from './mass-aggregate/ParticleDemo';
+import SpringDemo from './mass-aggregate/SpringDemo';
+import TerrainDemo from './mass-aggregate/TerrainDemo';
 import ParticleCollisionDemo from './mass-aggregate/ParticleCollisionDemo';
 
 export default {
@@ -26,20 +25,16 @@ export default {
         return {
             demos: [
                 {
-                    title: 'Simple Particle Demo',
-                    component: SimpleParticleDemo,
+                    title: 'Particle Demo',
+                    component: ParticleDemo,
                 },
                 {
-                    title: 'Simple Spring Demo',
-                    component: SimpleSpringDemo,
+                    title: 'Spring Demo',
+                    component: SpringDemo,
                 },
                 {
-                    title: 'Mouse Spring Demo',
-                    component: MouseSpringDemo,
-                },
-                {
-                    title: 'Terrain Collision Demo',
-                    component: TerrainCollisionDemo,
+                    title: 'Terrain Demo',
+                    component: TerrainDemo,
                 },
                 {
                     title: 'Particle Collision Demo',

@@ -13,11 +13,11 @@ import Vector from '../Vector';
 import { min } from '../utils';
 import SimulationDisplay from './SimulationDisplay';
 
-const minSelectionDistance = 4e-2;
+const minSelectionDistance = 8e-2;
 
 const minSelectionDistanceSquared = minSelectionDistance * minSelectionDistance;
 
-const particleThrowMultiplier = 10;
+const particleThrowMultiplier = 5e-2;
 
 export default {
     components: { SimulationDisplay },
@@ -38,10 +38,9 @@ export default {
             if (this.selection.particle === undefined)
                 return;
 
+            this.previousPosition = this.selection.particle.position;
             this.selection.particle.velocity = Vector.zero;
             this.selection.particle.position = mousePosition;
-            if (this.previousPosition === undefined || !this.previousPosition.almostEquals(mousePosition))
-                this.previousPosition = mousePosition;
         },
         onMouseUp(mousePosition) {
             if (this.selection.particle === undefined)
@@ -60,6 +59,7 @@ export default {
             if (this.selection.particle === undefined)
                 return;
 
+            this.selection.particle.position = mousePosition;
             this.selection.wasFixed = this.selection.particle.fixed;
             this.selection.particle.fixed = true;
         },
@@ -70,11 +70,12 @@ export default {
                 this.selection.particle.fixed = false;
             this.selection.particle = undefined;
         },
-        throwSelectedParticle(mousePosition) {
+        throwSelectedParticle() {
             if (this.previousPosition === undefined)
                 return;
 
-            const delta = mousePosition.subtracted(this.previousPosition);
+            const delta = this.selection.particle.position.subtracted(this.previousPosition);
+            console.log(delta.x, delta.y);
             this.selection.particle.velocity = delta.scaled(particleThrowMultiplier);
         },
         newlySelectedParticle(mousePosition) {

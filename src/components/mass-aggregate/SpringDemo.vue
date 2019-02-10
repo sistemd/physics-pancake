@@ -20,8 +20,6 @@
 
 <script>
 
-// XXX Rename this to SpringDemo
-
 import Demo from '../Demo';
 import InteractiveSimulationDisplay from '../InteractiveSimulationDisplay';
 import RestartButton from '../RestartButton';

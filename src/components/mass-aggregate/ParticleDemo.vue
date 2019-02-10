@@ -3,7 +3,7 @@
     <tbody>
       <tr>
         <td>
-          <SimulationDisplay :simulation="simulation" />
+          <InteractiveSimulationDisplay :simulation="simulation" />
         </td>
       </tr>
       <tr>
@@ -24,7 +24,7 @@
 import Demo from '../Demo';
 import GravitySlider from '../GravitySlider';
 import RestartButton from '../RestartButton';
-import SimulationDisplay from '../SimulationDisplay';
+import InteractiveSimulationDisplay from '../InteractiveSimulationDisplay';
 import Particle from '../../engine/mass-aggregate/Particle';
 import MassAggregateEngine from '../../engine/mass-aggregate/MassAggregateEngine';
 import MassAggregateDrawing from '../../engine/mass-aggregate/MassAggregateDrawing';
@@ -32,7 +32,7 @@ import Vector from '../../Vector';
 
 export default {
     components: {
-        SimulationDisplay,
+        InteractiveSimulationDisplay,
         RestartButton,
         GravitySlider,
     },
@@ -45,7 +45,6 @@ export default {
                 particles: [
                     new Particle({
                         position: new Vector(0, 0),
-                        mass: 0.1,
                     }),
                 ],
             });

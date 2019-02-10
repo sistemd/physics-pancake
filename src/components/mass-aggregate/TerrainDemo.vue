@@ -3,7 +3,7 @@
     <tbody>
       <tr>
         <td>
-          <SimulationDisplay :simulation="simulation" />
+          <InteractiveSimulationDisplay :simulation="simulation" />
         </td>
       </tr>
       <tr>
@@ -32,7 +32,7 @@
 
 <script>
 import Demo from '../Demo';
-import SimulationDisplay from '../SimulationDisplay';
+import InteractiveSimulationDisplay from '../InteractiveSimulationDisplay';
 import RestartButton from '../RestartButton';
 import RestitutionSlider from '../RestitutionSlider';
 import AngleSlider from '../AngleSlider';
@@ -44,7 +44,6 @@ import MassAggregateEngine from '../../engine/mass-aggregate/MassAggregateEngine
 import MassAggregateDrawing from '../../engine/mass-aggregate/MassAggregateDrawing';
 import TerrainElement from '../../engine/mass-aggregate/TerrainElement';
 
-// XXX Name this TerrainDemo and maybe add some more terrain to it like a wall on the right end or similar
 // XXX Add a friction slider here and see if you can figure out a decent default value
 
 function startingPosition() {
@@ -52,7 +51,7 @@ function startingPosition() {
 }
 
 export default {
-    components: { SimulationDisplay, RestartButton, RestitutionSlider, AngleSlider, LengthSlider },
+    components: { InteractiveSimulationDisplay, RestartButton, RestitutionSlider, AngleSlider, LengthSlider },
     mixins: [Demo],
     data() {
         const platformRestitution = 0.45;
@@ -80,7 +79,8 @@ export default {
             this.updatePlatformLayout();
         },
         platformRestitution() {
-            this.platform.setRestitution(this.platformRestitution);
+            for (const terrainElement of this.simulation.engine.terrain)
+                terrainElement.restitution = this.platformRestitution;
         },
     },
     methods: {
@@ -92,7 +92,13 @@ export default {
                 gravity: previousEngine.gravity,
                 damping: previousEngine.damping,
                 particles: [this.particle],
-                terrain: [this.platform],
+                terrain: [this.platform, new TerrainElement({
+                    restitution: this.platformRestitution,
+                    polygon: Polygon.fromVertices([
+                        new Vector(0.8, 0.8), new Vector(4, 0.8),
+                        new Vector(4, -0.8), new Vector(0.8, -0.8),
+                    ]),
+                })],
             });
         },
         createDrawing() {
