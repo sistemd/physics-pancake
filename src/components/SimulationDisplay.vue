@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import { toNormalizedCoordinates } from '../graphics';
+import { toNormalizedDeviceCoordinates } from '../graphics';
 import Vector from '../Vector';
 
 export default {
@@ -29,7 +29,7 @@ export default {
     methods: {
         reEmit(eventName, event) {
             const { canvas } = this.simulation.drawing.context;
-            this.$emit(eventName, toNormalizedCoordinates(this.clickPosition(event), canvas));
+            this.$emit(eventName, toNormalizedDeviceCoordinates(this.clickPosition(event), canvas));
         },
         clickPosition(event) {
             const { canvas } = this.simulation.drawing.context;

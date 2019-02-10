@@ -1,9 +1,4 @@
 import Contact from './Contact';
-import Vector from '../../Vector';
-
-const minimumSlideSpeed = 1e-6;
-
-const minimumSlideSpeedSquared = minimumSlideSpeed * minimumSlideSpeed;
 
 const minimumBounceSpeed = 1.3e-4;
 
@@ -42,12 +37,9 @@ export default class TerrainContact extends Contact {
     }
 
     bounceParticle(normal) {
-        // XXX Maybe don't look at velocity projected onto the normal,
-        // look at overall velocity instead
-        // I think it would look more realistic
-        const normalVelocity = this.particle.velocity.projected(normal);
-        if (normalVelocity.magnitudeSquared < minimumBounceSpeedSquared)
+        if (this.particle.speedSquared < minimumBounceSpeedSquared)
             return false;
+        const normalVelocity = this.particle.velocity.projected(normal);
         this.particle.velocity.subtract(normalVelocity);
         this.particle.velocity.add(normalVelocity.scaled(-this.terrainElement.restitution));
         return true;

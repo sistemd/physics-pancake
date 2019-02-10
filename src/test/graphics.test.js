@@ -1,6 +1,6 @@
 /* eslint-env jest */
 
-import { fromNormalizedCoordinates, toNormalizedCoordinates } from '../graphics';
+import { fromNormalizedDeviceCoordinates, toNormalizedDeviceCoordinates } from '../graphics';
 import Vector from '../Vector';
 
 const coordinateConversionTests = [
@@ -64,11 +64,11 @@ const coordinateConversionTests = [
     },
 ];
 
-test('graphics.fromNormalizedCoordinates and graphics.toNormalizedCoordinates', () => {
+test('graphics.fromNormalizedDeviceCoordinates and graphics.toNormalizedDeviceCoordinates', () => {
     for (const testCase of coordinateConversionTests) {
         for (const coordinates of testCase.coordinates) {
-            const worldCoordinates = fromNormalizedCoordinates(coordinates.normalized, testCase.dimensions);
-            const normalizedCoordinates = toNormalizedCoordinates(coordinates.world, testCase.dimensions);
+            const worldCoordinates = fromNormalizedDeviceCoordinates(coordinates.normalized, testCase.dimensions);
+            const normalizedCoordinates = toNormalizedDeviceCoordinates(coordinates.world, testCase.dimensions);
             expect(worldCoordinates.almostEquals(coordinates.world)).toBeTruthy();
             expect(normalizedCoordinates.almostEquals(coordinates.normalized)).toBeTruthy();
         }

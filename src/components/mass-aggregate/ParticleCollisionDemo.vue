@@ -91,8 +91,6 @@ export default {
     },
     methods: {
         createEngine() {
-            // XXX Better way to do this
-
             this.particles[0].position = leftParticlePosition.cloned;
             this.particles[0].velocity = Vector.zero;
             this.particles[0].fired = false;
