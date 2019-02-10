@@ -2,10 +2,7 @@
   <table>
     <tr>
       <td>
-        <SimulationDisplay
-          :simulation="simulation"
-          @mousemove="mouseMoved"
-        />
+        <InteractiveSimulationDisplay :simulation="simulation" />
       </td>
     </tr>
     <tr>
@@ -15,7 +12,7 @@
     </tr>
     <tr>
       <td>
-        <StiffnessSlider :stiffness="stiffness" />
+        <StiffnessSlider v-model="stiffness" />
       </td>
     </tr>
   </table>
@@ -23,32 +20,24 @@
 
 <script>
 import Demo from '../Demo';
-import SimulationDisplay from '../SimulationDisplay';
+import InteractiveSimulationDisplay from '../InteractiveSimulationDisplay';
 import RestartButton from '../RestartButton';
 import StiffnessSlider from '../StiffnessSlider';
 import MassAggregateEngine from '../../engine/mass-aggregate/MassAggregateEngine';
 import MassAggregateDrawing from '../../engine/mass-aggregate/MassAggregateDrawing';
 import Spring from '../../engine/mass-aggregate/Spring';
 import Particle from '../../engine/mass-aggregate/Particle';
-import FixedParticle from '../../engine/mass-aggregate/FixedParticle';
 import Vector from '../../Vector';
-
-// XXX When I make particles dragable by default, I won't need to save
-// fixedParticle on data() here
 
 export default {
     components: {
-        SimulationDisplay,
+        InteractiveSimulationDisplay,
         RestartButton,
         StiffnessSlider,
     },
     mixins: [Demo],
     data() {
         return {
-            fixedParticle: new FixedParticle({
-                position: Vector.zero,
-                mass: 1,
-            }),
             stiffness: 1e-5,
         };
     },
@@ -60,7 +49,11 @@ export default {
     methods: {
         createEngine(previousEngine) {
             const particles = [
-                this.fixedParticle,
+                new Particle({
+                    position: Vector.zero,
+                    mass: 1,
+                    fixed: true,
+                }),
                 new Particle({
                     position: new Vector(-0.2, 0.2),
                     gravityScale: 2.5,
@@ -78,9 +71,6 @@ export default {
         },
         createDrawing() {
             return new MassAggregateDrawing();
-        },
-        mouseMoved(position) {
-            this.fixedParticle.position = position;
         },
     },
 };

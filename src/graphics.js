@@ -43,6 +43,7 @@ export function drawPolygon(context, polygon, style) {
     context.fill();
 }
 
+// XXX Turn this into fromNormalizedDeviceCoordinates
 export function fromNormalizedCoordinates(coordinates, { width, height }) {
     const factor = coordinates.added(new Vector(1, 1)).scaled(0.5);
     return new Vector(

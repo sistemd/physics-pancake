@@ -21,11 +21,14 @@
           <DampingSlider :engine="simulation.engine" />
         </td>
       </tr>
-        <tr>
-            <td>
-                <StiffnessSlider v-model="stiffness" :spring="simulation.engine.springs[0]" />
-            </td>
-        </tr>
+      <tr>
+        <td>
+          <StiffnessSlider
+            v-model="stiffness"
+            :spring="simulation.engine.springs[0]"
+          />
+        </td>
+      </tr>
     </tbody>
   </table>
 </template>
@@ -41,7 +44,6 @@ import MassAggregateEngine from '../../engine/mass-aggregate/MassAggregateEngine
 import MassAggregateDrawing from '../../engine/mass-aggregate/MassAggregateDrawing';
 import Spring from '../../engine/mass-aggregate/Spring';
 import Particle from '../../engine/mass-aggregate/Particle';
-import FixedParticle from '../../engine/mass-aggregate/FixedParticle';
 import Vector from '../../Vector';
 
 // XXX Need a stiffness slider here
@@ -56,12 +58,12 @@ export default {
         DampingSlider,
         StiffnessSlider,
     },
+    mixins: [Demo],
     data() {
         return {
             stiffness: 1e-5,
         };
     },
-    mixins: [Demo],
     watch: {
         stiffness(newStiffness) {
             this.simulation.engine.springs[0].stiffness = newStiffness;
@@ -70,9 +72,10 @@ export default {
     methods: {
         createEngine(previousEngine) {
             const particles = [
-                new FixedParticle({
+                new Particle({
                     position: new Vector(0, 0.75),
                     mass: 1,
+                    fixed: true,
                 }),
                 new Particle({
                     position: new Vector(-0.3, 0.75),

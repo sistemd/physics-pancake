@@ -2,7 +2,10 @@
   <canvas
     width="500"
     height="500"
-    @mousemove="mouseMoved"
+    @mousemove="reEmit('mousemove', $event)"
+    @mousedown="reEmit('mousedown', $event)"
+    @mouseup="reEmit('mouseup', $event)"
+    @mouseleave="$emit('mouseleave')"
   />
 </template>
 
@@ -12,10 +15,7 @@ import Vector from '../Vector';
 
 export default {
     props: {
-        simulation: {
-            type: Object,
-            default: null,
-        },
+        simulation: Object,
     },
     mounted() {
         const frameCallback = time => {
@@ -27,12 +27,15 @@ export default {
         requestAnimationFrame(frameCallback);
     },
     methods: {
-        mouseMoved(event) {
-            const canvas = this.simulation.drawing.context.canvas;
+        reEmit(eventName, event) {
+            const { canvas } = this.simulation.drawing.context;
+            this.$emit(eventName, toNormalizedCoordinates(this.clickPosition(event), canvas));
+        },
+        clickPosition(event) {
+            const { canvas } = this.simulation.drawing.context;
             const { left, top } = canvas.getBoundingClientRect();
-            const position = new Vector(event.clientX - left, event.clientY - top);
-            this.$emit('mousemove', toNormalizedCoordinates(position, canvas));
-        }
-    }
+            return new Vector(event.clientX - left, event.clientY - top);
+        },
+    },
 };
 </script>

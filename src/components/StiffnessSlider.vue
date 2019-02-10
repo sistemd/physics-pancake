@@ -6,11 +6,11 @@
     <input
       id="stiffness-slider"
       :value="value"
-      @input="$emit('input', Number($event.target.value))"
       type="range"
       min="1e-6"
       max="1e-4"
       step="1e-9"
+      @input="$emit('input', Number($event.target.value))"
     >
   </div>
 </template>
