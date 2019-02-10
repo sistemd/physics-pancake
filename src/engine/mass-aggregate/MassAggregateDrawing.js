@@ -8,7 +8,7 @@ const backgroundStyle = 'white';
 const particleColor = {
     hue: 225,
     saturation: 70,
-    lightness:  40,
+    lightness: 40,
 };
 
 const maxColorLightness = 100;

@@ -1,32 +1,56 @@
 import Contact from './Contact';
+import Vector from '../../Vector';
+
+const minimumSlideSpeed = 1e-6;
+
+const minimumSlideSpeedSquared = minimumSlideSpeed * minimumSlideSpeed;
+
+const minimumBounceSpeed = 1.3e-4;
+
+const minimumBounceSpeedSquared = minimumBounceSpeed * minimumBounceSpeed;
 
 export default class TerrainContact extends Contact {
-    constructor({ particle, polygon, restitution }) {
+    constructor({ particle, terrainElement }) {
         super();
         this.particle = particle;
-        this.polygon = polygon;
-        this.restitution = restitution;
+        this.terrainElement = terrainElement;
     }
 
     solve() {
         const edge = this.edge();
         const normal = this.normal(edge);
         const penetrationDepth = this.penetrationDepth(edge);
-        this.solvePenetration(normal, penetrationDepth);
-        this.solveBounce(normal);
+
+        this.removePenetration(edge, normal, penetrationDepth);
+        if (this.bounceParticle(normal))
+            return;
+        this.slideParticle(edge, penetrationDepth);
+        this.applyFriction(edge);
     }
 
-    solvePenetration(normal, penetrationDepth) {
+    removePenetration(edge, normal, penetrationDepth) {
         this.particle.position.add(normal.scaled(penetrationDepth));
     }
 
-    solveBounce(normal) {
-        const speed = this.particle.velocity.dot(normal);
-        this.particle.velocity = normal.scaled(-speed * this.restitution);
+    slideParticle(edge, penetrationDepth) {
+        const direction = edge.offset.flippedTowards(this.particle.velocity);
+        this.particle.velocity = this.particle.velocity.projected(direction);
+    }
+
+    applyFriction(edge) {
+        this.particle.velocity.scale(1 - this.terrainElement.friction);
+    }
+
+    bounceParticle(normal) {
+        const velocity = this.particle.velocity.projected(normal);
+        if (velocity.magnitudeSquared < minimumBounceSpeedSquared)
+            return false;
+        this.particle.velocity = velocity.scaled(-this.terrainElement.restitution);
+        return true;
     }
 
     edge() {
-        return this.polygon.closestEdge(this.particle.position);
+        return this.terrainElement.polygon.closestEdge(this.particle.position);
     }
 
     normal(edge) {

@@ -1,5 +1,4 @@
 import Engine from '../Engine';
-import { epsilon } from '../../utils';
 import Vector from '../../Vector';
 
 // XXX
@@ -39,7 +38,7 @@ export default class Particle {
 
     overlaps(other) {
         const radiiSum = this.radius + other.radius;
-        return radiiSum * radiiSum >= this.position.distanceSquared(other.position);
+        return radiiSum * radiiSum > this.position.distanceSquared(other.position);
     }
 
     get speed() {

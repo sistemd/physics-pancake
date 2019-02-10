@@ -21,6 +21,12 @@ export default class Vector {
             return normal;
         return normal.negated;
     }
+    
+    flippedTowards(direction) {
+        if (this.dot(direction) > 0)
+            return this.cloned;
+        return this.negated;
+    }
 
     get cloned() {
         return new Vector(this.x, this.y);
@@ -40,6 +46,10 @@ export default class Vector {
 
     get negated() {
         return new Vector(-this.x, -this.y);
+    }
+
+    get isNormalized() {
+        return almostEquals(this.magnitudeSquared, 1);
     }
 
     almostEquals(other) {
@@ -91,5 +101,11 @@ export default class Vector {
 
     direction(other) {
         return other.subtracted(this).normalized;
+    }
+
+    projected(other) {
+        if (!other.isNormalized)
+            other = other.normalized;
+        return other.normalized.scaled(this.dot(other));
     }
 }

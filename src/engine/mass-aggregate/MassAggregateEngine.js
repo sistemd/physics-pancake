@@ -70,9 +70,9 @@ export default class MassAggregateEngine extends Engine {
 
     * findTerrainContacts() {
         for (const particle of this.particles) {
-            for (const { polygon, restitution } of this.terrain) {
-                if (polygon.containsPoint(particle.position))
-                    yield new TerrainContact({ particle, polygon, restitution });
+            for (const terrainElement of this.terrain) {
+                if (terrainElement.polygon.containsPoint(particle.position))
+                    yield new TerrainContact({ particle, terrainElement });
             }
         }
     }

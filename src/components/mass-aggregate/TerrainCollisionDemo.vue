@@ -62,6 +62,7 @@ export default {
                     new Vector(0.5, -2), new Vector(-0.5, -2),
                 ]),
                 restitution: platformRestitution,
+                friction: 1e-2,
             }),
             platformAngle: 0,
             platformLength: 1,

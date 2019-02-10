@@ -45,8 +45,7 @@ export default class Polygon {
         return true;
     }
 
-    // If point is on a vertex, this method returns false.
-    // If point is on a line or somewhere inside the polygon, this works as expected.
+    // If point is on a vertex or on an edge, this method returns false.
     containsPoint(point) {
         const ray = new Line({ origin: point, offset: new Vector(1, 0) });
         return this.countIntersections(ray) % 2 === 1;
@@ -54,6 +53,8 @@ export default class Polygon {
 
     countIntersections(ray) {
         return this.edges.reduce((acc, edge) => {
+            if (edge.containsPoint(ray.origin))
+                return acc;
             if (ray.rayIntersects(edge))
                 return acc + 1;
             return acc;
