@@ -17,8 +17,8 @@
           <input
             v-model.number="firingForce"
             type="range"
-            min="1e-5"
-            max="4e-3"
+            min="0"
+            max="1e-3"
             step="1e-9"
           >
         </td>

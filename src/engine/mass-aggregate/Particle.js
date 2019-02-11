@@ -15,7 +15,7 @@ import Vector from '../../Vector';
 // and also Kodicek D., Flynt J. P., Mathematics and Physics for Programmers,
 // chapter on collision resolution might be interesting.
 
-const baseRadius = 6e-3;
+const baseRadius = 1.2e-2;
 
 export default class Particle {
     constructor({ position, mass = 1, gravityScale = 1, fixedRadius = undefined, fixed = false }) {
@@ -47,7 +47,7 @@ export default class Particle {
     // XXX Test this
     overlaps(other) {
         const radiiSum = this.radius + other.radius;
-        return radiiSum * radiiSum > this.position.distanceSquared(other.position);
+        return radiiSum * radiiSum >= this.position.distanceSquared(other.position);
     }
 
     get radius() {

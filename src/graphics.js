@@ -11,8 +11,8 @@ export function drawCircle(context, { position, radius }, style) {
         context.fillStyle = style;
     context.beginPath();
     position = fromNormalizedDeviceCoordinates(position, context.canvas);
-    const xRadius = context.canvas.width * radius;
-    const yRadius = context.canvas.height * radius;
+    const xRadius = context.canvas.width * radius / 2;
+    const yRadius = context.canvas.height * radius / 2;
     context.ellipse(position.x, position.y, xRadius, yRadius, 0, 0, Math.PI * 2);
     context.fill();
 }
