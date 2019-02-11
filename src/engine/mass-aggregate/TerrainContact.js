@@ -16,23 +16,23 @@ export default class TerrainContact extends Contact {
         const normal = this.normal(edge);
         const penetrationDepth = this.penetrationDepth(edge);
 
-        this.removePenetration(edge, normal, penetrationDepth);
+        this.removePenetration(normal, penetrationDepth);
         if (this.bounceParticle(normal))
             return;
-        this.slideParticle(edge, penetrationDepth);
-        this.applyFriction(edge);
+        this.slideParticle(edge);
+        this.applyFriction();
     }
 
-    removePenetration(edge, normal, penetrationDepth) {
+    removePenetration(normal, penetrationDepth) {
         this.particle.position.add(normal.scaled(penetrationDepth));
     }
 
-    slideParticle(edge, penetrationDepth) {
+    slideParticle(edge) {
         const direction = edge.offset.flippedTowards(this.particle.velocity);
         this.particle.velocity = this.particle.velocity.projected(direction);
     }
 
-    applyFriction(edge) {
+    applyFriction() {
         this.particle.velocity.scale(1 - this.terrainElement.friction);
     }
 

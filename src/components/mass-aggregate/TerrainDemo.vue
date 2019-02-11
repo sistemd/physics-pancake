@@ -94,6 +94,7 @@ export default {
                 particles: [this.particle],
                 terrain: [this.platform, new TerrainElement({
                     restitution: this.platformRestitution,
+                    friction: 1e-2,
                     polygon: Polygon.fromVertices([
                         new Vector(0.8, 5), new Vector(4, 5),
                         new Vector(4, -5), new Vector(0.8, -5),

@@ -47,6 +47,8 @@ export default class MassAggregateEngine extends Engine {
     }
 
     solveContacts() {
+        const contacts = this.findContacts();
+        const x = 0;
         for (const contact of this.findContacts())
             contact.solve();
     }
