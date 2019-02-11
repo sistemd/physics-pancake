@@ -3,7 +3,7 @@ import Line from './Line';
 import Vector from './Vector';
 
 function * vertices(edges) {
-    
+
 }
 
 export default class Polygon {

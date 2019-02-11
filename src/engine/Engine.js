@@ -21,10 +21,10 @@ export default class Engine {
         }
 
         const timeDelta = currentTime - this.lastIntegrationTime;
+        this.lastIntegrationTime = currentTime;
         if (timeDelta > maxTimeDelta)
             return;
         this.timeAccumulator += timeDelta;
-        this.lastIntegrationTime = currentTime;
         while (this.timeAccumulator >= Engine.timestep) {
             this.timeAccumulator -= Engine.timestep;
             this.integrateStep();

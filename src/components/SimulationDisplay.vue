@@ -14,13 +14,13 @@ import { toNormalizedDeviceCoordinates } from '../graphics';
 import Vector from '../Vector';
 
 export default {
+    props: {
+        simulation: Object,
+    },
     data() {
         return {
             running: true,
         };
-    },
-    props: {
-        simulation: Object,
     },
     destroyed() {
         this.running = false;

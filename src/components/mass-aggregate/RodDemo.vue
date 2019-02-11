@@ -26,11 +26,11 @@ import Vector from '../../Vector';
 import Polygon from '../../Polygon';
 
 export default {
-    mixins: [Demo],
     components: {
         InteractiveSimulationDisplay,
         RestartButton,
     },
+    mixins: [Demo],
     methods: {
         createEngine() {
             const particles = [
@@ -45,8 +45,9 @@ export default {
                 terrain: [
                     new TerrainElement({
                         polygon: Polygon.fromVertices([
-                            new Vector(-0.6, 0), new Vector(0.6, 0),
-                            new Vector(0.6, -3), new Vector(-0.6, -3),
+                            new Vector(-5, 0), new Vector(0.7, 0),
+                            new Vector(0.7, 5), new Vector(5, 5),
+                            new Vector(5, -5), new Vector(-5, -5),
                         ]),
                         restitution: 0.3,
                     }),
