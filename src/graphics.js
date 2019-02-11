@@ -32,7 +32,7 @@ export function drawPolygon(context, polygon, style) {
     if (style)
         context.fillStyle = style;
 
-    if (!polygon.edgesAreConnected())
+    if (!polygon.edgesAreConnected)
         throw new Error('Disconnected polygon edges');
 
     const points = polygon.edges.map(edge => fromNormalizedDeviceCoordinates(edge.origin, context.canvas));

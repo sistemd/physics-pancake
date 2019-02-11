@@ -1,9 +1,9 @@
 import Line from '../../Line';
+import NotImplemented from '../../NotImplemented';
 
 export default class Spring {
-    constructor({ particles, stiffness }) {
+    constructor(particles) {
         this.particles = particles;
-        this.stiffness = stiffness;
         this.restingLength = this.currentLength;
     }
 
@@ -13,12 +13,7 @@ export default class Spring {
     }
 
     contract(fromParticle, toParticle) {
-        const direction = fromParticle.position.direction(toParticle.position);
-        fromParticle.force.add(direction.scaled(this.contractionMagnitude));
-    }
-
-    get contractionMagnitude() {
-        return this.stiffness * this.lengthDelta;
+        throw new NotImplemented();
     }
 
     get line() {

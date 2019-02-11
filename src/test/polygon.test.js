@@ -62,10 +62,10 @@ test('Polygon.edgesAreConnected', () => {
     ];
 
     for (const connectedPolygon of connectedPolygons)
-        expect(connectedPolygon.edgesAreConnected()).toBeTruthy();
+        expect(connectedPolygon.edgesAreConnected).toBeTruthy();
 
     for (const disconnectedPolygon of disconnectedPolygons)
-        expect(disconnectedPolygon.edgesAreConnected()).toBeFalsy();
+        expect(disconnectedPolygon.edgesAreConnected).toBeFalsy();
 });
 
 test('Polygon.fromVertices', () => {
@@ -104,7 +104,7 @@ test('Polygon.fromVertices', () => {
     for (const { vertices, edges } of tests) {
         const polygon = Polygon.fromVertices(vertices);
         expect(polygon.edges).toEqual(edges);
-        expect(polygon.edgesAreConnected()).toBeTruthy();
+        expect(polygon.edgesAreConnected).toBeTruthy();
     }
 });
 
@@ -113,14 +113,56 @@ test('Polygon.containsPoint', () => {
         {
             polygon: Polygon.fromVertices([Vector.zero, new Vector(2, 0), new Vector(2, 5)]),
             innerPoints: [
-                new Vector(2, 4),
-                new Vector(2, 3),
-                new Vector(2, 1.5),
-                new Vector(1.5, 1.5),
-                new Vector(1, 1),
-                new Vector(1, 2),
-                new Vector(1, 0),
-                new Vector(1.5, 0),
+                { point: Vector.zero },
+                { point: new Vector(2, 0) },
+                { point: new Vector(2, 5) },
+                {
+                    point: new Vector(1.5, 1.5),
+                    closestEdges: [new Line({ origin: new Vector(2, 0), end: new Vector(2, 5) })],
+                },
+                {
+                    point: new Vector(1, 1),
+                    closestEdges: [new Line({ origin: new Vector(2, 5), end: Vector.zero })],
+                },
+                {
+                    point: new Vector(1.5, 0.5),
+                    closestEdges: [
+                        new Line({ origin: Vector.zero, end: new Vector(2, 0) }),
+                        new Line({ origin: new Vector(2, 0), end: new Vector(2, 5) }),
+                    ],
+                },
+                {
+                    point: new Vector(1, 2),
+                    closestEdges: [new Line({ origin: new Vector(2, 5), end: Vector.zero })],
+                },
+                {
+                    point: new Vector(1.1, 2),
+                    closestEdges: [new Line({ origin: new Vector(2, 5), end: Vector.zero })],
+                },
+                {
+                    point: new Vector(1.1, 1.9),
+                    closestEdges: [new Line({ origin: new Vector(2, 5), end: Vector.zero })],
+                },
+                {
+                    point: new Vector(1, 0),
+                    closestEdges: [new Line({ origin: Vector.zero, end: new Vector(2, 0) })],
+                },
+                {
+                    point: new Vector(1.5, 0),
+                    closestEdges: [new Line({ origin: Vector.zero, end: new Vector(2, 0) })],
+                },
+                {
+                    point: new Vector(2, 4),
+                    closestEdges: [new Line({ origin: new Vector(2, 0), end: new Vector(2, 5) })],
+                },
+                {
+                    point: new Vector(2, 3),
+                    closestEdges: [new Line({ origin: new Vector(2, 0), end: new Vector(2, 5) })],
+                },
+                {
+                    point: new Vector(2, 1.5),
+                    closestEdges: [new Line({ origin: new Vector(2, 0), end: new Vector(2, 5) })],
+                },
             ],
             outerPoints: [
                 new Vector(1, 3),
@@ -137,13 +179,15 @@ test('Polygon.containsPoint', () => {
     ];
 
     for (const { polygon, innerPoints, outerPoints } of testCases) {
-        for (const innerPoint of innerPoints)
-            expect(polygon.containsPoint(innerPoint)).toBeTruthy();
+        for (const { point, closestEdges } of innerPoints) {
+            expect(polygon.containsPoint(point)).toBeTruthy();
+            if (closestEdges !== undefined) {
+                const expectedEdge = polygon.closestEdge(point);
+                expect(closestEdges.some(edge => edge.almostEquals(expectedEdge))).toBeTruthy();
+            }
+        }
+
         for (const outerPoint of outerPoints)
             expect(polygon.containsPoint(outerPoint)).toBeFalsy();
     }
-});
-
-test('Polygon.closestLine', () => {
-
 });

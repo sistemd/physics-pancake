@@ -19,11 +19,17 @@ import ParticleDemo from './mass-aggregate/ParticleDemo';
 import SpringDemo from './mass-aggregate/SpringDemo';
 import TerrainDemo from './mass-aggregate/TerrainDemo';
 import ParticleCollisionDemo from './mass-aggregate/ParticleCollisionDemo';
+import RodDemo from './mass-aggregate/RodDemo';
+import PolygonDemo from './mass-aggregate/PolygonTestDemo';
 
 export default {
     data() {
         return {
             demos: [
+                {
+                    title: 'Polygon Demo',
+                    component: PolygonDemo,
+                },
                 {
                     title: 'Particle Demo',
                     component: ParticleDemo,
@@ -40,6 +46,10 @@ export default {
                     title: 'Particle Collision Demo',
                     component: ParticleCollisionDemo,
                 },
+                {
+                    title: 'Rod Demo',
+                    component: RodDemo,
+                }
             ],
             currentDemo: undefined,
         };

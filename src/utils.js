@@ -26,3 +26,7 @@ export function valueIsBetween({ value, limits }) {
     const maxLimit = Math.max(...limits);
     return minLimit <= value && value <= maxLimit;
 }
+
+export function randomRange(min, max) {
+    return Math.random() * (max - min) + min;
+}

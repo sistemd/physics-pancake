@@ -16,6 +16,10 @@ export default class Line {
             throw new TypeError('Either offset or end must be specified');
     }
 
+    almostEquals(other) {
+        return this.origin.almostEquals(other.origin) && this.offset.almostEquals(other.offset);
+    }
+
     normal(positiveDirection) {
         return this.offset.normal(positiveDirection);
     }

@@ -95,8 +95,8 @@ export default {
                 terrain: [this.platform, new TerrainElement({
                     restitution: this.platformRestitution,
                     polygon: Polygon.fromVertices([
-                        new Vector(0.8, 0.8), new Vector(4, 0.8),
-                        new Vector(4, -0.8), new Vector(0.8, -0.8),
+                        new Vector(0.8, 5), new Vector(4, 5),
+                        new Vector(4, -5), new Vector(0.8, -5),
                     ]),
                 })],
             });

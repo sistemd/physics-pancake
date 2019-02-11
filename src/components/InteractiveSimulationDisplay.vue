@@ -75,7 +75,6 @@ export default {
                 return;
 
             const delta = this.selection.particle.position.subtracted(this.previousPosition);
-            console.log(delta.x, delta.y);
             this.selection.particle.velocity = delta.scaled(particleThrowMultiplier);
         },
         newlySelectedParticle(mousePosition) {
