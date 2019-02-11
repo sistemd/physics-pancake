@@ -1,7 +1,8 @@
 import NotImplemented from '../NotImplemented';
 
-// XXX Perhaps in the future I should make it so that the engine (and the simulation) can be paused
-// During the pause, lastIntegrationTime gets updated, but timeAccumulator doesn't
+// Trying to integrate more than maxTimeDelta milliseconds at a time
+// simply drops the integration and does nothing. Serves to fix lag.
+const maxTimeDelta = 3000;
 
 export default class Engine {
     static get timestep() {
@@ -10,16 +11,19 @@ export default class Engine {
 
     constructor() {
         this.timeAccumulator = 0;
-        this.lastIntegrationTime = null;
+        this.lastIntegrationTime = undefined;
     }
 
     integrateTime(currentTime) {
-        if (this.lastIntegrationTime === null) {
+        if (this.lastIntegrationTime === undefined) {
             this.lastIntegrationTime = currentTime;
             return;
         }
 
-        this.timeAccumulator += currentTime - this.lastIntegrationTime;
+        const timeDelta = currentTime - this.lastIntegrationTime;
+        if (timeDelta > maxTimeDelta)
+            return;
+        this.timeAccumulator += timeDelta;
         this.lastIntegrationTime = currentTime;
         while (this.timeAccumulator >= Engine.timestep) {
             this.timeAccumulator -= Engine.timestep;
