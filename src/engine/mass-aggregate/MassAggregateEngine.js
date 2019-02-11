@@ -10,13 +10,6 @@ function positionWithinBounds({ x, y }) {
 }
 
 export default class MassAggregateEngine extends Engine {
-    static get defaultTimestep() {
-        // XXX This is way too low, set to 6
-        // that's about 3 updates per frame
-        // will need to tweak other values
-        return 1;
-    }
-
     constructor({
         timestep = MassAggregateEngine.defaultTimestep,
         gravity = 1e-6, damping = 7e-4,

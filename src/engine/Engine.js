@@ -5,7 +5,7 @@ import NotImplemented from '../NotImplemented';
 
 export default class Engine {
     static get timestep() {
-        return 1;
+        return 6;
     }
 
     constructor() {

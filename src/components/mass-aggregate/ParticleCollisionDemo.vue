@@ -15,9 +15,9 @@
         <td>
           <label>Force</label>
           <input
-            v-model="firingForce"
+            v-model.number="firingForce"
             type="range"
-            min="1e-4"
+            min="1e-5"
             max="4e-3"
             step="1e-9"
           >
@@ -71,7 +71,7 @@ export default {
     components: { InteractiveSimulationDisplay, RestartButton, ParticleMassSliders },
     mixins: [Demo],
     data() {
-        const firingForce = 8.3e-4;
+        const firingForce = 1.3e-4;
 
         return {
             firingForce,
