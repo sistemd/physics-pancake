@@ -208,6 +208,54 @@ test('Polygon.containsPoint', () => {
                 new Vector(0.895309124143729, 0.6775310584845435),
                 new Vector(-0.569599271579202, -0.2601343847730464),
             ],
+        },
+        {
+            polygon: Polygon.fromVertices([
+                Vector.zero,
+                new Vector(0.6, -0.4),
+                new Vector(0.6, 0.6),
+                new Vector(0, 0.2),
+                new Vector(-0.6, 0.6),
+                new Vector(-0.6, -0.4),
+            ]),
+            innerPoints: [
+                {
+                    point: new Vector(-0.37141273347684667, 0.10805850093574154),
+                    closestEdges: [new Line({ origin: new Vector(-0.6, 0.6), end: new Vector(-0.6, -0.4) })],
+                },
+                {
+                    point: new Vector(-0.3605734524413142, 0.3988213189368244),
+                    closestEdges: [new Line({ origin: new Vector(0, 0.2), end: new Vector(-0.6, 0.6) })],
+                },
+                {
+                    point: new Vector(-0.05173443103177511, 0.21069513329324052),
+                    closestEdges: [new Line({ origin: new Vector(0, 0.2), end: new Vector(-0.6, 0.6) })],
+                },
+                {
+                    point: new Vector(0.16985893762700033, 0.010439474135209403),
+                    closestEdges: [new Line({ origin: new Vector(0, 0), end: new Vector(0.6, -0.4) })],
+                },
+                {
+                    point: new Vector(-0.29414393134220984, -0.10308041295599257),
+                    closestEdges: [new Line({ origin: new Vector(-0.6, -0.4), end: new Vector(0, 0) })],
+                },
+                {
+                    point: new Vector(-0.5615914243378577, 0.4304573038784658),
+                    closestEdges: [new Line({ origin: new Vector(-0.6, 0.6), end: new Vector(-0.6, -0.4) })],
+                },
+                {
+                    point: new Vector(0.5791442903163639, 0.010226880052997656),
+                    closestEdges: [new Line({ origin: new Vector(0.6, -0.4), end: new Vector(0.6, 0.6) })],
+                }
+            ],
+            outerPoints: [
+                new Vector(-0.8173454503571289, -0.8945639642260763),
+                new Vector(0.3000825627074748, 0.45341289301181),
+                new Vector(0.24242316196470748, -0.22060572170889903),
+                new Vector(-0.8367190150857267, -0.40203290274162806),
+                new Vector(0.10502466457120208, -0.31260994499398254),
+                new Vector(-0.689271108918063, 0.7693101926122949),
+            ],
         }
     ];
 

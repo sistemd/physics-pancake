@@ -19,9 +19,12 @@ export default {
     data() {
         return {
             polygon: Polygon.fromVertices([
-                new Vector(-0.8, 0.8),
-                new Vector(0.8, 0.8),
-                new Vector(0, -0.8),
+                Vector.zero,
+                new Vector(0.6, -0.4),
+                new Vector(0.6, 0.6),
+                new Vector(0, 0.2),
+                new Vector(-0.6, 0.6),
+                new Vector(-0.6, -0.4),
             ]),
             point: randomPoint(),
         };

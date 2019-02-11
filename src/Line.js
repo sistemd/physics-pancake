@@ -1,4 +1,4 @@
-import { epsilon, almostEquals, valueIsBetween } from './utils';
+import { epsilon, almostEquals, valueIsBetween, sameSigns } from './utils';
 import Vector from './Vector';
 
 export default class Line {
@@ -76,15 +76,28 @@ export default class Line {
     }
 
     closestPoint(point) {
-        // XXX This also isn't quite right.
-        // The line is treated as if it was infinite rather than a line segment.
-        if (this.offset.x === 0) {
-            return new Vector(this.origin.x, point.y);
+        const c = point.subtracted(this.origin).dot(this.offset);
+        const d = point.subtracted(this.end).dot(this.offset.negated);
+
+        if (!sameSigns(c, d)) {
+            if (this.origin.distanceSquared(point) < this.end.distanceSquared(point))
+                return this.origin;
+            return this.end;
         }
 
-        if (this.offset.y === 0) {
+        // Call the closest point a.
+        // Two conditions hold:
+        // 1) the vector from p to a must be perpendicular to the line's offset,
+        //    therefore their dot product must be zero and
+        // 2) a must be on the line, therefore the cross product between
+        //    a and the line's offset must be 0.
+        // Get a by solving the two equations.
+
+        if (this.offset.x === 0)
+            return new Vector(this.origin.x, point.y);
+
+        if (this.offset.y === 0)
             return new Vector(point.x, this.origin.y);
-        }
 
         const t = this.offset.dot(point);
         const y = (t * this.offset.y + this.offset.x * this.offset.cross(this.origin)) / this.offset.magnitudeSquared;

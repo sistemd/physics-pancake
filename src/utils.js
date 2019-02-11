@@ -30,3 +30,7 @@ export function valueIsBetween({ value, limits }) {
 export function randomRange(min, max) {
     return Math.random() * (max - min) + min;
 }
+
+export function sameSigns(a, b) {
+    return (a > 0 && b > 0) || (a < 0 && b < 0);
+}

@@ -215,7 +215,7 @@ test('Line.distance', () => {
                 end: new Vector(0, 1),
             }),
             point: new Vector(22, 3),
-            closestPoint: new Vector(0, 3),
+            closestPoint: new Vector(0, 1),
         },
         {
             line: new Line({
@@ -223,7 +223,23 @@ test('Line.distance', () => {
                 end: new Vector(1, 0),
             }),
             point: new Vector(22, 3),
-            closestPoint: new Vector(22, 0),
+            closestPoint: new Vector(1, 0),
+        },
+        {
+            line: new Line({
+                origin: Vector.zero,
+                end: new Vector(0, 1),
+            }),
+            point: new Vector(22, 0.3),
+            closestPoint: new Vector(0, 0.3),
+        },
+        {
+            line: new Line({
+                origin: Vector.zero,
+                end: new Vector(1, 0),
+            }),
+            point: new Vector(0.22, 3),
+            closestPoint: new Vector(0.22, 0),
         },
         {
             line: new Line({
@@ -231,7 +247,7 @@ test('Line.distance', () => {
                 end: new Vector(1, 0),
             }),
             point: new Vector(-13, 153),
-            closestPoint: new Vector(-13, 0),
+            closestPoint: Vector.zero,
         },
         {
             line: new Line({
@@ -247,72 +263,44 @@ test('Line.distance', () => {
                 end: new Vector(0, -1),
             }),
             point: new Vector(1, 1),
-            closestPoint: new Vector(0, 1),
+            closestPoint: Vector.zero,
         },
         {
-            line: new Line({
-                origin: Vector.zero,
-                end: new Vector(0, -1),
-            }),
+            line: new Line({ origin: Vector.zero, end: new Vector(0, -1) }),
             point: new Vector(22, 3),
-            closestPoint: new Vector(0, 3),
+            closestPoint: Vector.zero,
         },
         {
-            line: new Line({
-                origin: Vector.zero,
-                end: new Vector(-1, 0),
-            }),
+            line: new Line({ origin: Vector.zero, end: new Vector(-1, 0) }),
             point: new Vector(22, 3),
-            closestPoint: new Vector(22, 0),
+            closestPoint: Vector.zero,
         },
         {
-            line: new Line({
-                origin: Vector.zero,
-                end: new Vector(-1, 0),
-            }),
+            line: new Line({ origin: Vector.zero, end: new Vector(-1, 0) }),
             point: new Vector(-13, 153),
-            closestPoint: new Vector(-13, 0),
+            closestPoint: new Vector(-1, 0),
         },
         {
-            line: new Line({
-                origin: Vector.zero,
-                end: new Vector(1, 1),
-            }),
+            line: new Line({ origin: Vector.zero, end: new Vector(1, 1) }),
             point: new Vector(2, 2),
             closestPoint: new Vector(1, 1),
         },
         {
-            line: new Line({
-                origin: Vector.zero,
-                end: new Vector(1, 1),
-            }),
+            line: new Line({ origin: Vector.zero, end: new Vector(1, 1) }),
             point: new Vector(2, 3),
             closestPoint: new Vector(1, 1),
         },
         {
-            line: new Line({
-                origin: Vector.zero,
-                end: new Vector(1, 1),
-            }),
+            line: new Line({ origin: Vector.zero, end: new Vector(1, 1) }),
             point: new Vector(0, 2),
             closestPoint: new Vector(1, 1),
         },
         {
-            line: new Line({
-                origin: Vector.zero,
-                end: new Vector(1, 1),
-            }),
+            line: new Line({ origin: Vector.zero, end: new Vector(1, 1) }),
             point: new Vector(-1, 1),
-            closestPoint: new Vector(1, 1),
+            closestPoint: Vector.zero,
         },
-        {
-            line: new Line({
-                origin: Vector.zero,
-                end: new Vector(1, 1),
-            }),
-            point: new Vector(-0.5, 0.5),
-            closestPoint: new Vector(0.5, 0.5),
-        },
+        // XXX Derive more tests automatically, these are only lame edge cases
     ];
 
     for (const { line, point, closestPoint } of distanceTests) {

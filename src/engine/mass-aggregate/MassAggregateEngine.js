@@ -13,7 +13,7 @@ export default class MassAggregateEngine extends Engine {
     static get defaultTimestep() {
         // XXX This is way too low, set to 6
         // that's about 3 updates per frame
-        // will need to tweak other values though
+        // will need to tweak other values
         return 1;
     }
 
