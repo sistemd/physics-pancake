@@ -1,6 +1,6 @@
 module.exports = {
     lintOnSave: undefined,
-    publicPath: '/physics-pancake',
+    publicPath: '/physics-pancake-demos',
     outputDir: undefined,
     assetsDir: undefined,
     runtimeCompiler: undefined,
