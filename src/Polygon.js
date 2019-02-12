@@ -2,10 +2,6 @@ import { min } from './utils';
 import Line from './Line';
 import Vector from './Vector';
 
-function * vertices(edges) {
-
-}
-
 export default class Polygon {
     static fromVertices(vertices) {
         if (vertices.length < 3)

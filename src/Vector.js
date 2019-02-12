@@ -106,6 +106,6 @@ export default class Vector {
     projected(other) {
         if (!other.isNormalized)
             other = other.normalized;
-        return other.normalized.scaled(this.dot(other));
+        return other.scaled(this.dot(other));
     }
 }

@@ -9,26 +9,25 @@ export default class TerrainContact extends Contact {
         super();
         this.particle = particle;
         this.terrainElement = terrainElement;
+        this.edge = this.terrainElement.polygon.closestEdge(this.particle.position);
+        this.normal = this.edge.normal(this.particle.velocity.negated);
+        this.interpenetration = this.edge.distance(this.particle.position);
     }
 
     solve() {
-        const edge = this.edge();
-        const normal = this.normal(edge);
-        const penetrationDepth = this.penetrationDepth(edge);
-
-        this.removePenetration(normal, penetrationDepth);
-        if (this.bounceParticle(normal))
+        this.removePenetration();
+        if (this.bounceParticle())
             return;
-        this.slideParticle(edge);
+        this.slideParticle();
         this.applyFriction();
     }
 
-    removePenetration(normal, penetrationDepth) {
-        this.particle.position.add(normal.scaled(penetrationDepth));
+    removePenetration() {
+        this.particle.position.add(this.normal.scaled(this.interpenetration));
     }
 
     slideParticle(edge) {
-        const direction = edge.offset.flippedTowards(this.particle.velocity);
+        const direction = this.edge.offset.flippedTowards(this.particle.velocity);
         this.particle.velocity = this.particle.velocity.projected(direction);
     }
 
@@ -36,24 +35,11 @@ export default class TerrainContact extends Contact {
         this.particle.velocity.scale(1 - this.terrainElement.friction);
     }
 
-    bounceParticle(normal) {
+    bounceParticle() {
         if (this.particle.speedSquared < minimumBounceSpeedSquared)
             return false;
-        const normalVelocity = this.particle.velocity.projected(normal);
-        this.particle.velocity.subtract(normalVelocity);
-        this.particle.velocity.add(normalVelocity.scaled(-this.terrainElement.restitution));
+        const normalVelocity = this.particle.velocity.projected(this.normal).negated;
+        this.particle.velocity.add(normalVelocity.scaled(1 + this.terrainElement.restitution));
         return true;
-    }
-
-    edge() {
-        return this.terrainElement.polygon.closestEdge(this.particle.position);
-    }
-
-    normal(edge) {
-        return edge.normal(this.particle.velocity.negated);
-    }
-
-    penetrationDepth(edge) {
-        return edge.distance(this.particle.position);
     }
 }

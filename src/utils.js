@@ -17,6 +17,23 @@ export function min(sequence, key = x => x) {
     return result;
 }
 
+export function max(sequence, key = x => x) {
+    let result;
+    let maxKey;
+
+    for (const elem of sequence) {
+        const k = key(elem);
+        if (k === undefined)
+            continue;
+        if (result === undefined || maxKey === undefined || k > maxKey) {
+            result = elem;
+            maxKey = k;
+        }
+    }
+
+    return result;
+}
+
 export function almostEquals(a, b, x = epsilon) {
     return Math.abs(a - b) <= x;
 }

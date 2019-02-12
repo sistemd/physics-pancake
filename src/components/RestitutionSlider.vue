@@ -5,7 +5,8 @@
     </label>
     <input
       id="restitution-slider"
-      v-model.number="terrainElement.restitution"
+      @input="$emit('input', Number($event.target.value))"
+      :value="value"
       type="range"
       min="0"
       max="0.9"
@@ -17,6 +18,7 @@
 <script>
 export default {
     props: {
+        value: Number,
         terrainElement: Object,
     },
 };

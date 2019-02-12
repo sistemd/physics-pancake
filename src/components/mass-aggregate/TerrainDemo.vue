@@ -13,7 +13,7 @@
       </tr>
       <tr>
         <td>
-          <RestitutionSlider :terrainElement="platform" />
+          <RestitutionSlider v-model="restitution" />
         </td>
       </tr>
       <tr>
@@ -54,7 +54,7 @@ export default {
     components: { InteractiveSimulationDisplay, RestartButton, RestitutionSlider, AngleSlider, LengthSlider },
     mixins: [Demo],
     data() {
-        const platformRestitution = 0.45;
+        const restitution = 0.45;
 
         return {
             particle: new Particle({ position: startingPosition, mass: 1 }),
@@ -63,12 +63,12 @@ export default {
                     new Vector(-0.5, 0), new Vector(0.5, 0),
                     new Vector(0.5, -2), new Vector(-0.5, -2),
                 ]),
-                restitution: platformRestitution,
+                restitution,
                 friction: 1e-2,
             }),
             platformAngle: 0,
             platformLength: 1,
-            platformRestitution,
+            restitution,
         };
     },
     watch: {
@@ -78,9 +78,9 @@ export default {
         platformLength() {
             this.updatePlatformLayout();
         },
-        platformRestitution() {
+        restitution() {
             for (const terrainElement of this.simulation.engine.terrain)
-                terrainElement.restitution = this.platformRestitution;
+                terrainElement.restitution = this.restitution;
         },
     },
     methods: {
@@ -93,7 +93,7 @@ export default {
                 damping: previousEngine.damping,
                 particles: [this.particle],
                 terrain: [this.platform, new TerrainElement({
-                    restitution: this.platformRestitution,
+                    restitution: this.restitution,
                     friction: 1e-2,
                     polygon: Polygon.fromVertices([
                         new Vector(0.8, 5), new Vector(4, 5),

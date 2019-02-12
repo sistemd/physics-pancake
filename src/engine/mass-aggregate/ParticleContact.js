@@ -4,6 +4,10 @@ export default class ParticleContact extends Contact {
     constructor(particles) {
         super();
         this.particles = particles;
+        this.normal = this.particles[0].position.direction(this.particles[1].position);
+        this.impactSpeed = this.particles[0].velocity.dot(this.normal) + this.particles[1].velocity.dot(this.normal.negated);
+        const distance = this.particles[0].position.distance(this.particles[1].position);
+        this.interpenetration = this.particles[0].radius + this.particles[1].radius - distance;
     }
 
     solve() {
@@ -18,24 +22,8 @@ export default class ParticleContact extends Contact {
     }
 
     solveBounce() {
-        this.particles[0].velocity = this.normal.scaled(-this.particles[1].mass * this.netSpeed / this.netMass);
-        this.particles[1].velocity = this.normal.scaled(this.particles[0].mass * this.netSpeed / this.netMass);
-    }
-
-    get interpenetration() {
-        const distance = this.particles[0].position.distance(this.particles[1].position);
-        return this.particles[0].radius + this.particles[1].radius - distance;
-    }
-
-    get normal() {
-        return this.particles[0].position.direction(this.particles[1].position);
-    }
-
-    get netMass() {
-        return this.particles[0].mass + this.particles[1].mass;
-    }
-
-    get netSpeed() {
-        return this.particles[0].speed + this.particles[1].speed;
+        const netMass = this.particles[0].mass + this.particles[1].mass;
+        this.particles[0].velocity = this.normal.scaled(-this.particles[1].mass * this.impactSpeed / netMass);
+        this.particles[1].velocity = this.normal.scaled(this.particles[0].mass * this.impactSpeed / netMass);
     }
 }
