@@ -30,9 +30,9 @@ export default class MassAggregateEngine extends Engine {
 
     integrateStep() {
         this.resetForces();
-        this.updateSprings();
-        this.solveContacts();
         this.updateParticles();
+        this.solveContacts();
+        this.updateSprings();
         this.clearUselessParticles();
 
         // clearUselessParticles doesn't strictly need to be called whenever we

@@ -108,4 +108,8 @@ export default class Vector {
             other = other.normalized;
         return other.scaled(this.dot(other));
     }
+
+    toString() {
+        return `Vector(${this.x}, ${this.y})`;
+    }
 }

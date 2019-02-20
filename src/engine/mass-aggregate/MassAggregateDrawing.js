@@ -3,6 +3,8 @@ import Line from '../../Line';
 
 const visualForceScale = 100000;
 
+const visualVelocityScale = 100;
+
 const backgroundStyle = 'white';
 
 const particleColor = {
@@ -17,7 +19,9 @@ const springStyle = 'grey';
 
 const terrainStyle = 'rgb(155, 200, 200)';
 
-const forceStyle = 'pink';
+const forceStyle = 'brown';
+
+const velocityStyle = 'red';
 
 // XXX Have a base class for drawing
 
@@ -25,12 +29,14 @@ export default class MassAggregateDrawing {
     constructor({
         context,
         drawingForces = false,
+        drawingVelocities = false,
         drawingTerrain = true,
         drawingSprings = true,
-        drawingParticles = true
+        drawingParticles = true,
     } = {}) {
         this.context = context;
         this.drawingForces = drawingForces;
+        this.drawingVelocities = drawingVelocities;
         this.drawingTerrain = drawingTerrain;
         this.drawingSprings = drawingSprings;
         this.drawingParticles = drawingParticles;
@@ -45,6 +51,7 @@ export default class MassAggregateDrawing {
         this.drawParticles(engine.particles);
         this.drawSprings(engine.springs);
         this.drawForces(engine.particles);
+        this.drawVelocities(engine.particles);
     }
 
     clear() {
@@ -66,8 +73,21 @@ export default class MassAggregateDrawing {
         for (const particle of particles) {
             drawLine(
                 this.context,
-                new Line(particle.position, particle.force.scaled(visualForceScale)),
+                new Line({ origin: particle.position, offset: particle.force.scaled(visualForceScale) }),
                 forceStyle,
+            );
+        }
+    }
+
+    drawVelocities(particles) {
+        if (!this.drawingVelocities)
+            return;
+
+        for (const particle of particles) {
+            drawLine(
+                this.context,
+                new Line({ origin: particle.position, offset: particle.velocity.scaled(visualVelocityScale) }),
+                velocityStyle,
             );
         }
     }

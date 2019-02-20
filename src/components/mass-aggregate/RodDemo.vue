@@ -44,11 +44,21 @@ export default {
                 ],
                 terrain: [
                     new TerrainElement({
-                        polygon: Polygon.fromVertices([
-                            new Vector(-5, 0), new Vector(0.7, 0),
-                            new Vector(0.7, 5), new Vector(5, 5),
-                            new Vector(5, -5), new Vector(-5, -5),
-                        ]),
+                        polygon: new Polygon({
+                            vertices: [
+                                new Vector(5, -5), new Vector(5, 5),
+                                new Vector(0.7, 5), new Vector(0.7, -5),
+                            ],
+                        }),
+                        restitution: 0.3,
+                    }),
+                    new TerrainElement({
+                        polygon: new Polygon({
+                            vertices: [
+                                new Vector(0.8, 0), new Vector(-5, 0),
+                                new Vector(-5, -5), new Vector(0.8, -5),
+                            ],
+                        }),
                         restitution: 0.3,
                     }),
                 ],

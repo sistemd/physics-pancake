@@ -1,32 +1,54 @@
-import { min } from './utils';
+import { min, almostEquals } from './utils';
 import Line from './Line';
 import Vector from './Vector';
 
+function * edgesFromVertices(vertices) {
+    for (let i = 0; i < vertices.length - 1; ++i)
+        yield new Line({ origin: vertices[i].cloned, end: vertices[i + 1].cloned });
+    yield new Line({ origin: vertices[vertices.length - 1].cloned, end: vertices[0].cloned });
+}
+
+function verticesFromEdges(edges) {
+    return edges.map(edge => edge.origin);
+}
+
+function areCounterClockwise(edges) {
+    for (let i = 0; i < edges.length - 1; ++i) {
+        const c = edges[i].offset.cross(edges[i + 1].offset);
+        if (almostEquals(c, 0))
+            throw new Error('Two edges are collinear');
+        if (c < 0)
+            return false;
+    }
+
+    const c = edges[edges.length - 1].offset.cross(edges[0].offset);
+    if (almostEquals(c, 0))
+        throw new Error('Two edges are collinear');
+    return c > 0;
+}
+
+// XXX toString
+
 export default class Polygon {
-    static fromVertices(vertices) {
-        if (vertices.length < 3)
-            throw new Error('Polygon must have at least three vertices');
-        return Polygon.fromEdges(Array.from(findEdges()));
+    constructor({ vertices, edges }) {
+        if (vertices === undefined && edges === undefined)
+            throw new Error('Either vertices or edges must be specified');
+        if (vertices !== undefined && edges !== undefined)
+            throw new Error('Either vertices or edges should be specified, but not both');
 
-        function * findEdges() {
-            for (let i = 0; i < vertices.length - 1; ++i)
-                yield new Line({ origin: vertices[i].cloned, end: vertices[i + 1].cloned });
-            yield new Line({ origin: vertices[vertices.length - 1].cloned, end: vertices[0].cloned });
-        }
+        if (edges !== undefined)
+            vertices = verticesFromEdges(edges);
+        else
+            edges = Array.from(edgesFromVertices(vertices));
+
+        if (!areCounterClockwise(edges))
+            throw new Error('Polygon vertices/edges must be specified in counter-clockwise order');
+
+        this.vertices = vertices;
     }
 
-    static fromEdges(edges) {
-        if (edges.length < 3)
-            throw new Error('Polygon must have at least three edges');
-        return new Polygon(edges);
-    }
-
-    constructor(edges) {
-        this.edges = edges;
-    }
-
-    get vertices() {
-        return this.edges.map(edge => edge.origin);
+    get edges() {
+        return Array.from(edgesFromVertices(this.vertices));
     }
 
     get edgesAreConnected() {
@@ -35,10 +57,7 @@ export default class Polygon {
                 return false;
         }
 
-        if (!this.edges[0].origin.almostEquals(this.edges[this.edges.length - 1].end))
-            return false;
-
-        return true;
+        return this.edges[0].origin.almostEquals(this.edges[this.edges.length - 1].end);
     }
 
     containsPoint(point) {

@@ -59,10 +59,12 @@ export default {
         return {
             particle: new Particle({ position: startingPosition, mass: 1 }),
             platform: new TerrainElement({
-                polygon: Polygon.fromVertices([
-                    new Vector(-0.5, 0), new Vector(0.5, 0),
-                    new Vector(0.5, -2), new Vector(-0.5, -2),
-                ]),
+                polygon: new Polygon({
+                    vertices: [
+                        new Vector(-0.5, -2), new Vector(0.5, -2),
+                        new Vector(0.5, 0), new Vector(-0.5, 0),
+                    ],
+                }),
                 restitution,
                 friction: 1e-2,
             }),
@@ -95,10 +97,12 @@ export default {
                 terrain: [this.platform, new TerrainElement({
                     restitution: this.restitution,
                     friction: 1e-2,
-                    polygon: Polygon.fromVertices([
-                        new Vector(0.8, 5), new Vector(4, 5),
-                        new Vector(4, -5), new Vector(0.8, -5),
-                    ]),
+                    polygon: new Polygon({
+                        vertices: [
+                            new Vector(0.8, -5), new Vector(4, -5),
+                            new Vector(4, 5), new Vector(0.8, 5),
+                        ],
+                    }),
                 })],
             });
         },
@@ -109,10 +113,12 @@ export default {
             const lengthHalf = this.platformLength / 2;
             const x = lengthHalf * Math.cos(this.platformAngle);
             const y = lengthHalf * Math.sin(this.platformAngle);
-            this.platform.polygon = Polygon.fromVertices([
-                new Vector(-x, -y), new Vector(x, y),
-                new Vector(x, -2), new Vector(-x, -2),
-            ]);
+            this.platform.polygon = new Polygon({
+                vertices: [
+                    new Vector(-x, -2), new Vector(x, -2),
+                    new Vector(x, y), new Vector(-x, -y),
+                ],
+            });
             this.simulation.engine.terrain[0].polygon = this.platform.polygon;
         },
     },

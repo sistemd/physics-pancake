@@ -5,12 +5,12 @@
     </label>
     <input
       id="restitution-slider"
-      @input="$emit('input', Number($event.target.value))"
       :value="value"
       type="range"
       min="0"
       max="0.9"
       step="1e-9"
+      @input="$emit('input', Number($event.target.value))"
     >
   </div>
 </template>

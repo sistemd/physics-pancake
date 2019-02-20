@@ -6,59 +6,59 @@ import Line from '../Line';
 
 test('Polygon.edgesAreConnected', () => {
     const connectedPolygons = [
-        Polygon.fromEdges([
+        new Polygon({ edges: [
             new Line({ origin: Vector.zero, end: new Vector(1, 0) }),
             new Line({ origin: new Vector(1, 0), end: new Vector(1, 1) }),
             new Line({ origin: new Vector(1, 1), end: Vector.zero }),
-        ]),
-        Polygon.fromEdges([
+        ] }),
+        new Polygon({ edges: [
             new Line({ origin: Vector.zero, end: new Vector(1, 0) }),
             new Line({ origin: new Vector(1, 0), end: new Vector(1, 1) }),
             new Line({ origin: new Vector(1, 1), end: new Vector(0, 1) }),
             new Line({ origin: new Vector(0, 1), end: Vector.zero }),
-        ]),
+        ] }),
     ];
 
     const disconnectedPolygons = [
-        Polygon.fromEdges([
+        new Polygon({ edges: [
             new Line({ origin: Vector.zero, end: new Vector(1, 0) }),
             new Line({ origin: new Vector(1, 1), end: Vector.zero }),
             new Line({ origin: new Vector(1, 0), end: new Vector(1, 1) }),
-        ]),
-        Polygon.fromEdges([
+        ] }),
+        new Polygon({ edges: [
             new Line({ origin: Vector.zero, end: new Vector(1, 0) }),
             new Line({ origin: new Vector(1, 1), end: Vector.zero }),
             new Line({ origin: new Vector(1, 0), end: new Vector(1, 22) }),
-        ]),
-        Polygon.fromEdges([
+        ] }),
+        new Polygon({ edges: [
             new Line({ origin: Vector.zero, end: new Vector(1, 0) }),
             new Line({ origin: new Vector(1, 1), end: Vector.zero }),
             new Line({ origin: new Vector(1, 22), end: new Vector(1, 1) }),
-        ]),
-        Polygon.fromEdges([
+        ] }),
+        new Polygon({ edges: [
             new Line({ origin: new Vector(1, 0), end: new Vector(1, 1) }),
             new Line({ origin: Vector.zero, end: new Vector(1, 0) }),
             new Line({ origin: new Vector(1, 1), end: new Vector(0, 1) }),
             new Line({ origin: new Vector(0, 1), end: Vector.zero }),
-        ]),
-        Polygon.fromEdges([
+        ] }),
+        new Polygon({ edges: [
             new Line({ origin: Vector.zero, end: new Vector(1, 0) }),
             new Line({ origin: new Vector(1, 1), end: new Vector(0, 1) }),
             new Line({ origin: new Vector(1, 0), end: new Vector(1, 1) }),
             new Line({ origin: new Vector(0, 1), end: Vector.zero }),
-        ]),
-        Polygon.fromEdges([
+        ] }),
+        new Polygon({ edges: [
             new Line({ origin: Vector.zero, end: new Vector(1, 0) }),
             new Line({ origin: new Vector(1, 0), end: new Vector(1, 1) }),
             new Line({ origin: new Vector(0, 1), end: Vector.zero }),
             new Line({ origin: new Vector(1, 1), end: new Vector(0, 1) }),
-        ]),
-        Polygon.fromEdges([
+        ] }),
+        new Polygon({ edges: [
             new Line({ origin: new Vector(0, 1), end: Vector.zero }),
             new Line({ origin: new Vector(1, 0), end: new Vector(1, 1) }),
             new Line({ origin: new Vector(1, 1), end: new Vector(0, 1) }),
             new Line({ origin: Vector.zero, end: new Vector(1, 0) }),
-        ]),
+        ] }),
     ];
 
     for (const connectedPolygon of connectedPolygons)
@@ -68,7 +68,7 @@ test('Polygon.edgesAreConnected', () => {
         expect(disconnectedPolygon.edgesAreConnected).toBeFalsy();
 });
 
-test('Polygon.fromVertices', () => {
+test('Polygon.edges', () => {
     const tests = [
         {
             vertices: [
@@ -98,11 +98,11 @@ test('Polygon.fromVertices', () => {
         },
     ];
 
-    expect(() => Polygon.fromVertices([Vector.zero])).toThrow();
-    expect(() => Polygon.fromVertices([Vector.zero, Vector.zero])).toThrow();
+    expect(() => new Polygon({ vertices: [Vector.zero] })).toThrow();
+    expect(() => new Polygon({ vertices: [Vector.zero, Vector.zero] })).toThrow();
 
     for (const { vertices, edges } of tests) {
-        const polygon = Polygon.fromVertices(vertices);
+        const polygon = new Polygon({ vertices });
         expect(polygon.edges).toEqual(edges);
         expect(polygon.edgesAreConnected).toBeTruthy();
     }
@@ -111,7 +111,7 @@ test('Polygon.fromVertices', () => {
 test('Polygon.containsPoint', () => {
     const testCases = [
         {
-            polygon: Polygon.fromVertices([Vector.zero, new Vector(2, 0), new Vector(2, 5)]),
+            polygon: new Polygon({ vertices: [Vector.zero, new Vector(2, 0), new Vector(2, 5)] }),
             innerPoints: [
                 { point: Vector.zero },
                 { point: new Vector(2, 0) },
@@ -175,7 +175,7 @@ test('Polygon.containsPoint', () => {
             ],
         },
         {
-            polygon: Polygon.fromVertices([new Vector(-0.8, 0.8), new Vector(0.8, 0.8), new Vector(0, -0.8)]),
+            polygon: new Polygon({ vertices: [new Vector(-0.8, 0.8), new Vector(0.8, 0.8), new Vector(0, -0.8)] }),
             innerPoints: [
                 {
                     point: new Vector(0.09534935573218895, -0.5203028966643934),
@@ -210,14 +210,14 @@ test('Polygon.containsPoint', () => {
             ],
         },
         {
-            polygon: Polygon.fromVertices([
+            polygon: new Polygon({ vertices: [
                 Vector.zero,
                 new Vector(0.6, -0.4),
                 new Vector(0.6, 0.6),
                 new Vector(0, 0.2),
                 new Vector(-0.6, 0.6),
                 new Vector(-0.6, -0.4),
-            ]),
+            ] }),
             innerPoints: [
                 {
                     point: new Vector(-0.37141273347684667, 0.10805850093574154),

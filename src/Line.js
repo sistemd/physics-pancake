@@ -1,6 +1,8 @@
 import { epsilon, almostEquals, valueIsBetween, sameSigns } from './utils';
 import Vector from './Vector';
 
+// XXX toString
+
 export default class Line {
     constructor({ origin, offset, end }) {
         if (offset !== undefined && end !== undefined)
