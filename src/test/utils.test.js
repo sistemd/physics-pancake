@@ -1,6 +1,8 @@
 /* eslint-env jest */
 
-import { min, almostEquals } from '../utils';
+import { min, almostEquals, edgesAreConnected } from '../utils';
+import Line from '../Line';
+import Vector from '../Vector';
 
 test('utils.min', () => {
     expect(min([2, 1, 4, 10])).toBe(1);
@@ -20,4 +22,68 @@ test('utils.almostEquals', () => {
     expect(almostEquals(-0.1, 0.2)).toBeFalsy();
     expect(almostEquals(0.1, -0.1)).toBeFalsy();
     expect(almostEquals(55, -55.00000000000001)).toBeFalsy();
+});
+
+test('edgesAreConnected', () => {
+    const connectedEdges = [
+        [
+            new Line({ origin: Vector.zero, end: new Vector(1, 0) }),
+            new Line({ origin: new Vector(1, 0), end: new Vector(1, 1) }),
+            new Line({ origin: new Vector(1, 1), end: Vector.zero }),
+        ],
+        [
+            new Line({ origin: Vector.zero, end: new Vector(1, 0) }),
+            new Line({ origin: new Vector(1, 0), end: new Vector(1, 1) }),
+            new Line({ origin: new Vector(1, 1), end: new Vector(0, 1) }),
+            new Line({ origin: new Vector(0, 1), end: Vector.zero }),
+        ],
+    ];
+
+    const disconnectedEdges = [
+        [
+            new Line({ origin: Vector.zero, end: new Vector(1, 0) }),
+            new Line({ origin: new Vector(1, 1), end: Vector.zero }),
+            new Line({ origin: new Vector(1, 0), end: new Vector(1, 1) }),
+        ],
+        [
+            new Line({ origin: Vector.zero, end: new Vector(1, 0) }),
+            new Line({ origin: new Vector(1, 1), end: Vector.zero }),
+            new Line({ origin: new Vector(1, 0), end: new Vector(1, 22) }),
+        ],
+        [
+            new Line({ origin: Vector.zero, end: new Vector(1, 0) }),
+            new Line({ origin: new Vector(1, 1), end: Vector.zero }),
+            new Line({ origin: new Vector(1, 22), end: new Vector(1, 1) }),
+        ],
+        [
+            new Line({ origin: new Vector(1, 0), end: new Vector(1, 1) }),
+            new Line({ origin: Vector.zero, end: new Vector(1, 0) }),
+            new Line({ origin: new Vector(1, 1), end: new Vector(0, 1) }),
+            new Line({ origin: new Vector(0, 1), end: Vector.zero }),
+        ],
+        [
+            new Line({ origin: Vector.zero, end: new Vector(1, 0) }),
+            new Line({ origin: new Vector(1, 1), end: new Vector(0, 1) }),
+            new Line({ origin: new Vector(1, 0), end: new Vector(1, 1) }),
+            new Line({ origin: new Vector(0, 1), end: Vector.zero }),
+        ],
+        [
+            new Line({ origin: Vector.zero, end: new Vector(1, 0) }),
+            new Line({ origin: new Vector(1, 0), end: new Vector(1, 1) }),
+            new Line({ origin: new Vector(0, 1), end: Vector.zero }),
+            new Line({ origin: new Vector(1, 1), end: new Vector(0, 1) }),
+        ],
+        [
+            new Line({ origin: new Vector(0, 1), end: Vector.zero }),
+            new Line({ origin: new Vector(1, 0), end: new Vector(1, 1) }),
+            new Line({ origin: new Vector(1, 1), end: new Vector(0, 1) }),
+            new Line({ origin: Vector.zero, end: new Vector(1, 0) }),
+        ],
+    ];
+
+    for (const edges of connectedEdges)
+        expect(edgesAreConnected(edges)).toBeTruthy();
+
+    for (const edges of disconnectedEdges)
+        expect(edgesAreConnected(edges)).toBeFalsy();
 });

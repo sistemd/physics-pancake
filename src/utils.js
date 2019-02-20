@@ -51,3 +51,12 @@ export function randomRange(min, max) {
 export function sameSigns(a, b) {
     return (a > 0 && b > 0) || (a < 0 && b < 0);
 }
+
+export function edgesAreConnected(edges) {
+    for (let i = 1; i < edges.length; ++i) {
+        if (!edges[i].origin.almostEquals(edges[i - 1].end))
+            return false;
+    }
+
+    return edges[0].origin.almostEquals(edges[edges.length - 1].end);
+}

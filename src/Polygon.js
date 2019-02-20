@@ -1,4 +1,4 @@
-import { min, almostEquals } from './utils';
+import { min, almostEquals, edgesAreConnected } from './utils';
 import Line from './Line';
 import Vector from './Vector';
 
@@ -12,21 +12,6 @@ function verticesFromEdges(edges) {
     return edges.map(edge => edge.origin);
 }
 
-function areCounterClockwise(edges) {
-    for (let i = 0; i < edges.length - 1; ++i) {
-        const c = edges[i].offset.cross(edges[i + 1].offset);
-        if (almostEquals(c, 0))
-            throw new Error('Two edges are collinear');
-        if (c < 0)
-            return false;
-    }
-
-    const c = edges[edges.length - 1].offset.cross(edges[0].offset);
-    if (almostEquals(c, 0))
-        throw new Error('Two edges are collinear');
-    return c > 0;
-}
-
 // XXX toString
 
 export default class Polygon {
@@ -36,28 +21,40 @@ export default class Polygon {
         if (vertices !== undefined && edges !== undefined)
             throw new Error('Either vertices or edges should be specified, but not both');
 
-        if (edges !== undefined)
-            vertices = verticesFromEdges(edges);
-        else
-            edges = Array.from(edgesFromVertices(vertices));
+        if (vertices !== undefined) {
+            if (vertices.length < 3)
+                throw new Error('A polygon must contain at least three vertices');
 
-        if (!areCounterClockwise(edges))
-            throw new Error('Polygon vertices/edges must be specified in counter-clockwise order');
+            this.vertices = vertices;
+            return;
+        }
 
-        this.vertices = vertices;
+        if (edges.length < 3)
+            throw new Error('A polygon must contain at least three edges');
+        if (!edgesAreConnected(edges))
+            throw new Error('Polygon edges must be connected');
+        this.vertices = verticesFromEdges(edges);
+    }
+
+    get isCounterClockwise() {
+        const edges = this.edges;
+
+        for (let i = 0; i < edges.length - 1; ++i) {
+            const c = edges[i].offset.cross(edges[i + 1].offset);
+            if (almostEquals(c, 0))
+                throw new Error('Two edges are collinear');
+            if (c < 0)
+                return false;
+        }
+
+        const c = edges[edges.length - 1].offset.cross(edges[0].offset);
+        if (almostEquals(c, 0))
+            throw new Error('Two edges are collinear');
+        return c > 0;
     }
 
     get edges() {
         return Array.from(edgesFromVertices(this.vertices));
-    }
-
-    get edgesAreConnected() {
-        for (let i = 1; i < this.edges.length; ++i) {
-            if (!this.edges[i].origin.almostEquals(this.edges[i - 1].end))
-                return false;
-        }
-
-        return this.edges[0].origin.almostEquals(this.edges[this.edges.length - 1].end);
     }
 
     containsPoint(point) {
