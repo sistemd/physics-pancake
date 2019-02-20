@@ -6,11 +6,6 @@ export default class ElasticSpring extends Spring {
         this.stiffness = stiffness;
     }
 
-    update() {
-        this.contract(this.particles[0], this.particles[1]);
-        this.contract(this.particles[1], this.particles[0]);
-    }
-
     contract(fromParticle, toParticle) {
         const direction = fromParticle.position.direction(toParticle.position);
         fromParticle.force.add(direction.scaled(this.contractionMagnitude));
