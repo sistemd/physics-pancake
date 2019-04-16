@@ -1,23 +1,32 @@
 import Vector from './Vector';
+import Line from './Line';
+import Polygon from './Polygon';
 
-export function clearContext(context, style) {
+type Context = CanvasRenderingContext2D;
+
+export function clearContext(context: Context, style: string): void {
     if (style)
         context.fillStyle = style;
     context.fillRect(0, 0, context.canvas.width, context.canvas.height);
 }
 
-export function drawCircle(context, { position, radius }, style) {
+interface Circle {
+    position: Vector;
+    radius: number;
+}
+
+export function drawCircle(context: Context, circle: Circle, style: string): void {
     if (style)
         context.fillStyle = style;
     context.beginPath();
-    position = fromNormalizedDeviceCoordinates(position, context.canvas);
-    const xRadius = context.canvas.width * radius / 2;
-    const yRadius = context.canvas.height * radius / 2;
+    const position = fromNormalizedDeviceCoordinates(circle.position, context.canvas);
+    const xRadius = context.canvas.width * circle.radius / 2;
+    const yRadius = context.canvas.height * circle.radius / 2;
     context.ellipse(position.x, position.y, xRadius, yRadius, 0, 0, Math.PI * 2);
     context.fill();
 }
 
-export function drawLine(context, line, style) {
+export function drawLine(context: Context, line: Line, style: string): void {
     if (style)
         context.strokeStyle = style;
     context.beginPath();
@@ -28,7 +37,7 @@ export function drawLine(context, line, style) {
     context.stroke();
 }
 
-export function drawPolygon(context, polygon, style) {
+export function drawPolygon(context: Context, polygon: Polygon, style: string): void {
     if (style)
         context.fillStyle = style;
 
@@ -40,15 +49,20 @@ export function drawPolygon(context, polygon, style) {
     context.fill();
 }
 
-export function fromNormalizedDeviceCoordinates(coordinates, { width, height }) {
+interface Dimensions {
+    width: number;
+    height: number;
+}
+
+export function fromNormalizedDeviceCoordinates(coordinates: Vector, dimensions: Dimensions): Vector {
     const factor = coordinates.added(new Vector(1, 1)).scaled(0.5);
     return new Vector(
-        width * factor.x,
-        height * (1 - factor.y),
+        dimensions.width * factor.x,
+        dimensions.height * (1 - factor.y),
     );
 }
 
-export function toNormalizedDeviceCoordinates(coordinates, { width, height }) {
-    const factor = new Vector(coordinates.x / width, 1 - coordinates.y / height);
+export function toNormalizedDeviceCoordinates(coordinates: Vector, dimensions: Dimensions): Vector {
+    const factor = new Vector(coordinates.x / dimensions.width, 1 - coordinates.y / dimensions.height);
     return factor.added(new Vector(-0.5, -0.5)).scaled(2);
 }

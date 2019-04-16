@@ -1,115 +1,113 @@
 import { almostEquals } from './utils';
 
 export default class Vector {
-    static get zero() {
+    public static get zero() {
         return new Vector(0, 0);
     }
 
-    constructor(x, y) {
-        this.x = x;
-        this.y = y;
+    public constructor(public x: number, public y: number) {
     }
 
-    reset() {
+    public reset(): void {
         this.x = 0;
         this.y = 0;
     }
 
-    normal(positiveDirection) {
+    public normal(positiveDirection: Vector): Vector {
         const normal = new Vector(-this.y, this.x).normalized;
         if (normal.dot(positiveDirection) > 0)
             return normal;
         return normal.negated;
     }
 
-    flippedTowards(direction) {
+    public flippedTowards(direction: Vector): Vector {
         if (this.dot(direction) > 0)
             return this.cloned;
         return this.negated;
     }
 
-    get cloned() {
+    public get cloned(): Vector {
         return new Vector(this.x, this.y);
     }
 
-    get magnitude() {
+    public get magnitude(): number {
         return Math.sqrt(this.magnitudeSquared);
     }
 
-    get magnitudeSquared() {
+    public get magnitudeSquared(): number {
         return this.x * this.x + this.y * this.y;
     }
 
-    get normalized() {
+    public get normalized(): Vector {
         return this.scaled(1 / this.magnitude);
     }
 
-    get negated() {
+    public get negated(): Vector {
         return new Vector(-this.x, -this.y);
     }
 
-    get isNormalized() {
+    public get isNormalized(): boolean {
         return almostEquals(this.magnitudeSquared, 1);
     }
 
-    almostEquals(other) {
+    public almostEquals(other: Vector): boolean {
         return almostEquals(this.x, other.x) && almostEquals(this.y, other.y);
     }
 
-    dot(other) {
+    public dot(other: Vector): number {
         return this.x * other.x + this.y * other.y;
     }
 
-    cross(other) {
+    public cross(other: Vector): number {
         return this.x * other.y - this.y * other.x;
     }
 
-    added(other) {
+    public added(other: Vector): Vector {
         return new Vector(this.x + other.x, this.y + other.y);
     }
 
-    subtracted(other) {
+    public subtracted(other: Vector): Vector {
         return new Vector(this.x - other.x, this.y - other.y);
     }
 
-    scaled(factor) {
+    public scaled(factor: number): Vector {
         return new Vector(this.x * factor, this.y * factor);
     }
 
-    add(other) {
+    public add(other: Vector): void {
         this.x += other.x;
         this.y += other.y;
     }
 
-    subtract(other) {
+    public subtract(other: Vector): void {
         this.x -= other.x;
         this.y -= other.y;
     }
 
-    scale(factor) {
+    public scale(factor: number): void {
         this.x *= factor;
         this.y *= factor;
     }
 
-    distanceSquared(other) {
+    public distanceSquared(other: Vector): number {
         return this.subtracted(other).magnitudeSquared;
     }
 
-    distance(other) {
+    public distance(other: Vector): number {
         return Math.sqrt(this.distanceSquared(other));
     }
 
-    direction(other) {
+    public direction(other: Vector): Vector {
         return other.subtracted(this).normalized;
     }
 
-    projected(other) {
+    public projected(other: Vector): Vector {
         if (!other.isNormalized)
             other = other.normalized;
         return other.scaled(this.dot(other));
     }
 
-    toString() {
+    public toString(): string {
         return `Vector(${this.x}, ${this.y})`;
     }
 }

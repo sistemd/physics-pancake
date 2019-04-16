@@ -1,33 +1,47 @@
-import { epsilon, almostEquals, valueIsBetween, sameSigns } from './utils';
+import { epsilon, almostEquals, valueIsBetween, sameSign } from './utils';
 import Vector from './Vector';
 
-// XXX toString
+interface LineParams {
+    origin: Vector;
+    offset?: Vector;
+    end?: Vector;
+}
+
+interface IntersectionParameters {
+    t?: number;
+    u?: number;
+}
 
 export default class Line {
-    constructor({ origin, offset, end }) {
+    public origin: Vector;
+    public offset: Vector;
+
+    public constructor(params: LineParams) {
+        const { origin, offset, end } = params;
+
         if (offset !== undefined && end !== undefined)
             throw new TypeError('Either offset or end may be specified, but not both');
 
         this.origin = origin.cloned;
 
         if (end !== undefined)
-            this.end = end;
+            this.offset = end.subtracted(this.origin);
         else if (offset !== undefined)
             this.offset = offset;
         else
             throw new TypeError('Either offset or end must be specified');
     }
 
-    almostEquals(other) {
+    public almostEquals(other: Line): boolean {
         return this.origin.almostEquals(other.origin) && this.offset.almostEquals(other.offset);
     }
 
-    normal(positiveDirection) {
+    public normal(positiveDirection: Vector): Vector {
         return this.offset.normal(positiveDirection);
     }
 
-    // Treats self as if it were a ray directed from origin into end
-    rayIntersects(other) {
+    // Treats "this" line as if it were a ray directed from origin into end
+    public rayIntersects(other: Line): boolean {
         const { t, u } = this.intersectionParameters(other);
 
         if (t === undefined || u === undefined)
@@ -36,7 +50,7 @@ export default class Line {
         return -epsilon < t && -epsilon < u && u < 1 + epsilon;
     }
 
-    intersects(other) {
+    public intersects(other: Line): boolean {
         const { t, u } = this.intersectionParameters(other);
 
         if (t === undefined || u === undefined)
@@ -45,7 +59,7 @@ export default class Line {
         return -epsilon < t && t < 1 + epsilon && -epsilon < u && u < 1 + epsilon;
     }
 
-    intersection(other) {
+    public intersection(other: Line): Vector|undefined {
         const { t, u } = this.intersectionParameters(other);
 
         if (t === undefined || u === undefined)
@@ -58,30 +72,30 @@ export default class Line {
     }
 
     // XXX Document this, stackoverflow link or have a local copy
-    intersectionParameters(other) {
+    public intersectionParameters(other: Line): IntersectionParameters {
         const a = other.origin.subtracted(this.origin);
-        const div = this.offset.cross(other.offset);
+        const d = this.offset.cross(other.offset);
 
-        if (almostEquals(div, 0))
-            return {};
+        if (almostEquals(d, 0))
+            return { t: undefined, u: undefined };
 
         return {
-            t: a.cross(other.offset) / div,
-            u: a.negated.cross(this.offset) / (-div),
+            t: a.cross(other.offset) / d,
+            u: a.negated.cross(this.offset) / (-d),
         };
     }
 
-    containsPoint(p) {
+    public containsPoint(p: Vector): boolean {
         return almostEquals(p.subtracted(this.origin).cross(this.offset), 0) &&
                valueIsBetween({ value: p.x, limits: [this.origin.x, this.end.x] }) &&
                valueIsBetween({ value: p.y, limits: [this.origin.y, this.end.y] });
     }
 
-    closestPoint(point) {
+    public closestPoint(point: Vector): Vector {
         const c = point.subtracted(this.origin).dot(this.offset);
         const d = point.subtracted(this.end).dot(this.offset.negated);
 
-        if (!sameSigns(c, d)) {
+        if (!sameSign(c, d)) {
             if (this.origin.distanceSquared(point) < this.end.distanceSquared(point))
                 return this.origin;
             return this.end;
@@ -106,31 +120,31 @@ export default class Line {
         return new Vector((t - y * this.offset.y) / this.offset.x, y);
     }
 
-    distance(point) {
+    public distance(point: Vector): number {
         return Math.sqrt(this.distanceSquared(point));
     }
 
-    distanceSquared(point) {
+    public distanceSquared(point: Vector): number {
         return this.closestPoint(point).distanceSquared(point);
     }
 
-    get opposite() {
+    public get opposite(): Line {
         return new Line({ origin: this.origin, offset: this.offset.negated });
     }
 
-    get end() {
+    public get end(): Vector {
         return this.origin.added(this.offset);
     }
 
-    set end(value) {
+    public set end(value: Vector) {
         this.offset = value.subtracted(this.origin);
     }
 
-    get length() {
+    public get length(): number {
         return Math.sqrt(this.lengthSquared);
     }
 
-    get lengthSquared() {
+    public get lengthSquared(): number {
         return this.offset.x * this.offset.x + this.offset.y * this.offset.y;
     }
 }

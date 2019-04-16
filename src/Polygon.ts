@@ -2,22 +2,31 @@ import { min, almostEquals, edgesAreConnected } from './utils';
 import Line from './Line';
 import Vector from './Vector';
 
-function * edgesFromVertices(vertices) {
+function edgesFromVertices(vertices: Vector[]): Line[] {
+    const edges: Line[] = [];
+
     for (let i = 0; i < vertices.length - 1; ++i)
-        yield new Line({ origin: vertices[i].cloned, end: vertices[i + 1].cloned });
-    yield new Line({ origin: vertices[vertices.length - 1].cloned, end: vertices[0].cloned });
+        edges.push(new Line({ origin: vertices[i].cloned, end: vertices[i + 1].cloned }));
+    edges.push(new Line({ origin: vertices[vertices.length - 1].cloned, end: vertices[0].cloned }));
+
+    return edges;
 }
 
-function verticesFromEdges(edges) {
+function verticesFromEdges(edges: Line[]): Vector[] {
     return edges.map(edge => edge.origin);
 }
 
-// XXX toString
+interface PolygonParams {
+    vertices?: Vector[];
+    edges?: Line[];
+}
 
 export default class Polygon {
-    constructor({ vertices, edges }) {
-        if (vertices === undefined && edges === undefined)
-            throw new Error('Either vertices or edges must be specified');
+    public vertices: Vector[];
+
+    public constructor(params: PolygonParams) {
+        const { vertices, edges } = params;
+
         if (vertices !== undefined && edges !== undefined)
             throw new Error('Either vertices or edges should be specified, but not both');
 
@@ -27,37 +36,40 @@ export default class Polygon {
 
             this.vertices = vertices;
             return;
+        } else if (edges !== undefined) {
+            if (edges.length < 3)
+                throw new Error('A polygon must contain at least three edges');
+            if (!edgesAreConnected(edges))
+                throw new Error('Polygon edges must be connected');
+            this.vertices = verticesFromEdges(edges);
+        } else {
+            throw new Error('Either vertices or edges must be specified');
         }
-
-        if (edges.length < 3)
-            throw new Error('A polygon must contain at least three edges');
-        if (!edgesAreConnected(edges))
-            throw new Error('Polygon edges must be connected');
-        this.vertices = verticesFromEdges(edges);
     }
 
-    get isCounterClockwise() {
+    public get isCounterClockwise(): boolean {
         const edges = this.edges;
+        let c = 0;
 
         for (let i = 0; i < edges.length - 1; ++i) {
-            const c = edges[i].offset.cross(edges[i + 1].offset);
+            c = edges[i].offset.cross(edges[i + 1].offset);
             if (almostEquals(c, 0))
                 throw new Error('Two edges are collinear');
             if (c < 0)
                 return false;
         }
 
-        const c = edges[edges.length - 1].offset.cross(edges[0].offset);
+        c = edges[edges.length - 1].offset.cross(edges[0].offset);
         if (almostEquals(c, 0))
             throw new Error('Two edges are collinear');
         return c > 0;
     }
 
-    get edges() {
+    public get edges(): Line[] {
         return Array.from(edgesFromVertices(this.vertices));
     }
 
-    containsPoint(point) {
+    public containsPoint(point: Vector): boolean {
         if (this.isVertex(point))
             return true;
 
@@ -65,11 +77,11 @@ export default class Polygon {
         return this.countIntersections(ray) % 2 === 1;
     }
 
-    isVertex(point) {
+    public isVertex(point: Vector): boolean {
         return this.vertices.some(vertex => vertex.almostEquals(point));
     }
 
-    countIntersections(ray) {
+    public countIntersections(ray: Line): number {
         return this.edges.reduce((acc, edge) => {
             if (ray.rayIntersects(edge))
                 return acc + 1;
@@ -77,7 +89,7 @@ export default class Polygon {
         }, 0);
     }
 
-    closestEdge(point) {
+    public closestEdge(point: Vector): Line {
         return min(this.edges, edge => edge.distance(point));
     }
 }

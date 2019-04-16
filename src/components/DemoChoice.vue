@@ -20,6 +20,7 @@ import SpringDemo from './mass-aggregate/SpringDemo';
 import TerrainDemo from './mass-aggregate/TerrainDemo';
 import ParticleCollisionDemo from './mass-aggregate/ParticleCollisionDemo';
 import RodDemo from './mass-aggregate/RodDemo';
+import ShapesDemo from './mass-aggregate/ShapesDemo';
 
 export default {
     data() {
@@ -44,7 +45,11 @@ export default {
                 {
                     title: 'Rod Demo',
                     component: RodDemo,
-                }
+                },
+                {
+                    title: 'Shapes Demo',
+                    component: ShapesDemo,
+                },
             ],
             currentDemo: undefined,
         };

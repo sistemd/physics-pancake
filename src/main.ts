@@ -1,3 +1,5 @@
+/* tslint:disable: no-unused-expression */
+
 import Vue from 'vue';
 import App from './App.vue';
 
