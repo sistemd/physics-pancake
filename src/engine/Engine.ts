@@ -1,20 +1,16 @@
-import NotImplemented from '../NotImplemented';
-
 // Trying to integrate more than maxTimeDelta milliseconds at a time
 // simply drops the integration and does nothing. Serves to fix lag.
 const maxTimeDelta = 3000;
 
-export default class Engine {
-    static get timestep() {
+export default abstract class Engine {
+    public static get timestep(): number {
         return 6;
     }
 
-    constructor() {
-        this.timeAccumulator = 0;
-        this.lastIntegrationTime = undefined;
-    }
+    public timeAccumulator: number = 0;
+    public lastIntegrationTime?: number = undefined;
 
-    integrateTime(currentTime) {
+    public integrateTime(currentTime: number): void {
         if (this.lastIntegrationTime === undefined) {
             this.lastIntegrationTime = currentTime;
             return;
@@ -31,7 +27,5 @@ export default class Engine {
         }
     }
 
-    integrateStep() {
-        throw new NotImplemented();
-    }
+    public abstract integrateStep(): void;
 }

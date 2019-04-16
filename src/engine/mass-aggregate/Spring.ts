@@ -1,33 +1,35 @@
+import Particle from './Particle';
 import Line from '../../Line';
-import NotImplemented from '../../NotImplemented';
 
-export default class Spring {
-    constructor(particles) {
-        this.particles = particles;
+export default abstract class Spring {
+    public restingLength: number;
+
+    public constructor(public particles: Particle[]) {
+        if (particles.length !== 2)
+            throw new Error('Wrong number of particles');
+
         this.restingLength = this.currentLength;
     }
 
-    update() {
+    public update(): void {
         this.contract(this.particles[0], this.particles[1]);
         this.contract(this.particles[1], this.particles[0]);
     }
 
-    contract(fromParticle, toParticle) {
-        throw new NotImplemented();
-    }
+    public abstract contract(fromParticle: Particle, toParticle: Particle): void;
 
-    get line() {
+    public get line(): Line {
         return new Line({
             origin: this.particles[0].position,
             end: this.particles[1].position,
         });
     }
 
-    get currentLength() {
+    public get currentLength(): number {
         return this.particles[0].position.distance(this.particles[1].position);
     }
 
-    get lengthDelta() {
+    public get lengthDelta(): number {
         return this.currentLength - this.restingLength;
     }
 }

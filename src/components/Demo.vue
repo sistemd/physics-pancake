@@ -19,12 +19,12 @@ export default {
     },
     methods: {
         createEngine(previousEngine) {
-            throw new NotImplemented();
+            throw new Error('Not implemeted');
         },
         createDrawing() {
             // The created drawing can leave its context undefined.
             // mounted() will set up the context properly.
-            throw new NotImplemented();
+            throw new Error('Not implemented');
         },
         restartEngine() {
             this.simulation.engine = this.createEngine(this.simulation.engine);
