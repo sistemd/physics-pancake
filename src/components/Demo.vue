@@ -1,6 +1,6 @@
-<script>
+<script lang="ts">
 import Simulation from '../engine/Simulation';
-import NotImplemented from '../NotImplemented';
+import NotImplemented from './NotImplemented';
 
 export default {
     data() {
@@ -19,12 +19,12 @@ export default {
     },
     methods: {
         createEngine(previousEngine) {
-            throw new Error('Not implemeted');
+            throw new NotImplemented();
         },
         createDrawing() {
             // The created drawing can leave its context undefined.
             // mounted() will set up the context properly.
-            throw new Error('Not implemented');
+            throw new NotImplemented();
         },
         restartEngine() {
             this.simulation.engine = this.createEngine(this.simulation.engine);

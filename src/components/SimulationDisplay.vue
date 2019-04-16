@@ -9,7 +9,7 @@
   />
 </template>
 
-<script>
+<script lang="ts">
 import { toNormalizedDeviceCoordinates } from '../graphics';
 import Vector from '../Vector';
 

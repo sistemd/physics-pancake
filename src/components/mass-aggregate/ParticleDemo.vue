@@ -20,7 +20,7 @@
   </table>
 </template>
 
-<script>
+<script lang="ts">
 import Demo from '../Demo';
 import GravitySlider from '../GravitySlider';
 import RestartButton from '../RestartButton';

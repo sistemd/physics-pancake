@@ -13,7 +13,7 @@
   </table>
 </template>
 
-<script>
+<script lang="ts">
 import Demo from '../Demo';
 import InteractiveSimulationDisplay from '../InteractiveSimulationDisplay';
 import RestartButton from '../RestartButton';
