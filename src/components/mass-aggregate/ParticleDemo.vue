@@ -20,7 +20,7 @@
   </table>
 </template>
 
-<script lang="ts">
+<script lang="js">
 import Demo from '../Demo';
 import GravitySlider from '../GravitySlider';
 import RestartButton from '../RestartButton';
@@ -49,8 +49,8 @@ export default {
                 ],
             });
         },
-        createDrawing() {
-            return new MassAggregateDrawing();
+        createDrawing(engine) {
+            return new MassAggregateDrawing({ engine });
         },
     },
 };

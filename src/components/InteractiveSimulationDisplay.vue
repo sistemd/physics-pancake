@@ -8,7 +8,7 @@
   />
 </template>
 
-<script lang="ts">
+<script lang="js">
 import Vector from '../Vector';
 import { min } from '../utils';
 import SimulationDisplay from './SimulationDisplay';

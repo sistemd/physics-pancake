@@ -16,8 +16,14 @@
       "webpack-env"
     ],
     "paths": {
-      "@/*": [
+      "@root/*": [
         "src/*"
+      ],
+      "@engine/*": [
+        "src/engine/*"
+      ],
+      "@components/*": [
+        "src/components/*"
       ]
     },
     "lib": [

@@ -14,7 +14,7 @@
   </div>
 </template>
 
-<script lang="ts">
+<script lang="js">
 import ParticleDemo from './mass-aggregate/ParticleDemo';
 import SpringDemo from './mass-aggregate/SpringDemo';
 import TerrainDemo from './mass-aggregate/TerrainDemo';

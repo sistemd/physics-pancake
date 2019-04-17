@@ -4,11 +4,15 @@
     "tslint:recommended"
   ],
   "linterOptions": {
+    "include": [
+      "*.vue"
+    ],
     "exclude": [
       "node_modules/**"
     ]
   },
   "rules": {
+    "member-ordering": false,
     "member-access": [true, "check-accessor", "check-constructor", "check-parameter-property"],
     "quotemark": [true, "single"],
     "indent": [true, "spaces", 4],

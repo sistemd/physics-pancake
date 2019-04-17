@@ -15,10 +15,12 @@
   </div>
 </template>
 
-<script lang="ts">
-export default {
+<script lang="js">
+import Vue from 'vue';
+
+export default Vue.extend({
     props: {
         value: Number,
     },
-};
+});
 </script>

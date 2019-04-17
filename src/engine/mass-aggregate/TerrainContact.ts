@@ -23,21 +23,28 @@ export default class TerrainContact implements Contact {
     public constructor(params: TerrainContactParams) {
         this.particle = params.particle;
         this.terrainElement = params.terrainElement;
-        this.terrainEdge = this.terrainElement.polygon.closestEdge(this.particle.position);
+        this.terrainEdge = this.terrainElement.polygon.closestEdge(this.particle.origin);
         this.normal = this.terrainEdge.normal(this.particle.velocity.negated);
-        this.interpenetration = this.terrainEdge.distance(this.particle.position);
+
+        const p = this.terrainEdge.closestPoint(this.particle.origin);
+        const d = p.distance(this.particle.origin);
+
+        if (d <= this.particle.radius)
+            this.interpenetration = this.particle.radius - d;
+        else
+            this.interpenetration = this.particle.radius + d;
     }
 
     public solve(): void {
-        this.removePenetration();
+        this.removeInterpenetration();
         if (this.bounceParticle())
             return;
         this.slideParticle();
         this.applyFriction();
     }
 
-    public removePenetration(): void {
-        this.particle.position.add(this.normal.scaled(this.interpenetration));
+    public removeInterpenetration(): void {
+        this.particle.origin.add(this.normal.scaled(this.interpenetration));
     }
 
     public slideParticle(): void {

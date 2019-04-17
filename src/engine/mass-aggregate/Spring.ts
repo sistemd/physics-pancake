@@ -20,13 +20,13 @@ export default abstract class Spring {
 
     public get line(): Line {
         return new Line({
-            origin: this.particles[0].position,
-            end: this.particles[1].position,
+            origin: this.particles[0].origin,
+            end: this.particles[1].origin,
         });
     }
 
     public get currentLength(): number {
-        return this.particles[0].position.distance(this.particles[1].position);
+        return this.particles[0].origin.distance(this.particles[1].origin);
     }
 
     public get lengthDelta(): number {

@@ -30,7 +30,7 @@
   </table>
 </template>
 
-<script lang="ts">
+<script lang="js">
 import Demo from '../Demo';
 import InteractiveSimulationDisplay from '../InteractiveSimulationDisplay';
 import RestartButton from '../RestartButton';
@@ -57,7 +57,7 @@ export default {
         const restitution = 0.45;
 
         return {
-            particle: new Particle({ position: startingPosition, mass: 1 }),
+            particle: new Particle({ position: startingPosition(), mass: 1 }),
             platform: new TerrainElement({
                 polygon: new Polygon({
                     vertices: [
@@ -106,8 +106,8 @@ export default {
                 })],
             });
         },
-        createDrawing() {
-            return new MassAggregateDrawing();
+        createDrawing(engine) {
+            return new MassAggregateDrawing({ engine });
         },
         updatePlatformLayout() {
             const lengthHalf = this.platformLength / 2;

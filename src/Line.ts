@@ -1,5 +1,6 @@
 import { epsilon, almostEquals, valueIsBetween, sameSign } from './utils';
 import Vector from './Vector';
+import Circle from './Circle';
 
 interface LineParams {
     origin: Vector;
@@ -41,8 +42,8 @@ export default class Line {
     }
 
     // Treats "this" line as if it were a ray directed from origin into end
-    public rayIntersects(other: Line): boolean {
-        const { t, u } = this.intersectionParameters(other);
+    public intersectsRay(other: Line): boolean {
+        const { t, u } = this.lineIntersectionParameters(other);
 
         if (t === undefined || u === undefined)
             return false;
@@ -50,8 +51,8 @@ export default class Line {
         return -epsilon < t && -epsilon < u && u < 1 + epsilon;
     }
 
-    public intersects(other: Line): boolean {
-        const { t, u } = this.intersectionParameters(other);
+    public intersectsLine(other: Line): boolean {
+        const { t, u } = this.lineIntersectionParameters(other);
 
         if (t === undefined || u === undefined)
             return false;
@@ -59,8 +60,8 @@ export default class Line {
         return -epsilon < t && t < 1 + epsilon && -epsilon < u && u < 1 + epsilon;
     }
 
-    public intersection(other: Line): Vector|undefined {
-        const { t, u } = this.intersectionParameters(other);
+    public lineIntersection(other: Line): Vector|undefined {
+        const { t, u } = this.lineIntersectionParameters(other);
 
         if (t === undefined || u === undefined)
             return undefined;
@@ -72,7 +73,7 @@ export default class Line {
     }
 
     // XXX Document this, stackoverflow link or have a local copy
-    public intersectionParameters(other: Line): IntersectionParameters {
+    private lineIntersectionParameters(other: Line): IntersectionParameters {
         const a = other.origin.subtracted(this.origin);
         const d = this.offset.cross(other.offset);
 
@@ -83,6 +84,11 @@ export default class Line {
             t: a.cross(other.offset) / d,
             u: a.negated.cross(this.offset) / (-d),
         };
+    }
+
+    public intersectsCircle(circle: Circle) {
+        const p = this.closestPoint(circle.origin);
+        return circle.origin.distanceSquared(p) <= circle.radius * circle.radius;
     }
 
     public containsPoint(p: Vector): boolean {

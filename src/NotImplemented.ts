@@ -1,5 +1,5 @@
 export default class NotImplemented extends Error {
-    constructor() {
+    public constructor() {
         super('Not implemented');
     }
 }

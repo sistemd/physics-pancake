@@ -87,7 +87,7 @@ export default class MassAggregateDrawing implements Drawing {
             for (const particle of this.engine.particles) {
                 drawLine(
                     this.context,
-                    new Line({ origin: particle.position, offset: particle.force.scaled(visualForceScale) }),
+                    new Line({ origin: particle.origin, offset: particle.force.scaled(visualForceScale) }),
                     forceStyle,
                 );
             }
@@ -102,7 +102,7 @@ export default class MassAggregateDrawing implements Drawing {
             for (const particle of this.engine.particles) {
                 drawLine(
                     this.context,
-                    new Line({ origin: particle.position, offset: particle.velocity.scaled(visualVelocityScale) }),
+                    new Line({ origin: particle.origin, offset: particle.velocity.scaled(visualVelocityScale) }),
                     velocityStyle,
                 );
             }
@@ -122,7 +122,7 @@ export default class MassAggregateDrawing implements Drawing {
 
             for (const particle of this.engine.particles) {
                 const style = `hsl(${currentHue}, ${particleColor.saturation}%, ${particleColor.lightness}%)`;
-                drawCircle(this.context, { position: particle.position, radius: particle.radius }, style);
+                drawCircle(this.context, particle, style);
                 currentHue -= hueStep;
             }
         }

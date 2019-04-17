@@ -15,7 +15,7 @@ export default class ElasticSpring extends Spring {
     }
 
     public contract(fromParticle: Particle, toParticle: Particle): void {
-        const direction = fromParticle.position.direction(toParticle.position);
+        const direction = fromParticle.origin.direction(toParticle.origin);
         fromParticle.force.add(direction.scaled(this.contractionMagnitude));
     }
 

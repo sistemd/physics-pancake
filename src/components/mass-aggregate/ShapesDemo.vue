@@ -13,7 +13,7 @@
   </table>
 </template>
 
-<script lang="ts">
+<script lang="js">
 import Demo from '../Demo';
 import InteractiveSimulationDisplay from '../InteractiveSimulationDisplay';
 import RestartButton from '../RestartButton';
@@ -58,8 +58,8 @@ export default {
             ];
             return new MassAggregateEngine({ particles, terrain, springs });
         },
-        createDrawing() {
-            return new MassAggregateDrawing();
+        createDrawing(engine) {
+            return new MassAggregateDrawing({ engine });
         }
     },
 };

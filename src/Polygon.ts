@@ -1,6 +1,7 @@
 import { min, almostEquals, edgesAreConnected } from './utils';
 import Line from './Line';
 import Vector from './Vector';
+import Circle from './Circle';
 
 function edgesFromVertices(vertices: Vector[]): Line[] {
     const edges: Line[] = [];
@@ -69,6 +70,16 @@ export default class Polygon {
         return Array.from(edgesFromVertices(this.vertices));
     }
 
+    public overlapsCircle(circle: Circle): boolean {
+        for (const edge of this.edges) {
+            if (edge.intersectsCircle(circle))
+                return true;
+        }
+
+        const ray = new Line({ origin: circle.origin, offset: new Vector(1, 0) });
+        return this.countIntersections(ray) % 2 === 1;
+    }
+
     public containsPoint(point: Vector): boolean {
         if (this.isVertex(point))
             return true;
@@ -83,7 +94,7 @@ export default class Polygon {
 
     public countIntersections(ray: Line): number {
         return this.edges.reduce((acc, edge) => {
-            if (ray.rayIntersects(edge))
+            if (ray.intersectsRay(edge))
                 return acc + 1;
             return acc;
         }, 0);

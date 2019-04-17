@@ -13,13 +13,13 @@ export default class Rod extends Spring {
     }
 
     public contractOne(fromParticle: Particle, toParticle: Particle): void {
-        const direction = fromParticle.position.direction(toParticle.position);
-        fromParticle.position.add(direction.scaled(this.lengthDelta));
+        const direction = fromParticle.origin.direction(toParticle.origin);
+        fromParticle.origin.add(direction.scaled(this.lengthDelta));
     }
 
     public contractBoth(fromParticle: Particle, toParticle: Particle): void {
-        const direction = fromParticle.position.direction(toParticle.position);
+        const direction = fromParticle.origin.direction(toParticle.origin);
         const netMass = fromParticle.mass + toParticle.mass;
-        fromParticle.position.add(direction.scaled(this.lengthDelta * toParticle.mass / netMass));
+        fromParticle.origin.add(direction.scaled(this.lengthDelta * toParticle.mass / netMass));
     }
 }

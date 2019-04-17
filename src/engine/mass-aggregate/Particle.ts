@@ -1,5 +1,6 @@
 import Engine from '../Engine';
 import Vector from '../../Vector';
+import Circle from '../../Circle';
 
 const baseRadius = 1.2e-2;
 
@@ -11,8 +12,8 @@ interface ParticleParams {
     fixed?: boolean;
 }
 
-export default class Particle {
-    public position: Vector;
+export default class Particle implements Circle {
+    public origin: Vector;
     public mass: number;
     public gravityScale: number;
     public fixedRadius?: number;
@@ -21,7 +22,7 @@ export default class Particle {
     public velocity: Vector = Vector.zero;
 
     public constructor(params: ParticleParams) {
-        this.position = params.position;
+        this.origin = params.position;
         this.mass = params.mass || 1;
         this.gravityScale = params.gravityScale || 1;
         this.fixedRadius = params.fixedRadius;
@@ -47,7 +48,7 @@ export default class Particle {
     // XXX Test this
     public overlaps(other: Particle): boolean {
         const radiiSum = this.radius + other.radius;
-        return radiiSum * radiiSum >= this.position.distanceSquared(other.position);
+        return radiiSum * radiiSum >= this.origin.distanceSquared(other.origin);
     }
 
     public get radius(): number {
@@ -73,7 +74,7 @@ export default class Particle {
     }
 
     public updatePosition(): void {
-        this.position.add(this.velocity.scaled(Engine.timestep));
+        this.origin.add(this.velocity.scaled(Engine.timestep));
     }
 
     public get acceleration(): Vector {

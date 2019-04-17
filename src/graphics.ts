@@ -1,6 +1,7 @@
 import Vector from './Vector';
 import Line from './Line';
 import Polygon from './Polygon';
+import Circle from './Circle';
 
 type Context = CanvasRenderingContext2D;
 
@@ -10,16 +11,11 @@ export function clearContext(context: Context, style: string): void {
     context.fillRect(0, 0, context.canvas.width, context.canvas.height);
 }
 
-interface Circle {
-    position: Vector;
-    radius: number;
-}
-
 export function drawCircle(context: Context, circle: Circle, style: string): void {
     if (style)
         context.fillStyle = style;
     context.beginPath();
-    const position = fromNormalizedDeviceCoordinates(circle.position, context.canvas);
+    const position = fromNormalizedDeviceCoordinates(circle.origin, context.canvas);
     const xRadius = context.canvas.width * circle.radius / 2;
     const yRadius = context.canvas.height * circle.radius / 2;
     context.ellipse(position.x, position.y, xRadius, yRadius, 0, 0, Math.PI * 2);

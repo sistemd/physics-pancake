@@ -89,6 +89,11 @@ export default class Vector {
         this.y *= factor;
     }
 
+    public negate(): void {
+        this.x = -this.x;
+        this.y = -this.y;
+    }
+
     public distanceSquared(other: Vector): number {
         return this.subtracted(other).magnitudeSquared;
     }

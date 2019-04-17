@@ -39,7 +39,7 @@ export default class MassAggregateEngine extends Engine {
 
     public clearUselessParticles() {
         this.particles = this.particles.filter(
-            particle => positionWithinBounds(particle.position));
+            particle => positionWithinBounds(particle.origin));
     }
 
     public integrateStep() {
@@ -78,7 +78,7 @@ export default class MassAggregateEngine extends Engine {
     public * findTerrainContacts() {
         for (const particle of this.particles) {
             for (const terrainElement of this.terrain) {
-                if (terrainElement.polygon.containsPoint(particle.position))
+                if (terrainElement.polygon.overlapsCircle(particle))
                     yield new TerrainContact({ particle, terrainElement });
             }
         }

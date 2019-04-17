@@ -36,7 +36,7 @@
   </table>
 </template>
 
-<script lang="ts">
+<script lang="js">
 import Demo from '../Demo';
 import InteractiveSimulationDisplay from '../InteractiveSimulationDisplay';
 import RestartButton from '../RestartButton';
@@ -105,8 +105,8 @@ export default {
                 particles: this.particles,
             });
         },
-        createDrawing() {
-            return new MassAggregateDrawing();
+        createDrawing(engine) {
+            return new MassAggregateDrawing({ engine });
         },
     },
 };
