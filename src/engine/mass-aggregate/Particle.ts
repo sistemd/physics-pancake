@@ -29,10 +29,6 @@ export default class Particle implements Circle {
         this.fixed = params.fixed || false;
     }
 
-    public applyGravity(gravity: number): void {
-        this.force.add(new Vector(0, -gravity * this.mass).scaled(this.gravityScale));
-    }
-
     public update(gravity: number, damping: number): void {
         if (this.fixed) {
             this.velocity = Vector.zero;
@@ -43,6 +39,10 @@ export default class Particle implements Circle {
         this.updateVelocity();
         this.applyDamping(damping);
         this.updatePosition();
+    }
+
+    public applyGravity(gravity: number): void {
+        this.force.add(new Vector(0, -gravity * this.mass).scaled(this.gravityScale));
     }
 
     // XXX Test this

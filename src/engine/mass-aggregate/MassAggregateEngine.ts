@@ -22,19 +22,25 @@ interface MassAggregateEngineParams {
 }
 
 export default class MassAggregateEngine extends Engine {
-    public gravity: number;
-    public damping: number;
-    public particles: Particle[];
-    public springs: Spring[];
-    public terrain: TerrainElement[];
+    public gravity: number = 1e-6;
+    public damping: number = 7e-4;
+    public particles: Particle[] = [];
+    public springs: Spring[] = [];
+    public terrain: TerrainElement[] = [];
 
     public constructor(params: MassAggregateEngineParams) {
         super();
-        this.gravity = params.gravity || 1e-6;
-        this.particles = params.particles || [];
-        this.springs = params.springs || [];
-        this.terrain = params.terrain || [];
-        this.damping = params.damping || 7e-4;
+
+        if (params.gravity !== undefined)
+            this.gravity = params.gravity;
+        if (params.damping !== undefined)
+            this.damping = params.damping;
+        if (params.particles !== undefined)
+            this.particles = params.particles;
+        if (params.springs !== undefined)
+            this.springs = params.springs;
+        if (params.terrain !== undefined)
+            this.terrain = params.terrain;
     }
 
     public clearUselessParticles() {

@@ -27,8 +27,8 @@ export default Vue.extend({
         },
         restartEngine() {
             // XXX Ugh, what a hack
-            this.simulation.drawing.engine = this.simulation.engine =
-                this.createEngine(this.simulation.engine);
+            this.simulation.engine = this.createEngine(this.simulation.engine);
+            this.simulation.drawing.engine = this.simulation.engine;
         },
     },
 });

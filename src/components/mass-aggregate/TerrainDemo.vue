@@ -87,7 +87,7 @@ export default {
     },
     methods: {
         createEngine(previousEngine) {
-            this.particle.position = startingPosition();
+            this.particle.origin = startingPosition();
             this.particle.velocity = Vector.zero;
 
             return new MassAggregateEngine({
