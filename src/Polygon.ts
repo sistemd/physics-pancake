@@ -3,7 +3,7 @@ import Line from './Line';
 import Vector from './Vector';
 import Circle from './Circle';
 
-function edgesFromVertices(vertices: Vector[]): Line[] {
+function edgesFromVertices(vertices: ReadonlyArray<Vector>): Line[] {
     const edges: Line[] = [];
 
     for (let i = 0; i < vertices.length - 1; ++i)
@@ -23,11 +23,7 @@ interface PolygonParams {
 }
 
 export default class Polygon {
-    private mVertices: Vector[];
-
-    public get vertices(): ReadonlyArray<Vector> {
-        return this.mVertices;
-    }
+    public readonly vertices: ReadonlyArray<Vector>;
 
     public constructor(params: PolygonParams) {
         const { vertices, edges } = params;
@@ -39,14 +35,14 @@ export default class Polygon {
             if (vertices.length < 3)
                 throw new Error('A polygon must contain at least three vertices');
 
-            this.mVertices = vertices;
+            this.vertices = Array.from(vertices);
             return;
         } else if (edges !== undefined) {
             if (edges.length < 3)
                 throw new Error('A polygon must contain at least three edges');
             if (!edgesAreConnected(edges))
                 throw new Error('Polygon edges must be connected');
-            this.mVertices = verticesFromEdges(edges);
+            this.vertices = verticesFromEdges(edges);
         } else {
             throw new Error('Either vertices or edges must be specified');
         }
@@ -71,7 +67,7 @@ export default class Polygon {
     }
 
     public get edges(): Line[] {
-        return Array.from(edgesFromVertices(this.mVertices));
+        return Array.from(edgesFromVertices(this.vertices));
     }
 
     public overlapsCircle(circle: Circle): boolean {
@@ -93,7 +89,7 @@ export default class Polygon {
     }
 
     public isVertex(point: Vector): boolean {
-        return this.mVertices.some(vertex => vertex.almostEquals(point));
+        return this.vertices.some(vertex => vertex.almostEquals(point));
     }
 
     public countIntersections(ray: Line): number {
