@@ -34,13 +34,13 @@ export default {
     methods: {
         createEngine() {
             const particles = [
-                new Particle({ position: new Vector(0, 0.8) }),
-                new Particle({ position: new Vector(-0.35, 0.5) }),
+                new Particle({ origin: new Vector(0, 0.8) }),
+                new Particle({ origin: new Vector(-0.35, 0.5) }),
             ];
             return new MassAggregateEngine({
                 particles,
                 springs: [
-                    new Rod(particles)
+                    new Rod(particles),
                 ],
                 terrain: [
                     new TerrainElement({
@@ -66,7 +66,7 @@ export default {
         },
         createDrawing(engine) {
             return new MassAggregateDrawing({ engine });
-        }
+        },
     },
 };
 </script>

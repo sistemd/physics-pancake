@@ -50,12 +50,12 @@ export default {
         createEngine(previousEngine) {
             const particles = [
                 new Particle({
-                    position: Vector.zero,
+                    origin: Vector.zero,
                     mass: 1,
                     fixed: true,
                 }),
                 new Particle({
-                    position: new Vector(-0.2, 0.2),
+                    origin: new Vector(-0.2, 0.2),
                     gravityScale: 2.5,
                     mass: 1,
                 }),

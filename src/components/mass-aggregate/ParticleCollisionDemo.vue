@@ -77,12 +77,12 @@ export default {
             firingForce,
             particles: [
                 new FiredParticle({
-                    position: leftParticlePosition.cloned,
+                    origin: leftParticlePosition.cloned,
                     mass: 1,
                     firingForce: new Vector(firingForce, 0),
                 }),
                 new FiredParticle({
-                    position: rightParticlePosition.cloned,
+                    origin: rightParticlePosition.cloned,
                     mass: 1,
                     firingForce: new Vector(-firingForce, 0),
                 }),
@@ -91,11 +91,11 @@ export default {
     },
     methods: {
         createEngine() {
-            this.particles[0].position = leftParticlePosition.cloned;
+            this.particles[0].origin = leftParticlePosition.cloned;
             this.particles[0].velocity = Vector.zero;
             this.particles[0].fired = false;
             this.particles[0].firingForce = new Vector(this.firingForce, 0);
-            this.particles[1].position = rightParticlePosition.cloned;
+            this.particles[1].origin = rightParticlePosition.cloned;
             this.particles[1].velocity = Vector.zero;
             this.particles[1].fired = false;
             this.particles[1].firingForce = new Vector(-this.firingForce, 0);

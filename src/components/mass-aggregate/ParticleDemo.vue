@@ -44,7 +44,7 @@ export default {
                 damping: 0,
                 particles: [
                     new Particle({
-                        position: new Vector(0, 0),
+                        origin: new Vector(0, 0),
                     }),
                 ],
             });

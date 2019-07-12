@@ -12,12 +12,16 @@
 import Vector from '../Vector';
 import { min } from '../utils';
 import SimulationDisplay from './SimulationDisplay';
+import ElasticSpring from '../engine/mass-aggregate/ElasticSpring';
+import Particle from '../engine/mass-aggregate/Particle';
 
 const minSelectionDistance = 8e-2;
 
 const minSelectionDistanceSquared = minSelectionDistance * minSelectionDistance;
 
 const particleThrowMultiplier = 5e-2;
+
+const mouseSpringStiffness = 1e-3;
 
 export default {
     components: { SimulationDisplay },
@@ -26,61 +30,64 @@ export default {
     },
     data() {
         return {
-            selection: {
-                particle: undefined,
-                wasFixed: undefined,
-            },
-            previousPosition: undefined,
+            particleSelected: false,
+            mouseSpring: undefined,
         };
     },
     methods: {
-        onMouseMove(mousePosition) {
-            if (this.selection.particle === undefined)
-                return;
-
-            this.previousPosition = this.selection.particle.position;
-            this.selection.particle.velocity = Vector.zero;
-            this.selection.particle.position = mousePosition;
+        simulateMouseSpring() {
+            this.simulation.engine.springs.push(this.mouseSpring);
         },
-        onMouseUp(mousePosition) {
-            if (this.selection.particle === undefined)
-                return;
-
-            if (!this.selection.wasFixed) {
-                this.selection.particle.fixed = false;
-                this.throwSelectedParticle(mousePosition);
-            }
-
-            this.selection.particle = undefined;
+        stopSimulatingMouseSpring() {
+            this.simulation.engine.springs = this.simulation.engine.springs.filter(spring => spring !== this.mouseSpring);
         },
         onMouseDown(mousePosition) {
-            this.selection.particle = this.newlySelectedParticle(mousePosition);
-
-            if (this.selection.particle === undefined)
+            if (this.particleSelected)
                 return;
 
-            this.selection.particle.position = mousePosition;
-            this.selection.wasFixed = this.selection.particle.fixed;
-            this.selection.particle.fixed = true;
+            const particle = this.newlySelectedParticle(mousePosition);
+
+            if (particle === undefined)
+                return;
+
+            this.particleSelected = true;
+
+            if (this.mouseSpring === undefined) {
+                this.mouseSpring = new ElasticSpring({
+                    particles: [new Particle({origin: mousePosition, fixed: true}), particle],
+                    stiffness: mouseSpringStiffness,
+                });
+                // this.simulation.drawing.hiddenObjects.push(this.mouseSpring.particles[0]);
+                // this.simulation.drawing.hiddenObjects.push(this.mouseSpring);
+            } else {
+                this.mouseSpring.particles[0].origin = mousePosition;
+                this.mouseSpring.particles[1] = particle;
+                this.mouseSpring.particles[1].velocity = Vector.zero;
+            }
+
+            this.mouseSpring.restingLength = 1e-5;
+            this.simulateMouseSpring();
+        },
+        onMouseMove(mousePosition) {
+            if (!this.particleSelected)
+                return;
+
+            this.mouseSpring.particles[0].origin = mousePosition;
+        },
+        onMouseUp() {
+            if (!this.particleSelected)
+                return;
+
+            this.particleSelected = false;
+            this.stopSimulatingMouseSpring();
         },
         onMouseLeave() {
-            if (this.selection.particle === undefined)
-                return;
-            if (!this.selection.wasFixed)
-                this.selection.particle.fixed = false;
-            this.selection.particle = undefined;
-        },
-        throwSelectedParticle() {
-            if (this.previousPosition === undefined)
-                return;
-
-            const delta = this.selection.particle.position.subtracted(this.previousPosition);
-            this.selection.particle.velocity = delta.scaled(particleThrowMultiplier);
+            this.onMouseUp();
         },
         newlySelectedParticle(mousePosition) {
             return min(this.simulation.engine.particles,
                 particle => {
-                    const selectionDistance = particle.position.distanceSquared(mousePosition);
+                    const selectionDistance = particle.origin.distanceSquared(mousePosition);
                     if (selectionDistance > minSelectionDistanceSquared)
                         return undefined;
                     return selectionDistance;

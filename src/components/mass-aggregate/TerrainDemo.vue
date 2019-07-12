@@ -57,7 +57,7 @@ export default {
         const restitution = 0.45;
 
         return {
-            particle: new Particle({ position: startingPosition(), mass: 1 }),
+            particle: new Particle({ origin: startingPosition(), mass: 1 }),
             platform: new TerrainElement({
                 polygon: new Polygon({
                     vertices: [

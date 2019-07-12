@@ -5,7 +5,7 @@ import Circle from '../../Circle';
 const baseRadius = 1.2e-2;
 
 interface ParticleParams {
-    position: Vector;
+    origin: Vector;
     mass?: number;
     gravityScale?: number;
     fixedRadius?: number;
@@ -22,7 +22,7 @@ export default class Particle implements Circle {
     public velocity: Vector = Vector.zero;
 
     public constructor(params: ParticleParams) {
-        this.origin = params.position;
+        this.origin = params.origin;
         this.mass = params.mass || 1;
         this.gravityScale = params.gravityScale || 1;
         this.fixedRadius = params.fixedRadius;

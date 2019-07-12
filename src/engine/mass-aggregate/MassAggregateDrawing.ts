@@ -43,6 +43,7 @@ export default class MassAggregateDrawing implements Drawing {
     public drawingTerrain: boolean;
     public drawingSprings: boolean;
     public drawingParticles: boolean;
+    public hiddenObjects: object[] = [];
 
     public constructor(params: MassAggregateDrawingParams) {
         this.context = params.context;
@@ -74,7 +75,7 @@ export default class MassAggregateDrawing implements Drawing {
             return;
 
         if (this.context !== undefined) {
-            for (const { polygon } of this.engine.terrain)
+            for (const { polygon } of this.visibleObjects(this.engine.terrain))
                 drawPolygon(this.context, polygon, terrainStyle);
         }
     }
@@ -84,7 +85,7 @@ export default class MassAggregateDrawing implements Drawing {
             return;
 
         if (this.context !== undefined) {
-            for (const particle of this.engine.particles) {
+            for (const particle of this.visibleObjects(this.engine.particles)) {
                 drawLine(
                     this.context,
                     new Line({ origin: particle.origin, offset: particle.force.scaled(visualForceScale) }),
@@ -99,7 +100,7 @@ export default class MassAggregateDrawing implements Drawing {
             return;
 
         if (this.context !== undefined) {
-            for (const particle of this.engine.particles) {
+            for (const particle of this.visibleObjects(this.engine.particles)) {
                 drawLine(
                     this.context,
                     new Line({ origin: particle.origin, offset: particle.velocity.scaled(visualVelocityScale) }),
@@ -120,7 +121,7 @@ export default class MassAggregateDrawing implements Drawing {
                 20,
             );
 
-            for (const particle of this.engine.particles) {
+            for (const particle of this.visibleObjects(this.engine.particles)) {
                 const style = `hsl(${currentHue}, ${particleColor.saturation}%, ${particleColor.lightness}%)`;
                 drawCircle(this.context, particle, style);
                 currentHue -= hueStep;
@@ -133,8 +134,12 @@ export default class MassAggregateDrawing implements Drawing {
             return;
 
         if (this.context !== undefined) {
-            for (const spring of this.engine.springs)
+            for (const spring of this.visibleObjects(this.engine.springs))
                 drawLine(this.context, spring.line, springStyle);
         }
+    }
+
+    public visibleObjects<T extends object>(objects: T[]): T[] {
+        return objects.filter(o => !this.hiddenObjects.some(hiddenObject => hiddenObject === o));
     }
 }

@@ -35,10 +35,10 @@ export default {
     methods: {
         createEngine(previousEngine) {
             const particles = [
-                new Particle({ position: new Vector(-0.1, 0.1) }),
-                new Particle({ position: new Vector(0.1, 0.1) }),
-                new Particle({ position: new Vector(0.1, -0.1) }),
-                new Particle({ position: new Vector(-0.1, -0.1) }),
+                new Particle({ origin: new Vector(-0.1, 0.1) }),
+                new Particle({ origin: new Vector(0.1, 0.1) }),
+                new Particle({ origin: new Vector(0.1, -0.1) }),
+                new Particle({ origin: new Vector(-0.1, -0.1) }),
             ];
             const terrain = [
                 new TerrainElement({
@@ -60,7 +60,7 @@ export default {
         },
         createDrawing(engine) {
             return new MassAggregateDrawing({ engine });
-        }
+        },
     },
 };
 </script>
