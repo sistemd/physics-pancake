@@ -10,6 +10,8 @@ function findExtrema<T>(sequence: T[], comp: ComparisonFunc<T>): number {
 
     for (let i = 0; i < sequence.length; ++i) {
         const elem = sequence[i];
+        if (elem === undefined)
+            continue;
         if (index === undefined || minElem === undefined || comp(elem, minElem)) {
             index = i;
             minElem = elem;
@@ -19,26 +21,32 @@ function findExtrema<T>(sequence: T[], comp: ComparisonFunc<T>): number {
     if (index !== undefined) {
         return index;
     } else {
-        throw new Error('Sequence is empty');
+        return -1;
     }
 }
 
-export function min<T, K>(sequence: T[], key: KeyFunc<T, K>): T {
+export function min<T, K>(sequence: T[], key: KeyFunc<T, K>): T|undefined {
     const i = findExtrema(
         sequence.map(key),
         (left, right) => left < right,
     );
 
-    return sequence[i];
+    if (i === -1)
+        return undefined;
+    else
+        return sequence[i];
 }
 
-export function max<T, K>(sequence: T[], key: KeyFunc<T, K>): T {
+export function max<T, K>(sequence: T[], key: KeyFunc<T, K>): T|undefined {
     const i = findExtrema(
         sequence.map(key),
         (left, right) => left > right,
     );
 
-    return sequence[i];
+    if (i === -1)
+        return undefined;
+    else
+        return sequence[i];
 }
 
 export function almostEquals(a: number, b: number, x: number = epsilon): boolean {
@@ -72,4 +80,11 @@ export function edgesAreConnected(edges: any): boolean {
     }
 
     return edges[0].origin.almostEquals(edges[edges.length - 1].end);
+}
+
+export function repeatTask(task: () => void, milliseconds: number): void {
+    setTimeout(() => {
+        task();
+        repeatTask(task, milliseconds);
+    }, milliseconds);
 }
