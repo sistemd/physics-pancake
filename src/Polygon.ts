@@ -23,7 +23,11 @@ interface PolygonParams {
 }
 
 export default class Polygon {
-    public vertices: Vector[];
+    private mVertices: Vector[];
+
+    public get vertices(): ReadonlyArray<Vector> {
+        return this.mVertices;
+    }
 
     public constructor(params: PolygonParams) {
         const { vertices, edges } = params;
@@ -35,14 +39,14 @@ export default class Polygon {
             if (vertices.length < 3)
                 throw new Error('A polygon must contain at least three vertices');
 
-            this.vertices = vertices;
+            this.mVertices = vertices;
             return;
         } else if (edges !== undefined) {
             if (edges.length < 3)
                 throw new Error('A polygon must contain at least three edges');
             if (!edgesAreConnected(edges))
                 throw new Error('Polygon edges must be connected');
-            this.vertices = verticesFromEdges(edges);
+            this.mVertices = verticesFromEdges(edges);
         } else {
             throw new Error('Either vertices or edges must be specified');
         }
@@ -67,7 +71,7 @@ export default class Polygon {
     }
 
     public get edges(): Line[] {
-        return Array.from(edgesFromVertices(this.vertices));
+        return Array.from(edgesFromVertices(this.mVertices));
     }
 
     public overlapsCircle(circle: Circle): boolean {
@@ -89,7 +93,7 @@ export default class Polygon {
     }
 
     public isVertex(point: Vector): boolean {
-        return this.vertices.some(vertex => vertex.almostEquals(point));
+        return this.mVertices.some(vertex => vertex.almostEquals(point));
     }
 
     public countIntersections(ray: Line): number {
@@ -101,6 +105,6 @@ export default class Polygon {
     }
 
     public closestEdge(point: Vector): Line {
-        return min(this.edges, edge => edge.distance(point));
+        return min(this.edges, edge => edge.distance(point)) as Line;
     }
 }

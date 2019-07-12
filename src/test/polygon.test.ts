@@ -126,7 +126,7 @@ test('Polygon.containsPoint', () => {
                 },
                 {
                     point: new Vector(0.45230862833231367, 0.15588471403180493),
-                    closestEdges: [new Line({ origin: new Vector(0.8, 0.8), end: new Vector(0, -0.8) })]
+                    closestEdges: [new Line({ origin: new Vector(0.8, 0.8), end: new Vector(0, -0.8) })],
                 },
                 {
                     point: new Vector(-0.5298157111105166, 0.36197345923967017),
@@ -181,7 +181,7 @@ test('Polygon.containsPoint', () => {
                 {
                     point: new Vector(0.5791442903163639, 0.010226880052997656),
                     closestEdges: [new Line({ origin: new Vector(0.6, -0.4), end: new Vector(0.6, 0.6) })],
-                }
+                },
             ],
             outerPoints: [
                 new Vector(-0.8173454503571289, -0.8945639642260763),
@@ -191,7 +191,7 @@ test('Polygon.containsPoint', () => {
                 new Vector(0.10502466457120208, -0.31260994499398254),
                 new Vector(-0.689271108918063, 0.7693101926122949),
             ],
-        }
+        },
     ];
 
     for (const { polygon, innerPoints, outerPoints } of testCases) {

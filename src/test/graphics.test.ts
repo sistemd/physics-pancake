@@ -31,7 +31,7 @@ const coordinateConversionTests = [
                 world: new Vector(40, 97.5),
                 normalized: new Vector(-0.2, -0.95),
             },
-        ]
+        ],
     },
     {
         dimensions: { width: 200, height: 400 },
@@ -60,7 +60,7 @@ const coordinateConversionTests = [
                 world: new Vector(80, 390),
                 normalized: new Vector(-0.2, -0.95),
             },
-        ]
+        ],
     },
 ];
 

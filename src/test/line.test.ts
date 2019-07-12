@@ -180,11 +180,19 @@ test('Line.intersection', () => {
 
     for (const { lines, intersection } of intersectionTests) {
         if (intersection === undefined) {
-            expect(lines[0].intersection(lines[1])).toBeUndefined();
-            expect(lines[1].intersection(lines[0])).toBeUndefined();
+            expect(lines[0].lineIntersection(lines[1])).toBeUndefined();
+            expect(lines[1].lineIntersection(lines[0])).toBeUndefined();
         } else {
-            expect(lines[0].intersection(lines[1]).almostEquals(intersection)).toBeTruthy();
-            expect(lines[1].intersection(lines[0]).almostEquals(intersection)).toBeTruthy();
+            const firstIntersection = lines[0].lineIntersection(lines[1]);
+            const secondIntersection = lines[1].lineIntersection(lines[0]);
+
+            expect(firstIntersection).not.toBeUndefined();
+            expect(secondIntersection).not.toBeUndefined();
+
+            if (firstIntersection !== undefined && secondIntersection !== undefined) {
+                expect(firstIntersection.almostEquals(intersection)).toBeTruthy();
+                expect(secondIntersection.almostEquals(intersection)).toBeTruthy();
+            }
         }
     }
 });

@@ -25,11 +25,15 @@ function findExtrema<T>(sequence: T[], comp: ComparisonFunc<T>): number {
     }
 }
 
-export function min<T, K>(sequence: T[], key: KeyFunc<T, K>): T|undefined {
-    const i = findExtrema(
-        sequence.map(key),
-        (left, right) => left < right,
-    );
+export function min<T, K>(sequence: T[], key?: KeyFunc<T, K>): T|undefined {
+    let i;
+
+    const comp = <U>(left: U, right: U) => left < right;
+
+    if (key !== undefined)
+        i = findExtrema(sequence.map(key), comp);
+    else
+        i = findExtrema(sequence, comp);
 
     if (i === -1)
         return undefined;
@@ -37,11 +41,15 @@ export function min<T, K>(sequence: T[], key: KeyFunc<T, K>): T|undefined {
         return sequence[i];
 }
 
-export function max<T, K>(sequence: T[], key: KeyFunc<T, K>): T|undefined {
-    const i = findExtrema(
-        sequence.map(key),
-        (left, right) => left > right,
-    );
+export function max<T, K>(sequence: T[], key?: KeyFunc<T, K>): T|undefined {
+    let i;
+
+    const comp = <U>(left: U, right: U) => left > right;
+
+    if (key !== undefined)
+        i = findExtrema(sequence.map(key), comp);
+    else
+        i = findExtrema(sequence, comp);
 
     if (i === -1)
         return undefined;
