@@ -1,6 +1,6 @@
 import Engine from '../Engine';
 import Vector from '../../Vector';
-import Circle from '../../Circle';
+import Circle, {circlesOverlap} from '../../Circle';
 
 const baseRadius = 1.2e-2;
 
@@ -45,10 +45,8 @@ export default class Particle implements Circle {
         this.force.add(new Vector(0, -gravity * this.mass).scaled(this.gravityScale));
     }
 
-    // XXX Test this
     public overlaps(other: Particle): boolean {
-        const radiiSum = this.radius + other.radius;
-        return radiiSum * radiiSum >= this.origin.distanceSquared(other.origin);
+        return circlesOverlap(this, other);
     }
 
     public get radius(): number {

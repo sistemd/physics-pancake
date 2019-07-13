@@ -17,11 +17,11 @@ test('utils.min', () => {
 
 test('utils.almostEquals', () => {
     expect(almostEquals(0.1, 0.1)).toBeTruthy();
-    expect(almostEquals(55, 55.00000000000001)).toBeTruthy();
+    expect(almostEquals(55, 55)).toBeTruthy();
 
     expect(almostEquals(-0.1, 0.2)).toBeFalsy();
     expect(almostEquals(0.1, -0.1)).toBeFalsy();
-    expect(almostEquals(55, -55.00000000000001)).toBeFalsy();
+    expect(almostEquals(55, -55)).toBeFalsy();
 });
 
 test('edgesAreConnected', () => {
