@@ -20,6 +20,10 @@ That's why the vue files are still in plain JS rather than TypeScript.
 ```
 npm install
 ```
+or
+```
+npm install --save-dev
+```
 
 ### Compiles and hot-reloads for development
 ```
