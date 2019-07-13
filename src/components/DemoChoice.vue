@@ -1,19 +1,21 @@
 <template>
-  <div id="root">
-    <select v-model="currentDemo">
-      <option
-        v-for="demo in demos"
-        :key="demo.title"
-        :value="demo.component"
-      >
-        {{ demo.title }}
-      </option>
-    </select>
+    <div id="root">
+        <div id="choice">
+            <select id="selection" v-model="currentDemo">
+                <option
+                    v-for="demo in demos"
+                    :key="demo.title"
+                    :value="demo.component"
+                >
+                    {{ demo.title }}
+                </option>
+            </select>
+        </div>
 
-    <transition name="demo" mode="out-in">
-      <component :is="currentDemo" />
-    </transition>
-  </div>
+        <transition name="demo" mode="out-in">
+            <component :is="currentDemo" />
+        </transition>
+    </div>
 </template>
 
 <style>

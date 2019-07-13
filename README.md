@@ -1,17 +1,20 @@
 # physics-pancake
 
-Select a demo, and use right click to move and throw particles around.
+Select a demo, and use left click to move and throw particles around.
+
+A build is available online at https://ennmichael.github.io/physics-pancake-demos/.
 
 ## Implementation notes
 
-Normaly, when checking intersections, we should first check if the bounding boxes of the
-two objects overlap. This is a fast check. If they don't overlap, the objects definitely are
-not intersecting. If they do overlap, then we should do the more specific check. I avoided
-doing this in the engine for the sake of simplicity.
+This is a demo of a 2D physics engine.
+In the future, it will probably support both rigidbody simulation and mass aggregate simulation.
+For now, only mass aggregate simulation is supported.
 
-There is also an optimisation you can do when checking if a polygon contains a point. When
-constructing the polygon object, check its convexity. If it's convex, the algorithm for checking
-if a point is contained can be made to run faster.
+The code was written with some level of simplicity in mind.
+A clear demonstration and application of physics simulation concepts was the goal.
+
+This project was initially written in Javascript, but eventually TypeScript support was added. This is not complete yet.
+That's why the vue files are still in plain JS rather than TypeScript.
 
 ## Project setup
 ```
