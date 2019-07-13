@@ -1,17 +1,17 @@
 <template>
-  <table>
-    <tr>
-      <td>
+    <div id="root">
         <InteractiveSimulationDisplay :simulation="simulation" />
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <RestartButton @click="restartEngine" />
-      </td>
-    </tr>
-  </table>
+        <RestartButton id="restart-button" @click="restartEngine" />
+    </div>
 </template>
+
+<style>
+div#root {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+</style>
 
 <script lang="js">
 import Demo from '../Demo';

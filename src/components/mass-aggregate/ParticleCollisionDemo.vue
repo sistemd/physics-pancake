@@ -1,40 +1,32 @@
 <template>
-  <table>
-    <tbody>
-      <tr>
-        <td>
-          <InteractiveSimulationDisplay :simulation="simulation" />
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <RestartButton @click="restartEngine" />
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <label>Force</label>
-          <input
-            v-model.number="firingForce"
-            type="range"
-            min="0"
-            max="1e-3"
-            step="1e-9"
-          >
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <ParticleMassSliders
-            :particles="particles"
-            :min="1"
-            :max="5"
-          />
-        </td>
-      </tr>
-    </tbody>
-  </table>
+    <div id="root">
+        <InteractiveSimulationDisplay :simulation="simulation" />
+        <RestartButton id="restart-button" @click="restartEngine" />
+        <div id="remaining-ui">
+            <div id="force-slider">
+                <label>Force</label>
+                <input v-model.number="firingForce" type="range" min="0" max="1e-3" step="1e-9" />
+            </div>
+            <ParticleMassSliders :particles="particles" :min="1" :max="5" />
+        </div>
+    </div>
 </template>
+
+<style>
+div#root {
+    display: flex;
+    align-items: center;
+}
+
+#restart-button {
+    padding-top: 3%;
+    padding-bottom: 5%;
+}
+
+div#force-slider {
+    display: flex;
+}
+</style>
 
 <script lang="js">
 import Demo from '../Demo';

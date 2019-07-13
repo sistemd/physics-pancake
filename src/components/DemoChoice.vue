@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="root">
     <select v-model="currentDemo">
       <option
         v-for="demo in demos"
@@ -10,9 +10,32 @@
       </option>
     </select>
 
-    <component :is="currentDemo" />
+    <transition name="demo" mode="out-in">
+      <component :is="currentDemo" />
+    </transition>
   </div>
 </template>
+
+<style>
+div#root {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.demo-enter-active {
+    transition: all ease-in-out .5s;
+}
+
+.demo-enter, .demo-leave-to {
+    opacity: 0;
+}
+
+.demo-enter-to, .demo-leave {
+    opacity: 100%;
+}
+</style>
 
 <script lang="js">
 import ParticleDemo from './mass-aggregate/ParticleDemo';

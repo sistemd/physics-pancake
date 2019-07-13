@@ -1,5 +1,7 @@
 <template>
-  <button v-on="$listeners">
-    Restart
-  </button>
+    <div>
+        <button v-on="$listeners">
+            Restart
+        </button>
+    </div>
 </template>

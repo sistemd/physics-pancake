@@ -3,7 +3,7 @@ import Vue from 'vue';
 import Simulation from '../engine/Simulation';
 import NotImplemented from '../NotImplemented';
 
-export default Vue.extend({
+export default {
     data() {
         return {
             simulation: undefined,
@@ -31,5 +31,5 @@ export default Vue.extend({
             this.simulation.drawing.engine = this.simulation.engine;
         },
     },
-});
+};
 </script>

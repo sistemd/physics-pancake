@@ -1,24 +1,22 @@
 <template>
-  <table>
-    <tbody>
-      <tr>
-        <td>
-          <InteractiveSimulationDisplay :simulation="simulation" />
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <RestartButton @click="restartEngine" />
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <GravitySlider :engine="simulation.engine" />
-        </td>
-      </tr>
-    </tbody>
-  </table>
+    <div id="root">
+        <InteractiveSimulationDisplay :simulation="simulation" />
+        <RestartButton id="restart-button" @click="restartEngine" />
+        <GravitySlider :engine="simulation.engine" />
+    </div>
 </template>
+
+<style>
+div#root {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#restart-button {
+    padding-top: 3%;
+}
+</style>
 
 <script lang="js">
 import Demo from '../Demo';

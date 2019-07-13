@@ -1,34 +1,23 @@
 <template>
-  <table>
-    <tbody>
-      <tr>
-        <td>
-          <InteractiveSimulationDisplay :simulation="simulation" />
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <RestartButton @click="restartEngine" />
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <RestitutionSlider v-model="restitution" />
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <AngleSlider v-model="platformAngle" />
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <LengthSlider v-model="platformLength" />
-        </td>
-      </tr>
-    </tbody>
-  </table>
+    <div id="root">
+        <InteractiveSimulationDisplay :simulation="simulation" />
+        <RestartButton @click="restartEngine" />
+        <div id="remaining-ui">
+            <RestitutionSlider v-model="restitution" />
+            <AngleSlider v-model="platformAngle" />
+            <LengthSlider v-model="platformLength" />
+        </div>
+    </div>
 </template>
+
+<style>
+div#root {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+</style>
+
 
 <script lang="js">
 import Demo from '../Demo';
