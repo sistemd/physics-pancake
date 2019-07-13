@@ -34,6 +34,8 @@ npm run serve
 ```
 npm run build
 ```
+By default, the project is set up to build files ready for deployment at https://ennmichael.github.io/physics-pancake-demos.
+You should probably use `npm run serve` or delete or modify the `vue.config.js` file.
 
 ### Run the tests
 ```
