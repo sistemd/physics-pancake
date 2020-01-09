@@ -18,10 +18,6 @@ That's why the vue files are still in plain JS rather than TypeScript.
 
 ## Project setup
 ```
-npm install
-```
-or
-```
 npm install --save-dev
 ```
 
