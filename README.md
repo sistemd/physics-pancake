@@ -2,7 +2,7 @@
 
 Select a demo, and use left click to move and throw particles around.
 
-A build is available online at https://ennmichael.github.io/physics-pancake-demos/.
+A build is available online at https://sistemd.github.io/physics-pancake-demos/.
 
 ## Implementation notes
 
